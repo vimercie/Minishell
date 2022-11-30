@@ -12,7 +12,7 @@ SRC=		main.c
 OBJ=		${addprefix ${OBJDIR}/,		\
 			${SRC:.c=.o}}
 
-INC=		${INCDIR}/pipex.h
+INC=		${INCDIR}/minishell.h
 
 LIB=		Libft/libft.a
 
