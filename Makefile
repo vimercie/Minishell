@@ -1,12 +1,15 @@
 NAME=		minishell
 
-VPATH=		src/
+VPATH=		src/						\
+			src/parsing
 
 OBJDIR=		obj
 
 INCDIR=		inc
 
-SRC=		main.c
+SRC=		main.c						\
+			parsing.c					\
+			parsing_utils.c
 
 
 OBJ=		${addprefix ${OBJDIR}/,		\
