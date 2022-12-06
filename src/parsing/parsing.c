@@ -6,14 +6,13 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/06 13:27:12 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 00:39:19 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <sys/_types/_id_t.h>
 
-char	*clean_input(char *input)
+char	*input_cleaner(char *input)
 {
 	int		input_len;
 	char	*res;
@@ -27,19 +26,14 @@ char	*clean_input(char *input)
 	j = 0;
 	while (input[i])
 	{
-		if (input[i] == '\\')
-			i++;
-		else if (input[i] == ' ')
+		if (input[i] == ' ' || input[i] == '\\')
+			res = skip_junk(input, res, &i, &j);
+		else
 		{
 			res[j] = input[i];
-			while (input[i] == ' ')
-				i++;
-			j++;
-		}
-		else
-			res[j] = input[i];
 			i++;
 			j++;
+		}
 	}
 	return (res);
 }
@@ -58,19 +52,12 @@ char	*clean_input(char *input)
 
 int	parsing(char *input)
 {
-	// t_command	cmd;
-	int	i;
+	t_command	*cmd;
 
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == ' ')
-			skip_ws(input + i);
-		else if (input[i] == '\\')
-			i++;
-		// else if (input[i] == '/')
-		// 	isPath(input + i);
-		i++;
-	}
+	cmd = malloc(sizeof(*cmd));
+	cmd->cmd = input_cleaner(input);
+	printf("input \t= \"%s\"\n", input);
+	printf("cmd \t= \"%s\"\n", cmd->cmd);
+	free(cmd->cmd);
 	return (0);
 }

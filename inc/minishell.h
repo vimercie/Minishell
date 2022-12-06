@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/06 15:29:55 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/07 00:40:07 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ typedef struct s_command
 	char	**args;
 }				t_command;
 
+// parsing
 int		parsing(char *input);
-char	*skip_ws(char *input);
+char	*input_cleaner(char *input);
+char	*skip_junk(char *input, char *res, int *i, int *j);
 
 #endif
