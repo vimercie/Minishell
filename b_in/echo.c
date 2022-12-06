@@ -39,3 +39,24 @@ int echo_n(char *input, int n)
     
     return exit_status;
 }
+
+int main(int ac, char **av)
+{
+    char *test_string = av[1];
+    
+    // Test echo_n with n = 1
+    printf("Testing echo_n with n = 1:\n");
+    if (echo_n(test_string, 1) == 0) {
+        printf("Successfully echoed string with n = 1!\n\n");
+    } else {
+        printf("Failed to echo string with n = 1!\n\n");
+    }
+    
+    // Test echo_n with n = 2
+    printf("Testing echo_n with n = 2:\n");
+    if (echo_n(test_string, 2) == 0) {
+        printf("Successfully echoed string with n = 2!\n\n");
+    } else {
+        printf("Failed to echo string with n = 2!\n\n");
+    }
+}
