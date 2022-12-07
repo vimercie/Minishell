@@ -27,7 +27,7 @@ all:		${OBJDIR} ${NAME}
 
 ${NAME}:	${OBJ} ${INC}
 			make -C Libft
-			${CC} ${OBJ} ${LIB} -o ${NAME}
+			${CC} ${OBJ} ${LIB} -lreadline -o ${NAME}
 
 lib:
 			make -C Libft
@@ -40,12 +40,12 @@ ${OBJDIR}/%.o:	%.c ${INC} Makefile
 
 
 clean:
-			rm -rf ${OBJDIR}
 			make clean -C Libft
+			rm -rf ${OBJDIR}
 
 fclean:		clean
-			${RM} ${NAME} libft.a
 			make fclean -C Libft
+			${RM} ${NAME}
 
 re:			fclean all
 

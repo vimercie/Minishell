@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/07 00:39:19 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:24:15 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*input_cleaner(char *input)
 	int		j;
 
 	input_len = ft_strlen(input);
-	res = malloc(input_len * sizeof(char));
-	ft_memset(res, '\0', input_len);
+	res = malloc((input_len * sizeof(char)) + 1);
+	ft_memset(res, '\0', input_len + 1);
 	i = 0;
 	j = 0;
 	while (input[i])
@@ -35,29 +35,16 @@ char	*input_cleaner(char *input)
 			j++;
 		}
 	}
+	free(input);
 	return (res);
 }
 
-// int	isPath(char *input)
-// {
-// 	char	*path;
-// 	int		i;
-
-// 	i = 0;
-// 	while (path[i] != ' ')
-// 		i++;
-// 	path = ft_substr(input, 0, i);
-// 	return (0);
-// }
-
-int	parsing(char *input)
+int	parsing(t_command *cmd)
 {
-	t_command	*cmd;
-
-	cmd = malloc(sizeof(*cmd));
-	cmd->cmd = input_cleaner(input);
-	printf("input \t= \"%s\"\n", input);
+	printf("input \t= \"%s\"\n", cmd->cmd);
+	cmd->cmd = input_cleaner(cmd->cmd);
 	printf("cmd \t= \"%s\"\n", cmd->cmd);
 	free(cmd->cmd);
+	free(cmd);
 	return (0);
 }

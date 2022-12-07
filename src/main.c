@@ -6,16 +6,21 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/06 15:44:26 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:06:35 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(void)
 {
-	(void)argc;
-	(void)envp;
-	parsing(argv[1]);
+	t_command	*cmd;
+
+	while (1)
+	{	
+		cmd = malloc(sizeof(t_command));
+		cmd->cmd = readline("input_cleaner$ ");
+		parsing(cmd);
+	}
 	return (0);
 }
