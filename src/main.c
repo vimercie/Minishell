@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/07 19:06:35 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:38:20 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	while (1)
 	{	
 		cmd = malloc(sizeof(t_command));
-		cmd->cmd = readline("input_cleaner$ ");
+		cmd->cmd = readline("GigaBash$ ");
 		parsing(cmd);
 	}
 	return (0);

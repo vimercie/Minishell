@@ -6,11 +6,32 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/07 18:24:15 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/09 23:07:51 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char	*skip_junk(char *input, char *res, int *i, int *j)
+{
+	int	ws;
+	int	start_i;
+
+	ws = 0;
+	start_i = *i;
+	while (is_junk(input + *i))
+	{
+		if (input[*i] == ' ' && ws == 0)
+			ws = 1;
+		*i += 1;
+	}
+	if (ws == 1 && start_i != 0 && input[*i])
+	{
+		res[*j] = ' ';
+		*j += 1;
+	}
+	return (res);
+}
 
 char	*input_cleaner(char *input)
 {
@@ -26,7 +47,7 @@ char	*input_cleaner(char *input)
 	j = 0;
 	while (input[i])
 	{
-		if (input[i] == ' ' || input[i] == '\\')
+		if (is_junk(input + i))
 			res = skip_junk(input, res, &i, &j);
 		else
 		{
