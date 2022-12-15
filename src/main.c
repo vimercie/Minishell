@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/15 20:59:57 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/15 21:15:40 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_command	*cmd;
+	char	*cmd;
 
 	(void)argv;
 	(void)envp;
@@ -22,8 +22,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (0);
 	while (1)
 	{
-		cmd = malloc(sizeof(t_command));
-		cmd->cmd = readline("GigaBash$ ");
+		cmd = readline("GigaBash$ ");
 		parsing(cmd);
 	}
 	return (0);
