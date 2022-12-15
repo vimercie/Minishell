@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/15 20:32:32 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/15 20:41:41 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*manage_quote(char *input, char *res, int *i, int *j)
 			*j += 1;
 		}
 	}
-	*i += 1;
+	else
+		*i += 1;
 	return (res);
 }
 
@@ -84,9 +85,9 @@ char	*input_cleaner(char *input)
 
 int	parsing(t_command *cmd)
 {
-	printf("input \t= \"%s\"\n", cmd->cmd);
+	printf("input \t= |%s|\n", cmd->cmd);
 	cmd->cmd = input_cleaner(cmd->cmd);
-	printf("cmd \t= \"%s\"\n", cmd->cmd);
+	printf("cmd \t= |%s|\n", cmd->cmd);
 	free(cmd->cmd);
 	free(cmd);
 	return (0);
