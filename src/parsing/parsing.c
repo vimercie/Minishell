@@ -6,11 +6,31 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/09 23:07:51 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/15 20:32:32 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char	*manage_quote(char *input, char *res, int *i, int *j)
+{
+	int	index;
+
+	index = *i + 1;
+	while (input[index] != input[*i] && input[index])
+		index++;
+	if (input[index] == input[*i] && index != *i + 1 && input[index])
+	{
+		while (*i <= index)
+		{
+			res[*j] = input[*i];
+			*i += 1;
+			*j += 1;
+		}
+	}
+	*i += 1;
+	return (res);
+}
 
 char	*skip_junk(char *input, char *res, int *i, int *j)
 {
@@ -49,6 +69,8 @@ char	*input_cleaner(char *input)
 	{
 		if (is_junk(input + i))
 			res = skip_junk(input, res, &i, &j);
+		else if (is_quote(input + i))
+			res = manage_quote(input, res, &i, &j);
 		else
 		{
 			res[j] = input[i];

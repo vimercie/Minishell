@@ -6,15 +6,22 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/09 23:20:58 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/15 20:22:44 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+int	is_quote(char *s)
+{
+	if (s[0] == '\'' || s[0] == '\"')
+		return (1);
+	return (0);
+}
+
 int	is_junk(char *s)
 {
-	if (s[0] == ' ' || s[0] == '\\')
+	if (s[0] == ' ' || s[0] == '\\' || s[0] == ';')
 		return (1);
 	return (0);
 }
