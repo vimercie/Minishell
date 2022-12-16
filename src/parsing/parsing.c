@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/15 21:17:15 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:35:03 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,25 @@ char	*input_cleaner(char *input)
 	return (res);
 }
 
-int	parsing(char *cmd)
+char	*replace_env_v(char *cmd, char *envp[])
 {
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	return (cmd);
+}
+
+int	parsing(char *cmd, char *envp[])
+{
+	(void)envp;
 	printf("input \t= |%s|\n", cmd);
 	cmd = input_cleaner(cmd);
+	// cmd = replace_env_v(cmd, envp);
 	printf("cmd \t= |%s|\n", cmd);
 	free(cmd);
 	return (0);
