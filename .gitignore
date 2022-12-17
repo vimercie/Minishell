@@ -1,1 +1,2 @@
-./src/main.c
+.vscode/settings.json
+src/main.c

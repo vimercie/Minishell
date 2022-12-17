@@ -8,6 +8,7 @@ OBJDIR=		obj
 INCDIR=		inc
 
 SRC=		main.c						\
+			init.c						\
 			parsing.c					\
 			parsing_utils.c
 

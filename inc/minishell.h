@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/15 21:32:11 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/17 04:53:22 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,16 @@ typedef struct s_command
 }				t_command;
 
 // parsing
-int		parsing(char *cmd, char *envp[]);
-char	*input_cleaner(char *input);
-char	*skip_junk(char *input, char *res, int *i, int *j);
-char	*manage_quote(char *input, char *res, int *i, int *j);
+t_command	**parsing(char *cmd);
+char		*input_cleaner(char *input);
+char		*skip_junk(char *input, char *res, int *i, int *j);
+char		*manage_quote(char *input, char *res, int *i, int *j);
+
+// init
+t_command	**cmd_init(char *input);
 
 // checking
-int		is_junk(char *s);
-int		is_quote(char *s);
+int			is_junk(char *s);
+int			is_quote(char *s);
 
 #endif

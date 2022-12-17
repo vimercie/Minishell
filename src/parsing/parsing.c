@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/16 13:35:03 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/17 05:32:57 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,11 @@ char	*skip_junk(char *input, char *res, int *i, int *j)
 
 char	*input_cleaner(char *input)
 {
-	int		input_len;
 	char	*res;
 	int		i;
 	int		j;
 
-	input_len = ft_strlen(input);
-	res = malloc((input_len * sizeof(char)) + 1);
-	ft_memset(res, '\0', input_len + 1);
+	res = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 	i = 0;
 	j = 0;
 	while (input[i])
@@ -83,26 +80,23 @@ char	*input_cleaner(char *input)
 	return (res);
 }
 
-char	*replace_env_v(char *cmd, char *envp[])
-{
-	int	i;
+// char	*replace_env_v(char *cmd)
+// {
+// 	char	*var;
+// 	int		i;
 
-	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
+// 	i = 0;
+// 	return (cmd);
+// }
+
+t_command	**parsing(char *input)
+{
+	t_command	**cmd;
+
+	cmd = cmd_init(input);
+	if (cmd == NULL)
+		return (0);
+	// cmd = replace_env_v(cmd);
+	free(input);
 	return (cmd);
-}
-
-int	parsing(char *cmd, char *envp[])
-{
-	(void)envp;
-	printf("input \t= |%s|\n", cmd);
-	cmd = input_cleaner(cmd);
-	// cmd = replace_env_v(cmd, envp);
-	printf("cmd \t= |%s|\n", cmd);
-	free(cmd);
-	return (0);
 }
