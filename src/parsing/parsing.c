@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 19:02:32 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 19:22:51 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*syntax_cleaner(char *input)
 	}
 	input[j] = '\0';
 	res_len = ft_strlen(input);
+	if (res_len == 0)
+		return (NULL);
 	res = ft_calloc(res_len + 1, sizeof(char));
 	ft_strlcpy(res, input, res_len + 1);
 	return (res);

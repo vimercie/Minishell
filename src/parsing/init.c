@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 19:02:43 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 19:40:26 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ int	count_pipes(char *input)
 	while (input[i])
 	{
 		if (input[i] == '|')
-			res++;
+		{
+			if (input[i + 1])
+				res++;
+			// else
+				// printf("\npipe> ");
+		}
 		i++;
 	}
 	return (res);
@@ -74,6 +79,11 @@ t_command	*data_init(char **pipe_split, int n_pipes)
 	while (i < n_pipes + 1)
 	{
 		clean_input = syntax_cleaner(pipe_split[i]);
+		if (clean_input == NULL)
+		{
+			free(cmd);
+			return (NULL);
+		}
 		cmd[i].cmd = cmd_init(clean_input);
 		cmd[i].args = args_init(clean_input);
 		cmd[i].fd_in = 0;
