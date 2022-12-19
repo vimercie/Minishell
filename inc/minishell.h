@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 19:03:09 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:08:39 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 
 typedef struct s_command
 {
-	int		fd_in;
-	int		fd_out;
 	char	*cmd;
 	char	**args;
+	int		fd_in;
+	int		fd_out;
 }				t_command;
 
 // parsing

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 19:01:48 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:11:25 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,38 @@ int	free_cmd(t_command *cmd)
 	return (0);
 }
 
+int	main_tester(t_command *cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (cmd[i].cmd)
+	{
+		j = 0;
+		printf("cmd[%d].cmd = %s\n", i, cmd[i].cmd);
+		while (cmd[i].args[j])
+		{
+			printf("cmd[%d].args[%d] = %s\n", i, j, cmd[i].args[j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	return (0);
+}
+
 int	main(void)
 {
 	t_command	*cmd;
 	char		*buffer;
-	int			i;
-	int			j;
 
 	while (1)
 	{
-		i = 0;
 		buffer = readline("GigaBash$ ");
 		cmd = parsing(buffer);
 		free(buffer);
-		while (cmd[i].cmd)
-		{
-			j = 0;
-			printf("cmd[%d].cmd = %s\n", i, cmd[i].cmd);
-			while (cmd[i].args[j])
-			{
-				printf("cmd[%d].args[%d] = %s\n", i, j, cmd[i].args[j]);
-				j++;
-			}
-			printf("\n");
-			i++;
-		}
+		main_tester(cmd);
 		free_cmd(cmd);
 	}
 	return (0);
