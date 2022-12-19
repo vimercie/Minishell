@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 22:02:59 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 22:16:48 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,21 @@ char		*cmd_init(char *input)
 {
 	char	*res;
 	int		i;
+	int		j;
 
 	i = 0;
 	while (input[i] != ' ' && input[i])
+	{
+		if (is_quote(input + i))
+		{
+			j = i + 1;
+			while (!is_quote(input + j) && input[j])
+				j++;
+			if (is_quote(input + j))
+				i = j;
+		}
 		i++;
+	}
 	res = ft_substr(input, 0, i);
 	return (res);
 }
@@ -79,12 +90,12 @@ t_command	*data_init(char **pipe_split, int n_pipes)
 	while (i < n_pipes + 1)
 	{
 		clean_input = syntax_cleaner(pipe_split[i]);
-		// clean_input = replace_env_v(cmd);
 		if (clean_input == NULL)
 		{
 			free(cmd);
 			return (NULL);
 		}
+		// clean_input = replace_env_v(cmd);
 		cmd[i].cmd = cmd_init(clean_input);
 		cmd[i].args = args_init(clean_input);
 		cmd[i].fd_in = 0;
