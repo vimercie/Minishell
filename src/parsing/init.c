@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 21:38:46 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 22:02:59 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,9 @@ t_command	*data_init(char **pipe_split, int n_pipes)
 	while (i < n_pipes + 1)
 	{
 		clean_input = syntax_cleaner(pipe_split[i]);
-		printf("test\n");
 		// clean_input = replace_env_v(cmd);
 		if (clean_input == NULL)
 		{
-			printf("CLEAN INPUT NULL\n");
 			free(cmd);
 			return (NULL);
 		}
