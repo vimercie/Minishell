@@ -6,13 +6,13 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/17 05:32:57 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:55:01 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*manage_quote(char *input, char *res, int *i, int *j)
+char	*manage_quote(char *input, int *i, int *j)
 {
 	int	index;
 
@@ -23,17 +23,17 @@ char	*manage_quote(char *input, char *res, int *i, int *j)
 	{
 		while (*i <= index)
 		{
-			res[*j] = input[*i];
+			input[*j] = input[*i];
 			*i += 1;
 			*j += 1;
 		}
 	}
 	else
 		*i += 1;
-	return (res);
+	return (input);
 }
 
-char	*skip_junk(char *input, char *res, int *i, int *j)
+char	*skip_junk(char *input, int *i, int *j)
 {
 	int	ws;
 	int	start_i;
@@ -48,55 +48,59 @@ char	*skip_junk(char *input, char *res, int *i, int *j)
 	}
 	if (ws == 1 && start_i != 0 && input[*i])
 	{
-		res[*j] = ' ';
+		input[*j] = ' ';
 		*j += 1;
 	}
-	return (res);
+	return (input);
 }
 
 char	*input_cleaner(char *input)
 {
 	char	*res;
+	int		res_len;
 	int		i;
 	int		j;
 
-	res = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 	i = 0;
 	j = 0;
 	while (input[i])
 	{
 		if (is_junk(input + i))
-			res = skip_junk(input, res, &i, &j);
+			input = skip_junk(input, &i, &j);
 		else if (is_quote(input + i))
-			res = manage_quote(input, res, &i, &j);
+			input = manage_quote(input, &i, &j);
 		else
 		{
-			res[j] = input[i];
+			input[j] = input[i];
 			i++;
 			j++;
 		}
 	}
-	free(input);
+	input[j] = '\0';
+	res_len = ft_strlen(input);
+	res = ft_calloc(res_len + 1, sizeof(char));
+	ft_strlcpy(res, input, res_len + 1);
 	return (res);
 }
 
-// char	*replace_env_v(char *cmd)
-// {
-// 	char	*var;
-// 	int		i;
-
-// 	i = 0;
-// 	return (cmd);
-// }
-
-t_command	**parsing(char *input)
+t_command	*parsing(char *input)
 {
-	t_command	**cmd;
+	t_command	*cmd;
+	char		**pipe_split;
+	int			n_pipes;
+	int			i;
 
-	cmd = cmd_init(input);
-	if (cmd == NULL)
-		return (0);
+	i = 0;
+	n_pipes = count_pipes(input);
+	pipe_split = ft_split(input, '|');
+	cmd = cmd_init(pipe_split, n_pipes);
+	while (pipe_split[i])
+	{
+		free(pipe_split[i]);
+		pipe_split[i] = NULL;
+		i++;
+	}
+	free(pipe_split);
 	// cmd = replace_env_v(cmd);
-	free(input);
 	return (cmd);
 }
