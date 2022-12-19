@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 21:52:09 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:24:40 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	main_tester(t_command *cmd)
 	while (cmd[i].cmd)
 	{
 		j = 0;
-		printf("cmd[%d].cmd = %s\n", i, cmd[i].cmd);
+		printf("cmd[%d].cmd = |%s|\n", i, cmd[i].cmd);
 		while (cmd[i].args[j])
 		{
-			printf("cmd[%d].args[%d] = %s\n", i, j, cmd[i].args[j]);
+			printf("cmd[%d].args[%d] = |%s|\n", i, j, cmd[i].args[j]);
 			j++;
 		}
 		printf("\n");
