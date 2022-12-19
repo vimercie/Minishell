@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 20:15:34 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/19 21:53:28 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ t_command	*parsing(char *input)
 	char		**pipe_split;
 	int			n_pipes;
 
+	if (input[0] == '|' || !input[0])
+		return (NULL);
 	n_pipes = count_pipes(input);
 	pipe_split = ft_split(input, '|');
 	cmd = data_init(pipe_split, n_pipes);
