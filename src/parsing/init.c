@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/20 01:42:02 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/20 02:38:59 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	cmd_end_index(char *input)
 			else
 				in_quotes = 0;
 		}
-		else if (is_ws(input + i) && in_quotes == 0)
-			break ;
+		if (is_ws(input + i) && in_quotes == 0)
+			return (i);
 		i++;
 	}
 	return (i);
@@ -62,7 +62,6 @@ char	**args_init(char *input)
 	int		n_cmd;
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
 	n_cmd = 0;
@@ -75,18 +74,14 @@ char	**args_init(char *input)
 	res = ft_calloc(n_cmd + 1, sizeof(char *));
 	i = 0;
 	j = cmd_end_index(input);
-	while (is_junk(input + j))
-		j++;
-	k = j;
-	while (input[k])
+	while (input[j])
 	{
-		k += cmd_end_index(input + j);
-		res[i] = ft_substr(input, j, k);
 		while (is_junk(input + j))
 			j++;
+		res[i] = ft_substr(input, j, cmd_end_index(input + j));
+		j += cmd_end_index(input + j);
 		i++;
 	}
-	res[i][0] = '\0';
 	return (res);
 }
 
