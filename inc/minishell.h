@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 21:29:42 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/20 00:20:15 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int			free_cmd(t_command *cmd);
 int			is_command(char *s);
 int			is_junk(char *s);
 int			is_quote(char *s);
+int			is_ws(char *s);
 
 #endif

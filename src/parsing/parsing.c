@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/20 00:11:35 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/20 00:54:36 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,15 @@ char	*manage_quote(char *input, int *i, int *j)
 		&& index != *i + 1
 		&& input[index])
 	{
-		*i += 1;
-		while (*i < index)
+		while (*i <= index)
 		{
 			input[*j] = input[*i];
-			input[*i] = '\0';
 			*i += 1;
 			*j += 1;
 		}
 	}
 	else
 		*i += 1;
-	
 	return (input);
 }
 
@@ -71,7 +68,11 @@ char	*syntax_cleaner(char *input)
 	while (input[i])
 	{
 		if (is_quote(input + i))
+		{
 			input = manage_quote(input, &i, &j);
+			// if (!is_command(input + i))
+			// 	break ;
+		}
 		else if (is_junk(input + i))
 			input = skip_junk(input, &i, &j);
 		else

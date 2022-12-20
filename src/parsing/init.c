@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 22:16:48 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/20 01:42:02 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,49 +33,68 @@ int	count_pipes(char *input)
 	return (res);
 }
 
-char	**args_init(char *cmd)
+int	cmd_end_index(char *input)
 {
-	char	**cmd_split;
-	char	**res;
-	int		n_ws;
+	int		in_quotes;
 	int		i;
 
 	i = 0;
-	n_ws = 0;
-	cmd_split = ft_split(cmd, ' ');
-	while (cmd_split[n_ws])
-		n_ws++;
-	i = 0;
-	res = ft_calloc(n_ws + 1, sizeof(char *));
-	while (cmd_split[i])
+	in_quotes = 0;
+	while (input[i])
 	{
-		res[i - 1] = ft_strdup(cmd_split[i]);
+		if (is_quote(input + i))
+		{
+			if (in_quotes == 0)
+				in_quotes = 1;
+			else
+				in_quotes = 0;
+		}
+		else if (is_ws(input + i) && in_quotes == 0)
+			break ;
 		i++;
 	}
-	res[i] = NULL;
+	return (i);
+}
+
+char	**args_init(char *input)
+{
+	char	**res;
+	int		n_cmd;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	n_cmd = 0;
+	while (input[i])
+	{
+		i += cmd_end_index(input + i);
+		i++;
+		n_cmd++;
+	}
+	res = ft_calloc(n_cmd + 1, sizeof(char *));
+	i = 0;
+	j = cmd_end_index(input);
+	while (is_junk(input + j))
+		j++;
+	k = j;
+	while (input[k])
+	{
+		k += cmd_end_index(input + j);
+		res[i] = ft_substr(input, j, k);
+		while (is_junk(input + j))
+			j++;
+		i++;
+	}
+	res[i][0] = '\0';
 	return (res);
 }
 
 char		*cmd_init(char *input)
 {
 	char	*res;
-	int		i;
-	int		j;
 
-	i = 0;
-	while (input[i] != ' ' && input[i])
-	{
-		if (is_quote(input + i))
-		{
-			j = i + 1;
-			while (!is_quote(input + j) && input[j])
-				j++;
-			if (is_quote(input + j))
-				i = j;
-		}
-		i++;
-	}
-	res = ft_substr(input, 0, i);
+	res = ft_substr(input, 0, cmd_end_index(input));
 	return (res);
 }
 
@@ -96,6 +115,7 @@ t_command	*data_init(char **pipe_split, int n_pipes)
 			return (NULL);
 		}
 		// clean_input = replace_env_v(cmd);
+		printf("input = %s\n", clean_input);
 		cmd[i].cmd = cmd_init(clean_input);
 		cmd[i].args = args_init(clean_input);
 		cmd[i].fd_in = 0;

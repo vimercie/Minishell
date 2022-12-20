@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/19 21:31:17 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/20 00:20:05 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ int	is_quote(char *s)
 int	is_junk(char *s)
 {
 	if (s[0] == ' ' || s[0] == '\t' || s[0] == '\\')
+		return (1);
+	return (0);
+}
+
+int	is_ws(char *s)
+{
+	if (s[0] == ' ' || s[0] == '\t')
 		return (1);
 	return (0);
 }
