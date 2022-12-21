@@ -1,7 +1,8 @@
 NAME=		minishell
 
 VPATH=		src/						\
-			src/parsing
+			src/parsing					\
+			src/exec
 
 OBJDIR=		obj
 
@@ -10,7 +11,8 @@ INCDIR=		inc
 SRC=		main.c						\
 			init.c						\
 			parsing.c					\
-			parsing_utils.c
+			parsing_utils.c				\
+			exec.c
 
 
 OBJ=		${addprefix ${OBJDIR}/,		\

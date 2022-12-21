@@ -65,7 +65,10 @@ int	main_tester(t_command *cmd)
 			printf("cmd[%d].args[%d] = |%s|\n", i, j, cmd[i].args[j]);
 			j++;
 		}
+		printf("cmd[%d].args[%d] = |%s|\n", i, j, cmd[i].args[j]);
 		printf("\n");
+
+		exec_cmd(cmd);
 		i++;
 	}
 	return (0);

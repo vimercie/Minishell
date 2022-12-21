@@ -32,6 +32,7 @@ typedef struct s_command
 	char	**args;
 	int		fd_in;
 	int		fd_out;
+	int		has_pipe;
 }				t_command;
 
 // parsing
@@ -51,5 +52,9 @@ int			is_command(char *s);
 int			is_junk(char *s);
 int			is_quote(char *s);
 int			is_ws(char *s);
+
+// exec
+
+int		exec_cmd(t_command *cmd);
 
 #endif

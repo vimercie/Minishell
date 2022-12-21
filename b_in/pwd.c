@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-char* get_current_dir() {
+char* get_current_dir(void) {
 	char *cwd;
 
 	// Get the current working directory
