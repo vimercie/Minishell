@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/20 02:38:59 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:28:04 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**args_init(char *input)
 	}
 	res = ft_calloc(n_cmd + 1, sizeof(char *));
 	i = 0;
-	j = cmd_end_index(input);
+	j = 0;
 	while (input[j])
 	{
 		while (is_junk(input + j))
@@ -87,10 +87,27 @@ char	**args_init(char *input)
 
 char		*cmd_init(char *input)
 {
-	char	*res;
+	char	*path;
+	char	*path_start;
+	char	**path_array;
+	int		i;
 
-	res = ft_substr(input, 0, cmd_end_index(input));
-	return (res);
+	path_array = ft_split(getenv("PATH"), ':');
+	path_start = ft_substr(path_array[0], 5, ft_strlen(path_array[0]));
+	free(path_array[0]);
+	path_array[0] = ft_strdup(path_start);
+	free(path_start);
+	i = 0;
+	path = gather_full_path(path_array[i], input);
+	while (access(path, X_OK) == -1 && path_array[i])
+	{
+		i++;
+		free(path);
+		path = gather_full_path(path_array[i], input);
+	}
+	if (!path_array[i])
+		path = NULL;
+	return (path);
 }
 
 t_command	*data_init(char **pipe_split, int n_pipes)
@@ -110,9 +127,8 @@ t_command	*data_init(char **pipe_split, int n_pipes)
 			return (NULL);
 		}
 		// clean_input = replace_env_v(cmd);
-		printf("input = %s\n", clean_input);
-		cmd[i].cmd = cmd_init(clean_input);
 		cmd[i].args = args_init(clean_input);
+		cmd[i].cmd = cmd_init(cmd[i].args[0]);
 		cmd[i].fd_in = 0;
 		cmd[i].fd_out = 1;
 		i++;

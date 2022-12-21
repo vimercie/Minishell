@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/20 01:38:48 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:30:40 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	main_tester(t_command *cmd)
 		}
 		printf("cmd[%d].args[%d] = |%s|\n", i, j, cmd[i].args[j]);
 		printf("\n");
-
-		exec_cmd(cmd);
 		i++;
 	}
 	return (0);
@@ -88,7 +86,8 @@ int	main(void)
 			printf("Parse error\n");
 		else
 		{
-			main_tester(cmd);
+			// main_tester(cmd);
+			exec_cmd(cmd);
 			free_cmd(cmd);
 		}
 	}

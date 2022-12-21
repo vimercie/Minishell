@@ -13,7 +13,8 @@ SRC=		main.c						\
 			init.c						\
 			parsing.c					\
 			parsing_utils.c				\
-			exec.c
+			exec.c						\
+			checking.c
 
 
 OBJ=		${addprefix ${OBJDIR}/,		\
