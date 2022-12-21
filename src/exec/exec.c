@@ -1,8 +1,14 @@
 #include "../../inc/minishell.h"
 
-int		exec_cmd(t_command *cmd)
+// int     built_in_detection()
+// {
+
+// }
+
+int exec_cmd(t_command *cmd)
 {
 	pid_t	pid;
+	int		status;
 
     pid = fork();
 	if (pid == 0)
@@ -25,5 +31,7 @@ int		exec_cmd(t_command *cmd)
 	}
 	else if (pid < 0)
 		return (EXIT_FAILURE);
+	waitpid(pid, &status, 0);
+	rl_on_new_line();
 	return (EXIT_SUCCESS);
 }

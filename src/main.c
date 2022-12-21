@@ -82,9 +82,7 @@ int	main(void)
 		buffer = readline("GigaBash$ ");
 		cmd = parsing(buffer);
 		free(buffer);
-		if (cmd == NULL)
-			printf("Parse error\n");
-		else
+		if (cmd)
 		{
 			// main_tester(cmd);
 			exec_cmd(cmd);
