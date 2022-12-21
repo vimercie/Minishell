@@ -1,15 +1,22 @@
 #include "../../inc/minishell.h"
 
-// int     built_in_detection()
-// {
-
-// }
+int     built_in_detection(t_command *cmd)
+{
+    if (ft_strcmp(cmd->args[0], "echo") == 0)
+        return (echo_n(cmd));
+    return (0);
+}
 
 int exec_cmd(t_command *cmd)
 {
 	pid_t	pid;
 	int		status;
 
+    if (built_in_detection(cmd) == 1)
+    {
+       
+        return (EXIT_SUCCESS);
+    }
     pid = fork();
 	if (pid == 0)
 	{

@@ -1,6 +1,6 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	unsetenv(char *name, char **env)
+int	unset_env(char *name, char **env)
 {
 	int i;
 	int j;

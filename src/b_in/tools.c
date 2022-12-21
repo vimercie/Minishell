@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "../../inc/minishell.h"
 // fonction qui retourne le nom du shell
 char* getShellName() {
 	char* shellName = getenv("SHELL");

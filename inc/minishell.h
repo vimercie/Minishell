@@ -58,4 +58,12 @@ int			is_ws(char *s);
 // exec
 int			exec_cmd(t_command *cmd);
 
+//builts-in
+
+char 		*get_current_dir(void);
+int 		echo_n(t_command *cmd);
+int			export(char *str, char **env);
+int			unset_env(char *name, char **env);
+int 		cd(int argc, char** argv);
+
 #endif

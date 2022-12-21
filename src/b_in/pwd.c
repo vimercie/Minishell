@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char* get_current_dir(void) {
 	char *cwd;

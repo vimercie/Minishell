@@ -14,8 +14,13 @@ SRC=		main.c						\
 			parsing.c					\
 			parsing_utils.c				\
 			exec.c						\
-			checking.c
-
+			checking.c					\
+			cd.c						\
+			echo.c						\
+			exit.c						\
+			pwd.c						\
+			unset.c						\
+			export.c					
 
 OBJ=		${addprefix ${OBJDIR}/,		\
 			${SRC:.c=.o}}
@@ -26,7 +31,7 @@ LIB=		Libft/libft.a
 
 CC=			cc
 
-CFLAGS=		-Wall -Wextra -Werror
+CFLAGS=		-Wall -Wextra
 
 all:		${OBJDIR} ${NAME}
 
