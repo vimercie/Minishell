@@ -2,7 +2,8 @@ NAME=		minishell
 
 VPATH=		src/						\
 			src/parsing					\
-			src/exec
+			src/exec					\
+			src/b_in
 
 OBJDIR=		obj
 
