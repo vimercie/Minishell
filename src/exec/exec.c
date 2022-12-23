@@ -14,7 +14,7 @@ int exec_cmd(t_command *cmd)
 
     if (built_in_detection(cmd) == 1)
     {
-       
+		
         return (EXIT_SUCCESS);
     }
     pid = fork();

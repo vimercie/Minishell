@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 04:12:47 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:39:23 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	main(void)
 		buffer = readline("GigaBash$ ");
 		cmd = parsing(buffer);
 		free(buffer);
-		if (cmd)
+		if (cmd != NULL)
 		{
-			// main_tester(cmd);
+			main_tester(cmd);
 			exec_cmd(cmd);
 			free_cmd(cmd);
 		}
