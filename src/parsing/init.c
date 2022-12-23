@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 04:34:05 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/23 18:20:43 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	**args_init(char *input)
 		while (is_junk(input + j))
 			j++;
 		res[i] = ft_substr(input, j, cmd_end_index(input + j));
+		res[i] = remove_quotes(res[i]);
 		j += cmd_end_index(input + j);
 		i++;
 	}
@@ -105,7 +106,7 @@ char		*cmd_init(char *input)
 		free(path);
 		path = gather_full_path(path_array[i], input);
 	}
-	if (!path_array[i])
+	if (!path_array[i] && access(path, X_OK) == -1)
 		path = NULL;
 	return (path);
 }
