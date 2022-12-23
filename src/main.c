@@ -56,7 +56,7 @@ int	main_tester(t_command *cmd)
 	int	j;
 
 	i = 0;
-	while (cmd[i].cmd)
+	while (cmd && cmd[i].args[0])
 	{
 		j = 0;
 		printf("cmd[%d].cmd = |%s|\n", i, cmd[i].cmd);
@@ -82,9 +82,10 @@ int	main(void)
 		buffer = readline("GigaBash$ ");
 		cmd = parsing(buffer);
 		free(buffer);
+		
 		if (cmd)
 		{
-			// main_tester(cmd);
+		//	main_tester(cmd);
 			exec_cmd(cmd);
 			free_cmd(cmd);
 		}
