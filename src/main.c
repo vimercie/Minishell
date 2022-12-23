@@ -80,18 +80,13 @@ int	main(void)
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
+		add_history(buffer);
 		cmd = parsing(buffer);
 		free(buffer);
-<<<<<<< HEAD
 		
 		if (cmd)
 		{
 		//	main_tester(cmd);
-=======
-		if (cmd != NULL)
-		{
-			main_tester(cmd);
->>>>>>> c1ad0c40eb2a98661c014159247d81f20b999dd5
 			exec_cmd(cmd);
 			free_cmd(cmd);
 		}
