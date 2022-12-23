@@ -12,11 +12,8 @@ int exec_cmd(t_command *cmd)
 	pid_t	pid;
 	int		status;
 
-    if (built_in_detection(cmd) == 1)
-    {
-       
+    if (built_in_detection(cmd) == 1)  
         return (EXIT_SUCCESS);
-    }
     pid = fork();
 	if (pid == 0)
 	{
@@ -39,6 +36,7 @@ int exec_cmd(t_command *cmd)
 	else if (pid < 0)
 		return (EXIT_FAILURE);
 	waitpid(pid, &status, 0);
+	add_history(cmd->args[0]);
 	rl_on_new_line();
 	return (EXIT_SUCCESS);
 }
