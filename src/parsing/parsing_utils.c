@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 18:17:27 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:52:39 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,26 @@ char	*remove_quotes(char *s)
 		i++;
 	}
 	free(s);
+	return (res);
+}
+
+int	count_pipes(char *input)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = 0;
+	while (input[i])
+	{
+		if (input[i] == '|')
+		{
+			if (is_command(input + i + 1))
+				res++;
+			else
+				printf("readline = %s\n", readline("pipe> "));
+		}
+		i++;
+	}
 	return (res);
 }
