@@ -80,9 +80,7 @@ void	handle_history(char *a, char *b)
 	size_a = ft_strlen(a);
 	size_b = ft_strlen(b);
 	if (size_a < size_b)
-		size_a = size_b; 
-	printf("buffer 1=%s\nbuffer 2=%s\n", a, b);
-	printf("strcomp return = %d\n", ft_strncmp(a, b, size_a));
+		size_a = size_b;
 	if (ft_strncmp(a, b, size_a) != 0)
 			add_history(a);
 	ft_strlcpy(b, a, ft_strlen(a) + 1);
@@ -103,13 +101,8 @@ int	main(void)
 		free(buffer);
 		if (cmd)
 		{
-<<<<<<< HEAD
-			//main_tester(cmd);
-			exec_cmd(cmd);
-=======
 			main_tester(cmd);
-			// exec_cmd(cmd);
->>>>>>> 2a63f611779001a7be51e5f69e4e4d68a470f618
+			exec_cmd(cmd);
 			free_cmd(cmd);
 		}
 	}
