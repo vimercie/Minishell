@@ -88,25 +88,25 @@ void	handle_history(char *a, char *b)
 	ft_strlcpy(b, a, ft_strlen(a) + 1);
 }
 
-void	assign_fd(t_command *cmd)
+void	assign_fd(t_data *data)
 {
 	int	prev_fd_out;
 	int	i;
 
 	prev_fd_out = STDIN_FILENO;
 	i = 0;
-	while (i < 1) // while (i < cmd->length)
+	while (i < data->n_cmd) // while (i < cmd->length)
 	{
-		cmd[i].fd_in = prev_fd_out;
-		if (i == 1 - 1) // if (i == cmd->length - 1)
-			cmd[i].fd_out = STDOUT_FILENO;
+		data->cmd[i].fd_in = prev_fd_out;
+		if (i == data->n_cmd - 1) // if (i == cmd->length - 1)
+			data->cmd[i].fd_out = STDOUT_FILENO;
 		else
 		{
 			int	pipefd[2];
 
 			if (pipe(pipefd) < 0)
 				return ;
-			cmd[i].fd_out = pipefd[1];
+			data->cmd[i].fd_out = pipefd[1];
 			prev_fd_out = pipefd[0];
 		}
 		i++;
@@ -115,7 +115,7 @@ void	assign_fd(t_command *cmd)
 
 int	main(void)
 {
-	t_command	*cmd;
+	t_data	*data;
 	char		*buffer;
 	char		previous_buffer[1024];
 	int		i;
@@ -125,19 +125,19 @@ int	main(void)
 	{
 		buffer = readline("GigaBash$ ");
 		handle_history(buffer, previous_buffer);
-		cmd = parsing(buffer);
+		data = parsing(buffer);
 		free(buffer);
-		if (cmd != NULL)
+		if (data->cmd != NULL)
 		{
 			i = 0;
 		//	main_tester(cmd);
-			assign_fd(cmd);
+			assign_fd(data);
 		//	main_tester(cmd);
-			while (cmd[i].cmd) {
-				exec_cmd(&cmd[i]);
+			while (data->cmd[i].cmd) {
+				exec_cmd(&data->cmd[i]);
 				i++;
 			}
-			free_cmd(cmd);
+			free_cmd(data->cmd);
 		}
 	}
 	return (0);
