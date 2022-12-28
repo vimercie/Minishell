@@ -33,7 +33,6 @@ typedef struct s_command
 	char	**args;
 	int		fd_in;
 	int		fd_out;
-	int		has_pipe;
 }				t_command;
 
 // parsing
