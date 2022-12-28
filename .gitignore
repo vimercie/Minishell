@@ -1,2 +1,5 @@
 src/main.c
 .vscode/settings.json
+*.o
+.gitignore
+minishell

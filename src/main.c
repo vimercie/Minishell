@@ -56,7 +56,7 @@ int	main_tester(t_command *cmd)
 	int	j;
 
 	i = 0;
-	while (cmd && cmd[i].args[0])
+	while (cmd[i].cmd)
 	{
 		j = 0;
 		printf("cmd[%d].cmd = |%s|\n", i, cmd[i].cmd);
@@ -72,21 +72,39 @@ int	main_tester(t_command *cmd)
 	return (0);
 }
 
+void	handle_history(char *a, char *b)
+{
+	int	size_a;
+	int	size_b;
+
+	size_a = ft_strlen(a);
+	size_b = ft_strlen(b);
+	if (size_a < size_b)
+		size_a = size_b; 
+	printf("buffer 1=%s\nbuffer 2=%s\n", a, b);
+	printf("strcomp return = %d\n", ft_strncmp(a, b, size_a));
+	if (ft_strncmp(a, b, size_a) != 0)
+			add_history(a);
+	ft_strlcpy(b, a, ft_strlen(a) + 1);
+}
+
 int	main(void)
 {
 	t_command	*cmd;
 	char		*buffer;
+	char		previous_buffer[1024];
 
+	previous_buffer[0] = 0;
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
-		add_history(buffer);
+		handle_history(buffer, previous_buffer);
 		cmd = parsing(buffer);
 		free(buffer);
 		
 		if (cmd)
 		{
-		//	main_tester(cmd);
+			//main_tester(cmd);
 			exec_cmd(cmd);
 			free_cmd(cmd);
 		}
