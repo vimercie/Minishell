@@ -101,7 +101,7 @@ int	main(void)
 		free(buffer);
 		if (cmd)
 		{
-			main_tester(cmd);
+			//main_tester(cmd);
 			exec_cmd(cmd);
 			free_cmd(cmd);
 		}
