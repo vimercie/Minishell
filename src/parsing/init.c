@@ -6,32 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 18:20:43 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/23 22:37:24 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	count_pipes(char *input)
-{
-	int	i;
-	int	res;
-
-	i = 0;
-	res = 0;
-	while (input[i])
-	{
-		if (input[i] == '|')
-		{
-			if (is_command(input + i + 1))
-				res++;
-			else
-				printf("readline = %s\n", readline("pipe> "));
-		}
-		i++;
-	}
-	return (res);
-}
 
 int	cmd_end_index(char *input)
 {
@@ -56,6 +35,39 @@ int	cmd_end_index(char *input)
 	return (i);
 }
 
+char		**path_init(void)
+{
+	char	**path_array;
+	char	*path_start;
+
+	path_array = ft_split(getenv("PATH"), ':');
+	path_start = ft_substr(path_array[0], 5, ft_strlen(path_array[0]));
+	free(path_array[0]);
+	path_array[0] = NULL;
+	path_array[0] = ft_strdup(path_start);
+	return (path_array);
+}
+
+char		*cmd_init(char *input)
+{
+	char	*path;
+	char	**path_array;
+	int		i;
+
+	i = 0;
+	path_array = path_init();
+	path = gather_full_path(path_array[i], input);
+	while (access(path, X_OK) == -1 && path_array[i])
+	{
+		i++;
+		free(path);
+		path = gather_full_path(path_array[i], input);
+	}
+	if (!path_array[i] && access(path, X_OK) == -1)
+		path = ft_strdup(input);
+	return (path);
+}
+
 char	**args_init(char *input)
 {
 	char	**res;
@@ -74,9 +86,9 @@ char	**args_init(char *input)
 	res = ft_calloc(n_cmd + 1, sizeof(char *));
 	i = 0;
 	j = 0;
-	while (input[j])
+	while (input[j] && is_command(input + j))
 	{
-		while (is_junk(input + j))
+		while (is_ws(input + j))
 			j++;
 		res[i] = ft_substr(input, j, cmd_end_index(input + j));
 		res[i] = remove_quotes(res[i]);
@@ -86,32 +98,7 @@ char	**args_init(char *input)
 	return (res);
 }
 
-char		*cmd_init(char *input)
-{
-	char	*path;
-	char	*path_start;
-	char	**path_array;
-	int		i;
-
-	path_array = ft_split(getenv("PATH"), ':');
-	path_start = ft_substr(path_array[0], 5, ft_strlen(path_array[0]));
-	free(path_array[0]);
-	path_array[0] = ft_strdup(path_start);
-	free(path_start);
-	i = 0;
-	path = gather_full_path(path_array[i], input);
-	while (access(path, X_OK) == -1 && path_array[i])
-	{
-		i++;
-		free(path);
-		path = gather_full_path(path_array[i], input);
-	}
-	if (!path_array[i] && access(path, X_OK) == -1)
-		path = NULL;
-	return (path);
-}
-
-t_command	*data_init(char **pipe_split, int n_pipes)
+t_command	*data_init(char **pipe_split, int n_cmd)
 {
 	t_command	*cmd;
 	int			i;
@@ -119,8 +106,8 @@ t_command	*data_init(char **pipe_split, int n_pipes)
 	i = 0;
 	if (pipe_split == NULL)
 		return (NULL);
-	cmd = ft_calloc(n_pipes + 2, sizeof(t_command));
-	while (i < n_pipes + 1)
+	cmd = ft_calloc(n_cmd + 1, sizeof(t_command));
+	while (i < n_cmd)
 	{
 		cmd[i].args = args_init(pipe_split[i]);
 		cmd[i].cmd = cmd_init(cmd[i].args[0]);

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 17:39:23 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:23:37 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,15 @@ int	main(void)
 		handle_history(buffer, previous_buffer);
 		cmd = parsing(buffer);
 		free(buffer);
-		
 		if (cmd)
 		{
+<<<<<<< HEAD
 			//main_tester(cmd);
 			exec_cmd(cmd);
+=======
+			main_tester(cmd);
+			// exec_cmd(cmd);
+>>>>>>> 2a63f611779001a7be51e5f69e4e4d68a470f618
 			free_cmd(cmd);
 		}
 	}

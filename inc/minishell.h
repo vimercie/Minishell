@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 18:22:09 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:21:36 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@ typedef struct s_command
 // parsing
 t_command	*parsing(char *cmd);
 char		*syntax_cleaner(char *input);
-char		*skip_junk(char *input, int *i, int *j);
+char		*skip_ws(char *input, int *i, int *j);
 char		*manage_quote(char *input, int *i, int *j);
+char		**custom_split(char *s, char c, int n_cmd);
+
+// utils
 char		*remove_quotes(char *s);
 char		*gather_full_path(char *path, char *cmd);
+int			cmd_count(char *s, char c);
 
 // init
 t_command	*data_init(char **pipe_split, int n_pipes);
@@ -52,7 +56,6 @@ int			free_cmd(t_command *cmd);
 
 // checking
 int			is_command(char *s);
-int			is_junk(char *s);
 int			is_quote(char *s);
 int			is_in_quotes(char *s, int index);
 int			is_ws(char *s);

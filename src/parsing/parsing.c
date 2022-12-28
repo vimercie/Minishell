@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 18:23:19 by vimercie         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:23:24 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,16 @@ char	*manage_quote(char *input, int *i, int *j)
 	return (input);
 }
 
-char	*skip_junk(char *input, int *i, int *j)
+char	*skip_ws(char *input, int *i, int *j)
 {
 	int	ws;
 	int	start_i;
 
 	ws = 0;
 	start_i = *i;
-	while (is_junk(input + *i))
+	while (is_ws(input + *i))
 	{
-		if (input[*i] == ' ' && ws == 0)
-			ws = 1;
+		ws = 1;
 		*i += 1;
 	}
 	if (ws == 1 && start_i != 0 && input[*i])
@@ -68,13 +67,9 @@ char	*syntax_cleaner(char *input)
 	while (input[i])
 	{
 		if (is_quote(input + i))
-		{
 			input = manage_quote(input, &i, &j);
-			// if (!is_command(input + i))
-			// 	break ;
-		}
-		else if (is_junk(input + i))
-			input = skip_junk(input, &i, &j);
+		else if (is_ws(input + i))
+			input = skip_ws(input, &i, &j);
 		else
 		{
 			input[j] = input[i];
@@ -96,15 +91,15 @@ t_command	*parsing(char *input)
 	t_command	*cmd;
 	char		**pipe_split;
 	char		*clean_input;
-	int			n_pipes;
+	int			n_cmd;
 
 	if (!input[0])
 		return (NULL);
 	// clean_input = replace_env_v(clean_input);
 	clean_input = syntax_cleaner(input);
-	n_pipes = count_pipes(input);
-	pipe_split = ft_split(input, '|');
-	cmd = data_init(pipe_split, n_pipes);
+	n_cmd = cmd_count(input, '|');
+	pipe_split = custom_split(input, '|', n_cmd);
+	cmd = data_init(pipe_split, n_cmd);
 	free(clean_input);
 	free(pipe_split);
 	return (cmd);
