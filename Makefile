@@ -13,8 +13,9 @@ SRC=		main.c						\
 			init.c						\
 			parsing.c					\
 			parsing_utils.c				\
-			exec.c						\
+			syntax_error.c				\
 			checking.c					\
+			exec.c						\
 			cd.c						\
 			echo.c						\
 			exit.c						\
