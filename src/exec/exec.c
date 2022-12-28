@@ -29,10 +29,7 @@ int exec_cmd(t_command *cmd)
 			dup2(cmd->fd_out, STDOUT_FILENO);
 			close(cmd->fd_out);
 		}
-		if (cmd->has_pipe)
-			execve(cmd->cmd, cmd->args, NULL);
-		else
-			execve(cmd->cmd, cmd->args, NULL);
+		execve(cmd->cmd, cmd->args, NULL);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
