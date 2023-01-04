@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/04 19:44:44 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:55:15 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_data	*parsing(char *input)
 		return (NULL);
 	data = ft_calloc(1, sizeof(t_data));
 	full_input = prompt_join(input);
-	printf("full_input = %s\n", full_input);
 	clean_input = syntax_cleaner(full_input);
 	// full_input = replace_env_v(clean_input);
 	data->n_cmd = cmd_count(clean_input, '|');
