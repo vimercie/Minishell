@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/28 17:09:00 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:32:53 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_data
 	int			n_cmd;
 }				t_data;
 
+int			main_tester(t_command *cmd);
+
 // parsing
 t_data		*parsing(char *cmd);
 char		*syntax_cleaner(char *input);
@@ -60,6 +62,7 @@ int			free_tab(char **tab);
 int			free_cmd(t_command *cmd);
 
 // checking
+int			is_prompt(char *s);
 int			is_command(char *s);
 int			is_quote(char *s);
 int			is_in_quotes(char *s, int index);

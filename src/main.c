@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 23:23:37 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:50:46 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	main_tester(t_command *cmd)
 			j++;
 		}
 		printf("cmd[%d].args[%d] = |%s|\n", i, j, cmd[i].args[j]);
-		printf("\n");
 		printf("cmd[%d].fdIN = |%d|\n", i, cmd[i].fd_in);
 		printf("cmd[%d].fdOUT = |%d|\n", i, cmd[i].fd_out);
+		printf("\n");
 		i++;
 	}
 	return (0);
@@ -84,7 +84,7 @@ void	handle_history(char *a, char *b)
 	if (size_a < size_b)
 		size_a = size_b;
 	if (ft_strncmp(a, b, size_a) != 0)
-			add_history(a);
+		add_history(a);
 	ft_strlcpy(b, a, ft_strlen(a) + 1);
 }
 
@@ -116,8 +116,8 @@ void	assign_fd(t_data *data)
 int	main(void)
 {
 	t_data	*data;
-	char		*buffer;
-	char		previous_buffer[1024];
+	char	*buffer;
+	char	previous_buffer[1024];
 	int		i;
 
 	previous_buffer[0] = 0;
@@ -130,10 +130,9 @@ int	main(void)
 		if (data->cmd != NULL)
 		{
 			i = 0;
-		//	main_tester(cmd);
 			assign_fd(data);
-		//	main_tester(cmd);
-			while (data->cmd[i].cmd) {
+			while (data->cmd[i].cmd)
+			{
 				exec_cmd(&data->cmd[i]);
 				i++;
 			}

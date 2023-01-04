@@ -6,11 +6,30 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:12:21 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/23 21:43:15 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:48:11 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	is_prompt(char *s)
+{
+	int	is_prompt;
+	int	i;
+
+	is_prompt = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '|')
+		{
+			if (!is_command(s + i + 1))
+				is_prompt = 1;
+		}
+		i++;
+	}
+	return (is_prompt);
+}
 
 int	is_command(char *s)
 {
