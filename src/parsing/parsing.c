@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/04 19:55:15 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:03:07 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_data	*parsing(char *input)
 	// full_input = replace_env_v(clean_input);
 	data->n_cmd = cmd_count(clean_input, '|');
 	pipe_split = custom_split(clean_input, '|', data->n_cmd);
+	// data = redirect_fd(data);
 	data->cmd = cmd_tab_init(pipe_split, data->n_cmd);
 	free(full_input);
 	free(clean_input);
