@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/04 19:32:53 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:30:41 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char		**custom_split(char *s, char c, int n_cmd);
 char		*remove_quotes(char *s);
 char		*gather_full_path(char *path, char *cmd);
 int			cmd_count(char *s, char c);
+char		*str_trunc(char *s, int start, int end);
 
 // init
 t_command	*cmd_tab_init(char **pipe_split, int n_pipes);
