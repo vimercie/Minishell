@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/05 20:33:35 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:34:41 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ int	main(void)
 	int		i;
 
 	previous_buffer[0] = 0;
-	printf("res = %s\n", str_trunc("holaquetal", 1, 5));
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
