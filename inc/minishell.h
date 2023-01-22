@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/05 20:30:41 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/22 06:38:08 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int			main_tester(t_command *cmd);
 // parsing
 t_data		*parsing(char *cmd);
 char		*syntax_cleaner(char *input);
+char		*syntax_cleaner_v2(char *input);
 char		*skip_ws(char *input, int *i, int *j);
-char		*manage_quote(char *input, int *i, int *j);
 char		**custom_split(char *s, char c, int n_cmd);
 
 // utils
@@ -57,23 +57,25 @@ int			cmd_count(char *s, char c);
 char		*str_trunc(char *s, int start, int end);
 
 // init
-t_command	*cmd_tab_init(char **pipe_split, int n_pipes);
+t_command	*cmd_tab_init(char **pipe_split, int n_cmd);
 int			count_pipes(char *input);
 int			free_tab(char **tab);
 int			free_cmd(t_command *cmd);
 
+// redirection
+char    	*redirect_fd(char *input);
+
 // checking
+int			is_meta_char(char c);
 int			is_prompt(char *s);
 int			is_command(char *s);
 int			is_quote(char *s);
 int			is_in_quotes(char *s, int index);
-int			is_ws(char *s);
 
 // exec
 int			exec_cmd(t_command *cmd);
 
 //builts-in
-
 char 		*get_current_dir(void);
 int 		echo_n(t_command *cmd);
 int			export(char *str, char **env);

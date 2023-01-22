@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/05 20:33:10 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/13 02:36:47 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ int	cmd_count(char *s, char c)
 			&& s[i - 1] != c)
 		{
 			if(!is_command((s + i) + 1))
-			{
-				printf("Working on this issue\n");
 				return (res);
-			}
 			res++;
 		}
 		i++;

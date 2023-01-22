@@ -6,11 +6,21 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:12:21 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/04 18:48:11 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/22 06:25:33 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	is_meta_char(char c)
+{
+	if (c == '>'
+		|| c == '<'
+		|| c == '$'
+		|| c == '?')
+		return (1);
+	return (0);
+}
 
 int	is_prompt(char *s)
 {
@@ -38,37 +48,10 @@ int	is_command(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (!is_ws(s + i))
+		if (!ft_isspace(s[i]))
 			return (1);
 		i++;
 	}
-	return (0);
-}
-
-int	is_in_quotes(char *s, int index)
-{
-	int	i;
-	int	first_quote;
-	int	last_quote;
-
-	if (index <= 0)
-		return (0);
-	i = 0;
-	first_quote = 0;
-	last_quote = 0;
-	while (s[i] && last_quote == 0)
-	{
-		if (is_quote(s + i))
-		{
-			if (i < index)
-				first_quote = 1;
-			if (i > index)
-				last_quote = 1;
-		}
-		i++;
-	}
-	if (first_quote == 1 && last_quote == 1)
-		return (1);
 	return (0);
 }
 
@@ -79,9 +62,30 @@ int	is_quote(char *s)
 	return (0);
 }
 
-int	is_ws(char *s)
+int	is_in_quotes(char *s, int index)
 {
-	if (s[0] == ' ' || s[0] == '\t')
-		return (1);
+	int	opening_quote_index;
+	int	in_quote;
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		in_quote = 0;
+		opening_quote_index = i;
+		if (s[i] == '\"' || s[i] == '\'')
+		{
+			i++;
+			while (s[i] != s[opening_quote_index] && s[i])
+			{
+				if (i == index)
+					in_quote = 1;
+				i++;
+			}
+			if (s[i] == s[opening_quote_index] && in_quote)
+				return (1);
+		}
+		i++;
+	}
 	return (0);
 }

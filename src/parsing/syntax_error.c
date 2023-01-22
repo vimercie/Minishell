@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:36:41 by vimercie          #+#    #+#             */
-/*   Updated: 2022/12/28 17:10:08 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/22 06:45:25 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 char	*remove_quotes(char *s)
 {
+	// re-work is planned (to make it work like the is_in_quote() func).
 	char	*res;
 	int		n_quote;
-	int		i;
 	int		len;
+	int		i;
 
 	i = 0;
 	n_quote = 0;
 	while (s[i])
 	{
-		if (is_quote(s + i))
+		if ((s[i] == '\"' || s[i] == '\'') && !is_in_quotes(s, i))
 			n_quote++;
 		i++;
 	}
@@ -33,7 +34,7 @@ char	*remove_quotes(char *s)
 	len = 0;
 	while (s[i])
 	{
-		if (!is_quote(s + i))
+		if (s[i] != '\"' && s[i] != '\'' && !is_in_quotes(s, i))
 		{
 			res[len] = s[i];
 			len++;
@@ -44,29 +45,6 @@ char	*remove_quotes(char *s)
 	return (res);
 }
 
-char	*manage_quote(char *input, int *i, int *j)
-{
-	int	index;
-
-	index = *i + 1;
-	while (input[index] != input[*i] && input[index])
-		index++;
-	if (input[index] == input[*i]
-		&& index != *i + 1
-		&& input[index])
-	{
-		while (*i <= index)
-		{
-			input[*j] = input[*i];
-			*i += 1;
-			*j += 1;
-		}
-	}
-	else
-		*i += 1;
-	return (input);
-}
-
 char	*skip_ws(char *input, int *i, int *j)
 {
 	int	ws;
@@ -74,7 +52,7 @@ char	*skip_ws(char *input, int *i, int *j)
 
 	ws = 0;
 	start_i = *i;
-	while (is_ws(input + *i))
+	while (ft_isspace(input[*i]))
 	{
 		ws = 1;
 		*i += 1;
@@ -90,30 +68,32 @@ char	*skip_ws(char *input, int *i, int *j)
 char	*syntax_cleaner(char *input)
 {
 	char	*res;
-	int		res_len;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
+	res = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 	while (input[i])
 	{
-		if (is_quote(input + i))
-			input = manage_quote(input, &i, &j);
-		else if (is_ws(input + i))
-			input = skip_ws(input, &i, &j);
+		if (ft_isspace(input[i]) && !is_in_quotes(input, i))
+		{
+			if (is_command(input + i))
+			{
+				res[j] = ' ';
+				j++;
+			}
+			while (ft_isspace(input[i]) && input[i])
+				i++;
+		}
 		else
 		{
-			input[j] = input[i];
+			res[j] = input[i];
 			i++;
 			j++;
 		}
 	}
-	input[j] = '\0';
-	res_len = ft_strlen(input);
-	if (res_len == 0)
-		return (NULL);
-	res = ft_calloc(res_len + 1, sizeof(char));
-	ft_strlcpy(res, input, res_len + 1);
+	res[j] = '\0';
+	free(input);
 	return (res);
 }

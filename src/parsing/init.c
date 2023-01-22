@@ -6,34 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/04 19:21:45 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/22 06:43:05 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	cmd_end_index(char *input)
-{
-	int		in_quotes;
-	int		i;
-
-	i = 0;
-	in_quotes = 0;
-	while (input[i])
-	{
-		if (is_quote(input + i))
-		{
-			if (in_quotes == 0)
-				in_quotes = 1;
-			else
-				in_quotes = 0;
-		}
-		if ((is_ws(input + i) || input[i] == '|') && in_quotes == 0)
-			return (i);
-		i++;
-	}
-	return (i);
-}
 
 char		**path_init(void)
 {
@@ -68,33 +45,61 @@ char		*cmd_init(char *input)
 	return (path);
 }
 
+int		get_n_arg(char *input)
+{
+	int	n_arg;
+	int	i;
+
+	i = 0;
+	n_arg = 0;
+	while (ft_isspace(input[i]) && input[i])
+		i++;
+	while (input[i])
+	{
+		if (ft_isspace(input[i]) && !is_in_quotes(input, i))
+		{
+			if (is_command(input + i))
+			{
+				n_arg++;
+				while (ft_isspace(input[i]) && input[i])
+					i++;
+			}
+			else
+				return (n_arg);
+		}
+		else
+			i++;
+	}
+	return (n_arg);
+}
+
 char	**args_init(char *input)
 {
 	char	**res;
-	int		n_cmd;
-	int		i;
-	int		j;
+	int	    n_arg;
+	int     arg_len;
+	int     i;
 
 	i = 0;
-	n_cmd = 0;
-	while (input[i])
+	n_arg = get_n_arg(input);
+	res = ft_calloc(n_arg + 1, sizeof(char *));
+	while (input[0])
 	{
-		i += cmd_end_index(input + i);
+		while (ft_isspace(input[0]) && input[0])
+			input++;
+		if (!input[0])
+			break ;
+		arg_len = 0;
+		while ((!ft_isspace(input[arg_len]) || is_in_quotes(input, arg_len))
+			&& input[arg_len])
+			arg_len++;
+		res[i] = ft_substr(input, 0, arg_len);
+		// res[i] = remove_quotes(res[i]);
+		printf("res[%d] = |%s|\n", i, res[i]);
 		i++;
-		n_cmd++;
+		input += arg_len;
 	}
-	res = ft_calloc(n_cmd + 1, sizeof(char *));
-	i = 0;
-	j = 0;
-	while (input[j] && is_command(input + j))
-	{
-		while (is_ws(input + j))
-			j++;
-		res[i] = ft_substr(input, j, cmd_end_index(input + j));
-		res[i] = remove_quotes(res[i]);
-		j += cmd_end_index(input + j);
-		i++;
-	}
+	printf("\n");
 	return (res);
 }
 
