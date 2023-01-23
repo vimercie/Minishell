@@ -12,10 +12,11 @@ INCDIR=		inc
 SRC=		test.c						\
 			main.c						\
 			init.c						\
+			init_utils.c				\
 			parsing.c					\
 			parsing_utils.c				\
-			redirection.c				\
 			syntax_error.c				\
+			redirection.c				\
 			checking.c					\
 			exec.c						\
 			cd.c						\

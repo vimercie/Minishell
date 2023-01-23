@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:12:21 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/22 06:25:33 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/22 23:12:52 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,26 @@ int	is_meta_char(char c)
 {
 	if (c == '>'
 		|| c == '<'
-		|| c == '$'
-		|| c == '?')
+		|| c == '$')
 		return (1);
 	return (0);
 }
 
 int	is_prompt(char *s)
 {
-	int	is_prompt;
 	int	i;
 
-	is_prompt = 0;
 	i = 0;
 	while (s[i])
 	{
 		if (s[i] == '|')
 		{
 			if (!is_command(s + i + 1))
-				is_prompt = 1;
+				return (1);
 		}
 		i++;
 	}
-	return (is_prompt);
+	return (0);
 }
 
 int	is_command(char *s)
@@ -52,13 +49,6 @@ int	is_command(char *s)
 			return (1);
 		i++;
 	}
-	return (0);
-}
-
-int	is_quote(char *s)
-{
-	if (s[0] == '\'' || s[0] == '\"')
-		return (1);
 	return (0);
 }
 

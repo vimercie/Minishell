@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/22 06:43:05 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/23 02:57:51 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,34 +45,6 @@ char		*cmd_init(char *input)
 	return (path);
 }
 
-int		get_n_arg(char *input)
-{
-	int	n_arg;
-	int	i;
-
-	i = 0;
-	n_arg = 0;
-	while (ft_isspace(input[i]) && input[i])
-		i++;
-	while (input[i])
-	{
-		if (ft_isspace(input[i]) && !is_in_quotes(input, i))
-		{
-			if (is_command(input + i))
-			{
-				n_arg++;
-				while (ft_isspace(input[i]) && input[i])
-					i++;
-			}
-			else
-				return (n_arg);
-		}
-		else
-			i++;
-	}
-	return (n_arg);
-}
-
 char	**args_init(char *input)
 {
 	char	**res;
@@ -94,12 +66,10 @@ char	**args_init(char *input)
 			&& input[arg_len])
 			arg_len++;
 		res[i] = ft_substr(input, 0, arg_len);
-		// res[i] = remove_quotes(res[i]);
-		printf("res[%d] = |%s|\n", i, res[i]);
+		res[i] = remove_quotes(res[i]);
 		i++;
 		input += arg_len;
 	}
-	printf("\n");
 	return (res);
 }
 

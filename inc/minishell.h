@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/22 06:38:08 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:56:06 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char		*skip_ws(char *input, int *i, int *j);
 char		**custom_split(char *s, char c, int n_cmd);
 
 // utils
+int			get_n_arg(char *input);
 char		*remove_quotes(char *s);
 char		*gather_full_path(char *path, char *cmd);
 int			cmd_count(char *s, char c);
@@ -69,7 +70,6 @@ char    	*redirect_fd(char *input);
 int			is_meta_char(char c);
 int			is_prompt(char *s);
 int			is_command(char *s);
-int			is_quote(char *s);
 int			is_in_quotes(char *s, int index);
 
 // exec
