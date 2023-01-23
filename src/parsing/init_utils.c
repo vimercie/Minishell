@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 02:54:57 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/23 23:05:36 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ char	*remove_quotes(char *s)
 	n_quote = 0;
 	while (s[i])
 	{
-		if ((s[i] == '\"' || s[i] == '\'') && !is_in_quotes(s, i)
-			&& is_in_quotes(s, i + 1) + is_in_quotes(s, i - 1) == 1)
+		if (is_quote(s, i))
 			n_quote++;
 		i++;
 	}
@@ -33,8 +32,7 @@ char	*remove_quotes(char *s)
 	j = 0;
 	while (s[i])
 	{
-		if ((s[i] != '\"' && s[i] != '\'') || is_in_quotes(s, i)
-			|| (!is_in_quotes(s, i + 1) && !is_in_quotes(s, i - 1)))
+		if (!is_quote(s, i))
 		{
 			res[j] = s[i];
 			j++;

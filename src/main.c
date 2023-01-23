@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 03:01:05 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:55:17 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	assign_fd(t_data *data)
 
 int	main(void)
 {
-	t_data	*data;
+	t_data	data;
 	char	*buffer;
 	char	previous_buffer[1024];
 	int		i;
@@ -125,16 +125,16 @@ int	main(void)
 	{
 		buffer = readline("GigaBash$ ");
 		handle_history(buffer, previous_buffer);
-		data = parsing(buffer);
-		main_tester(data->cmd);
+		parsing(&data, buffer);
 		free(buffer);
-		if (data->cmd != NULL)
+		main_tester(data.cmd);
+		if (data.cmd != NULL)
 		{
 			i = 0;
-			assign_fd(data);
-			while (data->cmd[i].cmd)
+			assign_fd(&data);
+			while (data.cmd[i].cmd)
 			{
-				exec_cmd(&data->cmd[i]);
+				exec_cmd(&data.cmd[i]);
 				i++;
 			}
 			// free_cmd(data->cmd);

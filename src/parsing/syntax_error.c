@@ -6,31 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:36:41 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/22 19:55:17 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/23 03:28:15 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	*skip_ws(char *input, int *i, int *j)
-{
-	int	ws;
-	int	start_i;
-
-	ws = 0;
-	start_i = *i;
-	while (ft_isspace(input[*i]))
-	{
-		ws = 1;
-		*i += 1;
-	}
-	if (ws == 1 && start_i != 0 && input[*i])
-	{
-		input[*j] = ' ';
-		*j += 1;
-	}
-	return (input);
-}
 
 char	*syntax_cleaner(char *input)
 {

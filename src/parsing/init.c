@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 03:02:16 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/01/23 03:42:36 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	**args_init(char *input)
 
 	i = 0;
 	n_arg = get_n_arg(input);
-	res = ft_calloc(n_arg + 1, sizeof(char *));
+	res = malloc((n_arg + 1) * sizeof(char *));
 	while (input[0])
 	{
 		while (ft_isspace(input[0]) && input[0])
@@ -74,12 +74,14 @@ char	**args_init(char *input)
 	return (res);
 }
 
-t_command	*cmd_tab_init(char **pipe_split, int n_cmd)
+t_command	*cmd_tab_init(char *input, int n_cmd)
 {
 	t_command	*cmd;
+	char		**pipe_split;
 	int			i;
 
 	i = 0;
+	pipe_split = custom_split(input, '|', n_cmd);
 	if (pipe_split == NULL)
 		return (NULL);
 	cmd = ft_calloc(n_cmd + 1, sizeof(t_command));
@@ -92,5 +94,6 @@ t_command	*cmd_tab_init(char **pipe_split, int n_cmd)
 		i++;
 	}
 	cmd[i].cmd = NULL;
+	free_tab(pipe_split);
 	return (cmd);
 }
