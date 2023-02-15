@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 16:46:13 by vimercie          #+#    #+#             */
-/*   Updated: 2022/06/09 14:11:12 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/15 15:17:49 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ static	void	*ft_freetab(char **tab)
 	while (tab[i])
 	{
 		free(tab[i]);
+		tab[i] = NULL;
 		i++;
 	}
 	free(tab);
+	tab = NULL;
 	return (NULL);
 }
 

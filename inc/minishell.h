@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 23:04:56 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:12:30 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,42 +44,41 @@ typedef struct s_data
 int			main_tester(t_command *cmd);
 
 // parsing
-void		parsing(t_data *data, char *input);
-char		*syntax_cleaner(char *input);
-char		*syntax_cleaner_v2(char *input);
-char		**custom_split(char *s, char c, int n_cmd);
+void	parsing(t_data *data, char *input);
+char	*syntax_cleaner(char *input);
+char	**custom_split(char *s, char c, int n_cmd);
 
 // init
-t_command	*cmd_tab_init(char *input, int n_cmd);
-int			count_pipes(char *input);
-int			free_tab(char **tab);
-int			free_cmd(t_command *cmd);
+void	cmd_tab_init(char *input, t_data *data);
+int		count_pipes(char *input);
+int		free_tab(char **tab);
+int		free_cmd(t_command *cmd);
 
 // utils
-int			get_n_arg(char *input);
-char		*remove_quotes(char *s);
-char		*gather_full_path(char *path, char *cmd);
-int			cmd_count(char *s, char c);
-char		*str_trunc(char *s, int start, int end);
+int		get_n_arg(char *input);
+char	*remove_quotes(char *s);
+char	*gather_full_path(char *path, char *cmd);
+int		cmd_count(char *s, char c);
+char	*str_trunc(char *s, int start, int end);
 
 // redirection
-char    	*redirect_fd(char *input);
+char	*redirect_fd(char *input);
 
 // checking
-int			is_meta_char(char c);
-int			is_prompt(char *s);
-int			is_command(char *s);
-int			is_quote(char *s, int index);
-int			is_in_quotes(char *s, int index);
+int		is_meta_char(char c);
+int		is_prompt(char *s);
+int		is_command(char *s);
+int		is_quote(char *s, int index);
+int		is_in_quotes(char *s, int index);
 
 // exec
-int			exec_cmd(t_command *cmd);
+int		exec_cmd(t_command *cmd);
 
 //builts-in
-char 		*get_current_dir(void);
-int 		echo_n(t_command *cmd);
-int			export(char *str, char **env);
-int			unset_env(char *name, char **env);
-int 		cd(int argc, char** argv);
+char	*get_current_dir(void);
+int 	echo_n(t_command *cmd);
+int		export(char *str, char **env);
+int		unset_env(char *name, char **env);
+int 	cd(int argc, char** argv);
 
 #endif

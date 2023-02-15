@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 04:37:53 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:35:58 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,39 +92,3 @@ char	**custom_split(char *s, char c, int n_cmd)
 	tab[j] = NULL;
 	return (tab);
 }
-
-// char	*str_trunc(char *s, int start, int end)
-// {
-// 	char	*res;
-// 	char	*first_part;
-// 	char	*last_part;
-// 	int		len;
-
-// 	if (!s[0])
-// 		return (NULL);
-// 	len = ft_strlen(s);
-// 	first_part = NULL;
-// 	last_part = NULL;
-// 	if (start > 0)
-// 	{
-// 		if (start < len)
-// 			first_part = ft_substr(s, 0, start);
-// 		else
-// 			return (ft_substr(s, 0, len));
-// 		if (end < len)
-// 			last_part = ft_substr(s, end, len);
-// 		else
-// 			return (first_part);
-// 	}
-// 	else
-// 	{
-// 		if (end < len)
-// 			return (ft_substr(s, end, len));
-// 		else
-// 			return (ft_strdup(s));
-// 	}
-// 	res = ft_strjoin(first_part, last_part);
-// 	free(first_part);
-// 	free(last_part);
-// 	return (res);
-// }

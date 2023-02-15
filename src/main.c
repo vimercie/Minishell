@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 22:55:17 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:12:59 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,17 @@ int	free_cmd(t_command *cmd)
 	{
 		j = 0;
 		free(cmd[i].cmd);
+		cmd[i].cmd = NULL;
 		while (cmd[i].args[j])
 		{
 			free(cmd[i].args[j]);
 			cmd[i].args[j] = NULL;
 			j++;
 		}
-		cmd[i].cmd = NULL;
 		i++;
 	}
 	free(cmd);
+	cmd = NULL;
 	return (0);
 }
 
@@ -124,10 +125,10 @@ int	main(void)
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
-		handle_history(buffer, previous_buffer);
 		parsing(&data, buffer);
-		free(buffer);
 		main_tester(data.cmd);
+		handle_history(buffer, previous_buffer);
+		free(buffer);
 		if (data.cmd != NULL)
 		{
 			i = 0;
@@ -137,7 +138,7 @@ int	main(void)
 				exec_cmd(&data.cmd[i]);
 				i++;
 			}
-			// free_cmd(data->cmd);
+			free_cmd(data.cmd);
 		}
 	}
 	return (0);

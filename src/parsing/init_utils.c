@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 23:05:36 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:53:09 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,11 @@ int		get_n_arg(char *input)
 	{
 		if (ft_isspace(input[i]) && !is_in_quotes(input, i))
 		{
-			if (is_command(input + i))
-			{
-				n_arg++;
-				while (ft_isspace(input[i]) && input[i])
-					i++;
-			}
-			else
+			if (!is_command(input + i))
 				return (n_arg);
+			n_arg++;
+			while (ft_isspace(input[i]) && input[i])
+				i++;
 		}
 		else
 			i++;

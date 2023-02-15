@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/01/23 03:42:36 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:47:25 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char		**path_init(void)
 	path_array = ft_split(getenv("PATH"), ':');
 	path_start = ft_substr(path_array[0], 5, ft_strlen(path_array[0]));
 	free(path_array[0]);
-	path_array[0] = NULL;
 	path_array[0] = ft_strdup(path_start);
 	return (path_array);
 }
@@ -31,6 +30,8 @@ char		*cmd_init(char *input)
 	char	**path_array;
 	int		i;
 
+	if (input == NULL)
+		return (NULL);
 	i = 0;
 	path_array = path_init();
 	path = gather_full_path(path_array[i], input);
@@ -52,6 +53,8 @@ char	**args_init(char *input)
 	int     arg_len;
 	int     i;
 
+	if (input == NULL)
+		return (NULL);
 	i = 0;
 	n_arg = get_n_arg(input);
 	res = malloc((n_arg + 1) * sizeof(char *));
@@ -74,26 +77,24 @@ char	**args_init(char *input)
 	return (res);
 }
 
-t_command	*cmd_tab_init(char *input, int n_cmd)
+void	cmd_tab_init(char *input, t_data *data)
 {
-	t_command	*cmd;
 	char		**pipe_split;
 	int			i;
 
 	i = 0;
-	pipe_split = custom_split(input, '|', n_cmd);
-	if (pipe_split == NULL)
-		return (NULL);
-	cmd = ft_calloc(n_cmd + 1, sizeof(t_command));
-	while (i < n_cmd)
+	data->n_cmd = cmd_count(input, '|');
+	data->cmd = ft_calloc(data->n_cmd + 1, sizeof(t_command));
+	pipe_split = custom_split(input, '|', data->n_cmd);
+	while (i < data->n_cmd)
 	{
-		cmd[i].args = args_init(pipe_split[i]);
-		cmd[i].cmd = cmd_init(cmd[i].args[0]);
-		cmd[i].fd_in = 0;
-		cmd[i].fd_out = 1;
+		data->cmd[i].args = args_init(pipe_split[i]);
+		data->cmd[i].cmd = cmd_init(data->cmd[i].args[0]);
+		data->cmd[i].fd_in = 0;
+		data->cmd[i].fd_out = 1;
 		i++;
 	}
-	cmd[i].cmd = NULL;
+	data->cmd[i].cmd = NULL;
 	free_tab(pipe_split);
-	return (cmd);
+	return ;
 }
