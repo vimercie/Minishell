@@ -2,7 +2,7 @@
 
 int     built_in_detection(t_command *cmd)
 {
-    if (ft_strcmp(cmd->args[0], "echo") == 0)
+    if (ft_strcmp(cmd->argv[0], "echo") == 0)
         return (echo_n(cmd));
     return (0);
 }
@@ -29,7 +29,7 @@ int exec_cmd(t_command *cmd)
 			dup2(cmd->fd_out, STDOUT_FILENO);
 			close(cmd->fd_out);
 		}
-		execve(cmd->cmd, cmd->args, NULL);
+		execve(cmd->pathname, cmd->argv, NULL);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)

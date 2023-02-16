@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/15 18:09:30 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/16 09:38:54 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char	*prompt_join(char *input)
 	char	*buffer;
 	char	*tmp;
 
-	if (!input[0])
-		return (input);
 	res = ft_strdup(input);
 	while (is_prompt(res))
 	{

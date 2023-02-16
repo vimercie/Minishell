@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/15 18:12:59 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:14:23 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ int	free_cmd(t_command *cmd)
 	int	j;
 
 	i = 0;
-	while (cmd[i].cmd)
+	while (cmd[i].pathname)
 	{
 		j = 0;
-		free(cmd[i].cmd);
-		cmd[i].cmd = NULL;
-		while (cmd[i].args[j])
+		free(cmd[i].pathname);
+		cmd[i].pathname = NULL;
+		while (cmd[i].argv[j])
 		{
-			free(cmd[i].args[j]);
-			cmd[i].args[j] = NULL;
+			free(cmd[i].argv[j]);
+			cmd[i].argv[j] = NULL;
 			j++;
 		}
 		i++;
@@ -57,16 +57,16 @@ int	main_tester(t_command *cmd)
 	int	j;
 
 	i = 0;
-	while (cmd[i].cmd)
+	while (cmd[i].pathname != NULL)
 	{
 		j = 0;
-		printf("cmd[%d].cmd = |%s|\n", i, cmd[i].cmd);
-		while (cmd[i].args[j])
+		printf("cmd[%d].pathname = |%s|\n", i, cmd[i].pathname);
+		while (cmd[i].argv[j] != NULL)
 		{
-			printf("cmd[%d].args[%d] = |%s|\n", i, j, cmd[i].args[j]);
+			printf("cmd[%d].argv[%d] = |%s|\n", i, j, cmd[i].argv[j]);
 			j++;
 		}
-		printf("cmd[%d].args[%d] = |%s|\n", i, j, cmd[i].args[j]);
+		printf("cmd[%d].argv[%d] = |%s|\n", i, j, cmd[i].argv[j]);
 		printf("cmd[%d].fdIN = |%d|\n", i, cmd[i].fd_in);
 		printf("cmd[%d].fdOUT = |%d|\n", i, cmd[i].fd_out);
 		printf("\n");
@@ -119,7 +119,7 @@ int	main(void)
 	t_data	data;
 	char	*buffer;
 	char	previous_buffer[1024];
-	int		i;
+	// int		i;
 
 	previous_buffer[0] = 0;
 	while (1)
@@ -128,18 +128,18 @@ int	main(void)
 		parsing(&data, buffer);
 		main_tester(data.cmd);
 		handle_history(buffer, previous_buffer);
+		free_cmd(data.cmd);
 		free(buffer);
-		if (data.cmd != NULL)
-		{
-			i = 0;
-			assign_fd(&data);
-			while (data.cmd[i].cmd)
-			{
-				exec_cmd(&data.cmd[i]);
-				i++;
-			}
-			free_cmd(data.cmd);
-		}
+		// if (data.cmd != NULL)
+		// {
+		// 	i = 0;
+		// 	assign_fd(&data);
+		// 	while (data.cmd[i].cmd)
+		// 	{
+		// 		exec_cmd(&data.cmd[i]);
+		// 		i++;
+		// 	}
+		// }
 	}
 	return (0);
 }

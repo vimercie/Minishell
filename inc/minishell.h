@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/15 18:12:30 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:23:08 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 
 typedef struct s_command
 {
-	char	*cmd;
-	char	**args;
+	char	*pathname;
+	char	**argv;
 	int		fd_in;
 	int		fd_out;
 }				t_command;
@@ -41,25 +41,26 @@ typedef struct s_data
 	int			n_cmd;
 }				t_data;
 
-int			main_tester(t_command *cmd);
+int		main_tester(t_command *cmd);
+int		free_tab(char **tab);
+int		free_cmd(t_command *cmd);
 
 // parsing
 void	parsing(t_data *data, char *input);
 char	*syntax_cleaner(char *input);
-char	**custom_split(char *s, char c, int n_cmd);
 
 // init
 void	cmd_tab_init(char *input, t_data *data);
-int		count_pipes(char *input);
-int		free_tab(char **tab);
-int		free_cmd(t_command *cmd);
+char	**argv_init(char *input);
+char	*get_cmd_path(char *cmd);
+char	*gather_full_path(char *path, char *cmd);
 
 // utils
+char	**custom_split(char *s, char c, int n_cmd);
+char	*get_next_word(char *s, char c, int *i);
+int		cmd_count(char *s, char c);
 int		get_n_arg(char *input);
 char	*remove_quotes(char *s);
-char	*gather_full_path(char *path, char *cmd);
-int		cmd_count(char *s, char c);
-char	*str_trunc(char *s, int start, int end);
 
 // redirection
 char	*redirect_fd(char *input);

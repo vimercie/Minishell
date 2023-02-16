@@ -6,22 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/15 14:35:58 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:15:35 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	*gather_full_path(char *path, char *cmd)
-{
-	char	*path_slash;
-	char	*full_path;
-
-	path_slash = ft_strjoin(path, "/");
-	full_path = ft_strjoin(path_slash, cmd);
-	free(path_slash);
-	return (full_path);
-}
 
 int	cmd_count(char *s, char c)
 {
@@ -72,8 +61,6 @@ char	**custom_split(char *s, char c, int n_cmd)
 	int		i;
 	int		j;
 
-	if (s == NULL)
-		return (NULL);
 	tab = ft_calloc(n_cmd + 1, sizeof(char *));
 	if (tab == NULL)
 		return (NULL);
