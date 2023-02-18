@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/16 13:42:36 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:03:40 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*get_cmd_path(char *cmd)
 
 	i = 0;
 	res = NULL;
+	if (!cmd[0])
+		return (res);
 	path = ft_split(getenv("PATH"), ':');
 	while (path[i])
 	{
@@ -46,18 +48,20 @@ char	*get_cmd_path(char *cmd)
 	return (res);
 }
 
-char	**argv_init(char *input)
+void	argv_init(char *input, t_command *cmd)
 {
-	char	**res;
-	int	    n_arg;
 	int     arg_len;
 	int     i;
 
 	i = 0;
-	n_arg = get_n_arg(input);
-	res = ft_calloc(n_arg + 1, sizeof(char *));
+	cmd->n_arg = get_n_arg(input);
 	if (!input[0])
-		res[0] = ft_calloc(1, sizeof(char));
+	{
+		cmd->argv = malloc(1 * sizeof(char *));
+		cmd->argv[0] = ft_calloc(1, sizeof(char));
+		return ;
+	}
+	cmd->argv = ft_calloc(cmd->n_arg, sizeof(char *));
 	while (input[0])
 	{
 		while (ft_isspace(input[0]) && input[0])
@@ -68,12 +72,12 @@ char	**argv_init(char *input)
 		while ((!ft_isspace(input[arg_len]) || is_in_quotes(input, arg_len))
 			&& input[arg_len])
 			arg_len++;
-		res[i] = ft_substr(input, 0, arg_len);
-		res[i] = remove_quotes(res[i]);
+		cmd->argv[i] = ft_substr(input, 0, arg_len);
+		cmd->argv[i] = remove_quotes(cmd->argv[i]);
 		i++;
 		input += arg_len;
 	}
-	return (res);
+	return ;
 }
 
 void	cmd_tab_init(char *input, t_data *data)
@@ -87,7 +91,7 @@ void	cmd_tab_init(char *input, t_data *data)
 	pipe_split = custom_split(input, '|', data->n_cmd);
 	while (i < data->n_cmd)
 	{
-		data->cmd[i].argv = argv_init(pipe_split[i]);
+		argv_init(pipe_split[i], &data->cmd[i]);
 		data->cmd[i].pathname = get_cmd_path(data->cmd[i].argv[0]);
 		data->cmd[i].fd_in = 0;
 		data->cmd[i].fd_out = 1;

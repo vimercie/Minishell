@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/16 12:23:08 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:46:19 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_command
 	char	**argv;
 	int		fd_in;
 	int		fd_out;
+	int		n_arg;
 }				t_command;
 
 typedef struct s_data
@@ -41,9 +42,9 @@ typedef struct s_data
 	int			n_cmd;
 }				t_data;
 
-int		main_tester(t_command *cmd);
+int		main_tester(t_data *data);
 int		free_tab(char **tab);
-int		free_cmd(t_command *cmd);
+int		free_cmd(t_data *data);
 
 // parsing
 void	parsing(t_data *data, char *input);
@@ -51,7 +52,7 @@ char	*syntax_cleaner(char *input);
 
 // init
 void	cmd_tab_init(char *input, t_data *data);
-char	**argv_init(char *input);
+void	argv_init(char *input, t_command *cmd);
 char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
 

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/16 12:14:23 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:02:29 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,48 +27,43 @@ int	free_tab(char **tab)
 	return (0);
 }
 
-int	free_cmd(t_command *cmd)
+int	free_cmd(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (cmd[i].pathname)
+	while (i < data->n_cmd)
 	{
 		j = 0;
-		free(cmd[i].pathname);
-		cmd[i].pathname = NULL;
-		while (cmd[i].argv[j])
+		free(data->cmd[i].pathname);
+		while (j < data->cmd[i].n_arg || j < 1)
 		{
-			free(cmd[i].argv[j]);
-			cmd[i].argv[j] = NULL;
+			free(data->cmd[i].argv[j]);
 			j++;
 		}
 		i++;
 	}
-	free(cmd);
-	cmd = NULL;
 	return (0);
 }
 
-int	main_tester(t_command *cmd)
+int	main_tester(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (cmd[i].pathname != NULL)
+	while (i < data->n_cmd)
 	{
 		j = 0;
-		printf("cmd[%d].pathname = |%s|\n", i, cmd[i].pathname);
-		while (cmd[i].argv[j] != NULL)
+		printf("cmd[%d].pathname = |%s|\n", i, data->cmd[i].pathname);
+		while (j < data->cmd[i].n_arg || j < 1)
 		{
-			printf("cmd[%d].argv[%d] = |%s|\n", i, j, cmd[i].argv[j]);
+			printf("cmd[%d].argv[%d] = |%s|\n", i, j, data->cmd[i].argv[j]);
 			j++;
 		}
-		printf("cmd[%d].argv[%d] = |%s|\n", i, j, cmd[i].argv[j]);
-		printf("cmd[%d].fdIN = |%d|\n", i, cmd[i].fd_in);
-		printf("cmd[%d].fdOUT = |%d|\n", i, cmd[i].fd_out);
+		printf("cmd[%d].fdIN = |%d|\n", i, data->cmd[i].fd_in);
+		printf("cmd[%d].fdOUT = |%d|\n", i, data->cmd[i].fd_out);
 		printf("\n");
 		i++;
 	}
@@ -126,9 +121,9 @@ int	main(void)
 	{
 		buffer = readline("GigaBash$ ");
 		parsing(&data, buffer);
-		main_tester(data.cmd);
+		main_tester(&data);
 		handle_history(buffer, previous_buffer);
-		free_cmd(data.cmd);
+		free_cmd(&data);
 		free(buffer);
 		// if (data.cmd != NULL)
 		// {
