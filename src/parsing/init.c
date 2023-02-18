@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/18 15:03:40 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/18 16:22:13 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	argv_init(char *input, t_command *cmd)
 	cmd->n_arg = get_n_arg(input);
 	if (!input[0])
 	{
-		cmd->argv = malloc(1 * sizeof(char *));
+		cmd->argv = ft_calloc(1, sizeof(char *));
 		cmd->argv[0] = ft_calloc(1, sizeof(char));
 		return ;
 	}

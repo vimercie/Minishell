@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/18 14:46:19 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/18 17:03:05 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 
 typedef struct s_command
 {
-	char	*pathname;
 	char	**argv;
+	char	*pathname;
 	int		fd_in;
 	int		fd_out;
 	int		n_arg;
@@ -47,8 +47,8 @@ int		free_tab(char **tab);
 int		free_cmd(t_data *data);
 
 // parsing
-void	parsing(t_data *data, char *input);
-char	*syntax_cleaner(char *input);
+int		parsing(t_data *data, char *input);
+int		prompt_join(char *cmd_line);
 
 // init
 void	cmd_tab_init(char *input, t_data *data);

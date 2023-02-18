@@ -6,40 +6,36 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/16 09:38:54 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:09:00 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*prompt_join(char *input)
+int	prompt_join(char *cmd_line)
 {
-	char	*res;
 	char	*buffer;
 	char	*tmp;
 
-	res = ft_strdup(input);
-	while (is_prompt(res))
+	while (is_prompt(cmd_line))
 	{
-		tmp = ft_strjoin(res, "\n");
-		free(res);
+		tmp = ft_strjoin(cmd_line, "\n");
+		free(cmd_line);
 		buffer = readline("> ");
-		res = ft_strjoin(tmp, buffer);
+		cmd_line = ft_strjoin(tmp, buffer);
 		free(buffer);
 		free(tmp);
 	}
-	return (res);
+	return (1);
 }
 
-void	parsing(t_data *data, char *input)
+int	parsing(t_data *data, char *input)
 {
-	char		*cmd_line;
-
-	cmd_line = prompt_join(input);
-	// cmd = redirect_fd(cmd);
-	// cmd = syntax_cleaner(cmd);
-	// cmd = replace_env_v(cmd);
-	cmd_tab_init(cmd_line, data);
-	free(cmd_line);
-	return ;
+	prompt_join(input);
+	// redirect_fd(input);
+	// syntax_cleaner(input);
+	// replace_env_v(input);
+	cmd_tab_init(input, data);
+	free(input);
+	return (1);
 }
