@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/18 17:09:00 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/18 17:14:15 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ int	parsing(t_data *data, char *input)
 	// syntax_cleaner(input);
 	// replace_env_v(input);
 	cmd_tab_init(input, data);
-	free(input);
 	return (1);
 }
