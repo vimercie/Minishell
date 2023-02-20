@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/18 17:03:05 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/20 14:57:40 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 # define MINISHELL_H
 
 # include "../Libft/inc/libft.h"
+# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
+# include <stdbool.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -27,8 +28,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_data		t_data;
+typedef struct s_command	t_command;
+
 typedef struct s_command
 {
+	t_data	*data;
 	char	**argv;
 	char	*pathname;
 	int		fd_in;
@@ -48,11 +53,11 @@ int		free_cmd(t_data *data);
 
 // parsing
 int		parsing(t_data *data, char *input);
-int		prompt_join(char *cmd_line);
+int		check_syntax(char *input);
+// int		prompt_join(char *cmd_line);
 
 // init
-void	cmd_tab_init(char *input, t_data *data);
-void	argv_init(char *input, t_command *cmd);
+void	cmd_tab_init(char *input, t_command *cmd);
 char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
 
@@ -64,7 +69,7 @@ int		get_n_arg(char *input);
 char	*remove_quotes(char *s);
 
 // redirection
-char	*redirect_fd(char *input);
+int		redirect_fd(char *input, t_command *cmd);
 
 // checking
 int		is_meta_char(char c);

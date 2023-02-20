@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/18 16:22:13 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/20 15:03:50 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,22 @@ void	argv_init(char *input, t_command *cmd)
 
 	i = 0;
 	cmd->n_arg = get_n_arg(input);
-	if (!input[0])
+	if (!is_command(input))
 	{
 		cmd->argv = ft_calloc(1, sizeof(char *));
 		cmd->argv[0] = ft_calloc(1, sizeof(char));
 		return ;
 	}
 	cmd->argv = ft_calloc(cmd->n_arg, sizeof(char *));
-	while (input[0])
+	while (is_command(input))
 	{
 		while (ft_isspace(input[0]) && input[0])
 			input++;
-		if (!input[0])
-			break ;
 		arg_len = 0;
 		while ((!ft_isspace(input[arg_len]) || is_in_quotes(input, arg_len))
 			&& input[arg_len])
 			arg_len++;
-		cmd->argv[i] = ft_substr(input, 0, arg_len);
+		cmd->argv[i] = ft_strndup(input, arg_len);
 		cmd->argv[i] = remove_quotes(cmd->argv[i]);
 		i++;
 		input += arg_len;
@@ -80,23 +78,9 @@ void	argv_init(char *input, t_command *cmd)
 	return ;
 }
 
-void	cmd_tab_init(char *input, t_data *data)
+void	cmd_tab_init(char *input, t_command *cmd)
 {
-	char		**pipe_split;
-	int			i;
-
-	i = 0;
-	data->n_cmd = cmd_count(input, '|');
-	data->cmd = ft_calloc(data->n_cmd + 1, sizeof(t_command));
-	pipe_split = custom_split(input, '|', data->n_cmd);
-	while (i < data->n_cmd)
-	{
-		argv_init(pipe_split[i], &data->cmd[i]);
-		data->cmd[i].pathname = get_cmd_path(data->cmd[i].argv[0]);
-		data->cmd[i].fd_in = 0;
-		data->cmd[i].fd_out = 1;
-		i++;
-	}
-	free_tab(pipe_split);
+	argv_init(input, cmd);
+	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	return ;
 }

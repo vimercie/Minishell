@@ -9,12 +9,11 @@ OBJDIR=		obj
 
 INCDIR=		inc
 
-SRC=		test.c						\
-			main.c						\
-			init.c						\
-			init_utils.c				\
+SRC=		main.c						\
 			parsing.c					\
 			parsing_utils.c				\
+			init.c						\
+			init_utils.c				\
 			syntax_error.c				\
 			redirection.c				\
 			checking.c					\
