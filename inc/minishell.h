@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/20 14:57:40 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 11:40:33 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ typedef struct s_command
 	char	**argv;
 	char	*pathname;
 	int		fd_in;
-	int		fd_out;
+	int		*fd_out;
 	int		n_arg;
+	int		n_output;
 }				t_command;
 
 typedef struct s_data
@@ -52,24 +53,27 @@ int		free_tab(char **tab);
 int		free_cmd(t_data *data);
 
 // parsing
-int		parsing(t_data *data, char *input);
+int		parsing(char *input, t_data *data);
 int		check_syntax(char *input);
 // int		prompt_join(char *cmd_line);
 
 // init
-void	cmd_tab_init(char *input, t_command *cmd);
-char	*get_cmd_path(char *cmd);
-char	*gather_full_path(char *path, char *cmd);
+void	cmd_init(char *input, t_command *cmd);
 
-// utils
+// parsing utils
 char	**custom_split(char *s, char c, int n_cmd);
 char	*get_next_word(char *s, char c, int *i);
 int		cmd_count(char *s, char c);
+
+// init utils
+char	*get_cmd_path(char *cmd);
+char	*gather_full_path(char *path, char *cmd);
 int		get_n_arg(char *input);
 char	*remove_quotes(char *s);
 
 // redirection
 int		redirect_fd(char *input, t_command *cmd);
+int		output_count(char *input);
 
 // checking
 int		is_meta_char(char c);

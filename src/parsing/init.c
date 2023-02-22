@@ -6,46 +6,26 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/20 15:03:50 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 11:39:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*gather_full_path(char *path, char *cmd)
+void	fd_init(char *input, t_command *cmd)
 {
-	char	*path_slash;
-	char	*full_path;
-
-	path_slash = ft_strjoin(path, "/");
-	full_path = ft_strjoin(path_slash, cmd);
-	free(path_slash);
-	return (full_path);
-}
-
-char	*get_cmd_path(char *cmd)
-{
-	char	**path;
-	char	*res;
-	int		i;
+	int	i;
 
 	i = 0;
-	res = NULL;
-	if (!cmd[0])
-		return (res);
-	path = ft_split(getenv("PATH"), ':');
-	while (path[i])
+	cmd->fd_in = 0;
+	cmd->n_output = output_count(input);
+	cmd->fd_out = ft_calloc(cmd->n_output, sizeof(int));
+	while (i < cmd->n_output)
 	{
-		res = gather_full_path(path[i], cmd);
-		if (access(res, X_OK) == 0)
-			break ;
-		free(res);
+		cmd->fd_out[i] = 1;
 		i++;
 	}
-	if (!path[i])
-		res = ft_strdup(cmd);
-	free(path);
-	return (res);
+	return ;
 }
 
 void	argv_init(char *input, t_command *cmd)
@@ -53,14 +33,14 @@ void	argv_init(char *input, t_command *cmd)
 	int     arg_len;
 	int     i;
 
-	i = 0;
-	cmd->n_arg = get_n_arg(input);
 	if (!is_command(input))
 	{
 		cmd->argv = ft_calloc(1, sizeof(char *));
 		cmd->argv[0] = ft_calloc(1, sizeof(char));
 		return ;
 	}
+	i = 0;
+	cmd->n_arg = get_n_arg(input);
 	cmd->argv = ft_calloc(cmd->n_arg, sizeof(char *));
 	while (is_command(input))
 	{
@@ -78,8 +58,9 @@ void	argv_init(char *input, t_command *cmd)
 	return ;
 }
 
-void	cmd_tab_init(char *input, t_command *cmd)
+void	cmd_init(char *input, t_command *cmd)
 {
+	fd_init(input, cmd);
 	argv_init(input, cmd);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	return ;

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/18 16:20:40 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 11:35:11 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,12 @@ int	main_tester(t_data *data)
 			j++;
 		}
 		printf("cmd[%d].fdIN = |%d|\n", i, data->cmd[i].fd_in);
-		printf("cmd[%d].fdOUT = |%d|\n", i, data->cmd[i].fd_out);
+		j = 0;
+		while (j < data->cmd[i].n_output)
+		{
+			printf("cmd[%d].fdOUT[%d] = |%d|\n", i, j, data->cmd[i].fd_out[j]);
+			j++;
+		}
 		printf("\n");
 		i++;
 	}
@@ -84,30 +89,30 @@ void	handle_history(char *a, char *b)
 	ft_strlcpy(b, a, ft_strlen(a) + 1);
 }
 
-void	assign_fd(t_data *data)
-{
-	int	prev_fd_out;
-	int	i;
+// void	assign_fd(t_data *data)
+// {
+// 	int	prev_fd_out;
+// 	int	i;
 
-	prev_fd_out = STDIN_FILENO;
-	i = 0;
-	while (i < data->n_cmd) // while (i < cmd->length)
-	{
-		data->cmd[i].fd_in = prev_fd_out;
-		if (i == data->n_cmd - 1) // if (i == cmd->length - 1)
-			data->cmd[i].fd_out = STDOUT_FILENO;
-		else
-		{
-			int	pipefd[2];
+// 	prev_fd_out = STDIN_FILENO;
+// 	i = 0;
+// 	while (i < data->n_cmd) // while (i < cmd->length)
+// 	{
+// 		data->cmd[i].fd_in = prev_fd_out;
+// 		if (i == data->n_cmd - 1) // if (i == cmd->length - 1)
+// 			data->cmd[i].fd_out = STDOUT_FILENO;
+// 		else
+// 		{
+// 			int	pipefd[2];
 
-			if (pipe(pipefd) < 0)
-				return ;
-			data->cmd[i].fd_out = pipefd[1];
-			prev_fd_out = pipefd[0];
-		}
-		i++;
-	}
-}
+// 			if (pipe(pipefd) < 0)
+// 				return ;
+// 			data->cmd[i].fd_out = pipefd[1];
+// 			prev_fd_out = pipefd[0];
+// 		}
+// 		i++;
+// 	}
+// }
 
 int	main(void)
 {
@@ -120,7 +125,7 @@ int	main(void)
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
-		parsing(&data, buffer);
+		parsing(buffer, &data);
 		main_tester(&data);
 		handle_history(buffer, previous_buffer);
 		free_cmd(&data);
