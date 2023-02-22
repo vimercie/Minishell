@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 11:39:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 13:55:31 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,21 @@ void	fd_init(char *input, t_command *cmd)
 {
 	int	i;
 
-	i = 0;
-	cmd->fd_in = 0;
-	cmd->n_output = output_count(input);
+	cmd->n_input = redirect_count(input, '<');
+	cmd->n_output = redirect_count(input, '>');
+	if (cmd->n_input == 0)
+		cmd->n_input = 1;
+	if (cmd->n_output == 0)
+		cmd->n_output = 1;
+	cmd->fd_in = ft_calloc(cmd->n_input, sizeof(int));
 	cmd->fd_out = ft_calloc(cmd->n_output, sizeof(int));
+	i = 0;
+	while (i < cmd->n_input)
+	{
+		cmd->fd_in[i] = 0;
+		i++;
+	}
+	i = 0;
 	while (i < cmd->n_output)
 	{
 		cmd->fd_out[i] = 1;
@@ -61,6 +72,7 @@ void	argv_init(char *input, t_command *cmd)
 void	cmd_init(char *input, t_command *cmd)
 {
 	fd_init(input, cmd);
+	redirect_fd(input, cmd);
 	argv_init(input, cmd);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	return ;

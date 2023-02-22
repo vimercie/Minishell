@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 11:35:11 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 13:58:45 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,44 @@ int	free_cmd(t_data *data)
 			free(data->cmd[i].argv[j]);
 			j++;
 		}
+		free(data->cmd[i].fd_in);
+		free(data->cmd[i].fd_out);
 		i++;
 	}
 	return (0);
+}
+
+void	exit_gigabash(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < data->n_cmd)
+	{
+		j = 0;
+		while (j < data->cmd[i].n_input)
+		{
+			if (data->cmd[i].fd_in[j] > 1)
+			{
+				close(data->cmd[i].fd_in[j]);
+				printf("fd_in[%d] closed\n", data->cmd[i].fd_in[j]);
+			}
+			j++;
+		}
+		j = 0;
+		while (j < data->cmd[i].n_output)
+		{
+			if (data->cmd[i].fd_out[j] > 1)
+			{
+				close(data->cmd[i].fd_out[j]);
+				printf("fd_out[%d] closed\n\n", data->cmd[i].fd_out[j]);
+			}
+			j++;
+		}
+		i++;
+	}
+	free_cmd(data);
 }
 
 int	main_tester(t_data *data)
@@ -62,7 +97,12 @@ int	main_tester(t_data *data)
 			printf("cmd[%d].argv[%d] = |%s|\n", i, j, data->cmd[i].argv[j]);
 			j++;
 		}
-		printf("cmd[%d].fdIN = |%d|\n", i, data->cmd[i].fd_in);
+		j = 0;
+		while (j < data->cmd[i].n_input)
+		{
+			printf("cmd[%d].fdIN[%d] = |%d|\n", i, j, data->cmd[i].fd_in[j]);
+			j++;
+		}
 		j = 0;
 		while (j < data->cmd[i].n_output)
 		{
@@ -128,8 +168,8 @@ int	main(void)
 		parsing(buffer, &data);
 		main_tester(&data);
 		handle_history(buffer, previous_buffer);
-		free_cmd(&data);
 		free(buffer);
+		exit_gigabash(&data);
 		// if (data.cmd != NULL)
 		// {
 		// 	i = 0;

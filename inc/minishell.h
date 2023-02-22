@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 11:40:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 14:15:01 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ typedef struct s_command
 	t_data	*data;
 	char	**argv;
 	char	*pathname;
-	int		fd_in;
-	int		*fd_out;
 	int		n_arg;
+	int		*fd_in;
+	int		*fd_out;
+	int		n_input;
 	int		n_output;
 }				t_command;
 
@@ -59,6 +60,8 @@ int		check_syntax(char *input);
 
 // init
 void	cmd_init(char *input, t_command *cmd);
+void	argv_init(char *input, t_command *cmd);
+void	fd_init(char *input, t_command *cmd);
 
 // parsing utils
 char	**custom_split(char *s, char c, int n_cmd);
@@ -73,7 +76,8 @@ char	*remove_quotes(char *s);
 
 // redirection
 int		redirect_fd(char *input, t_command *cmd);
-int		output_count(char *input);
+int 	get_fd(char *input);
+int		redirect_count(char *input, char c);
 
 // checking
 int		is_meta_char(char c);
