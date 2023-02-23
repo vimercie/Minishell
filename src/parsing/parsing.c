@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/23 15:11:00 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 16:28:02 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,28 @@ int	prompt_join(char *cmd_line)
 	return (1);
 }
 
+int	pipe_init(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->n_cmd)
+	{
+		if (i < data->n_cmd - 1)
+		{
+			pipe(data->cmd[i].d.pipefd);
+			printf("pipefd[1] = %d\n\n", data->cmd[i].d.pipefd[1]);
+			printf("pipefd[0] = %d\n", data->cmd[i].d.pipefd[0]);
+		}
+		if (i != 0)
+			data->cmd[i].fd_in = data->cmd[i - 1].d.pipefd[0];
+		if (i < data->n_cmd - 1)
+			data->cmd[i].fd_out = data->cmd[i].d.pipefd[1];
+		i++;
+	}
+	return (1);
+}
+
 int	parsing(char *input, t_data *data)
 {
 	char	**pipe_split;
@@ -45,5 +67,6 @@ int	parsing(char *input, t_data *data)
 		cmd_init(pipe_split[i], &data->cmd[i]);
 		i++;
 	}
+	pipe_init(data);
 	return (1);
 }

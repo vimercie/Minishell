@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/23 15:15:40 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 16:17:32 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,15 @@ int	free_tab(char **tab)
 	return (0);
 }
 
-int	free_cmd(t_data *data)
+int	free_cmd(t_command *cmd)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (i < data->n_cmd)
+	free(cmd->pathname);
+	while (i < cmd->d.n_arg || i < 1)
 	{
-		j = 0;
-		free(data->cmd[i].pathname);
-		while (j < data->cmd[i].d.n_arg || j < 1)
-		{
-			free(data->cmd[i].argv[j]);
-			j++;
-		}
+		free(cmd->argv[i]);
 		i++;
 	}
 	return (0);
@@ -49,7 +43,18 @@ int	free_cmd(t_data *data)
 
 void	exit_gigabash(t_data *data)
 {
-	free_cmd(data);
+	int	i;
+
+	i = 0;
+	while (i < data->n_cmd)
+	{
+		if (data->cmd[i].d.pipefd[0] > 2)
+			close(data->cmd[i].d.pipefd[0]);
+		if (data->cmd[i].d.pipefd[1] > 2)
+			close(data->cmd[i].d.pipefd[1]);
+		free_cmd(&data->cmd[i]);
+		i++;
+	}
 }
 
 int	main_tester(t_data *data)

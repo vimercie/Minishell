@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/23 15:11:29 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 16:15:52 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_data
 
 int		main_tester(t_data *data);
 int		free_tab(char **tab);
-int		free_cmd(t_data *data);
+int		free_cmd(t_command *cmd);
 
 // parsing
 int		parsing(char *input, t_data *data);
