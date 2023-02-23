@@ -6,11 +6,13 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 02:11:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 14:28:51 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 15:03:32 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+// compte le nombre de redirections
 
 int	redirect_count(char *input, char c)
 {
@@ -31,6 +33,8 @@ int	redirect_count(char *input, char c)
 	}
 	return (res);
 }
+
+// renvoie le fd du fichier suivant l'operateur de redirection
 
 int get_fd(char *input)
 {
@@ -62,37 +66,33 @@ int get_fd(char *input)
 int redirect_fd(char *input, t_command *cmd)
 {
 	int i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	(void)cmd;
 	while (input[0])
 	{
 		if (input[0] == '>')
 		{
-			cmd->fd_out[i] = get_fd(input);
+			cmd->fd_out = get_fd(input);
 			while (input[0] == '>' && input[0])
 				input++;
 			while (ft_isspace(input[0]) && input[0])
 				input++;
 			while (!ft_isspace(input[0]) && input[0])
 				input++;
-			i++;
 		}
 		else if (input[0] == '<')
 		{
-			cmd->fd_in[j] = get_fd(input);
+			cmd->fd_in = get_fd(input);
 			while (input[0] == '<' && input[0])
 				input++;
 			while (ft_isspace(input[0]) && input[0])
 				input++;
 			while (!ft_isspace(input[0]) && input[0])
 				input++;
-			j++;
 		}
 		else
 			input++;
+		i++;
 	}
 	return (1);
 }

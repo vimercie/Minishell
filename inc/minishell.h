@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 14:15:01 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 15:11:29 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,25 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_data		t_data;
-typedef struct s_command	t_command;
+typedef struct	s_data		t_data;
+typedef struct	s_command	t_command;
+typedef struct	s_cmd_data	t_cmd_data;
 
-typedef struct s_command
+typedef struct	s_cmd_data
 {
-	t_data	*data;
-	char	**argv;
-	char	*pathname;
-	int		n_arg;
-	int		*fd_in;
-	int		*fd_out;
-	int		n_input;
-	int		n_output;
+	int			pipefd[2];
+	int			id;
+	int			n_arg;
+}				t_cmd_data;
+
+typedef struct	s_command
+{
+	t_data		*data;
+	char		**argv;
+	char		*pathname;
+	int			fd_in;
+	int			fd_out;
+	t_cmd_data	d;
 }				t_command;
 
 typedef struct s_data

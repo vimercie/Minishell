@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 12:16:04 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 15:11:00 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	parsing(char *input, t_data *data)
 	while (i < data->n_cmd)
 	{
 		data->cmd[i].data = data;
+		data->cmd[i].d.id = i + 1;
 		cmd_init(pipe_split[i], &data->cmd[i]);
 		i++;
 	}

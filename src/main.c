@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 13:58:45 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 15:15:40 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ int	free_cmd(t_data *data)
 	{
 		j = 0;
 		free(data->cmd[i].pathname);
-		while (j < data->cmd[i].n_arg || j < 1)
+		while (j < data->cmd[i].d.n_arg || j < 1)
 		{
 			free(data->cmd[i].argv[j]);
 			j++;
 		}
-		free(data->cmd[i].fd_in);
-		free(data->cmd[i].fd_out);
 		i++;
 	}
 	return (0);
@@ -51,34 +49,6 @@ int	free_cmd(t_data *data)
 
 void	exit_gigabash(t_data *data)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < data->n_cmd)
-	{
-		j = 0;
-		while (j < data->cmd[i].n_input)
-		{
-			if (data->cmd[i].fd_in[j] > 1)
-			{
-				close(data->cmd[i].fd_in[j]);
-				printf("fd_in[%d] closed\n", data->cmd[i].fd_in[j]);
-			}
-			j++;
-		}
-		j = 0;
-		while (j < data->cmd[i].n_output)
-		{
-			if (data->cmd[i].fd_out[j] > 1)
-			{
-				close(data->cmd[i].fd_out[j]);
-				printf("fd_out[%d] closed\n\n", data->cmd[i].fd_out[j]);
-			}
-			j++;
-		}
-		i++;
-	}
 	free_cmd(data);
 }
 
@@ -91,24 +61,15 @@ int	main_tester(t_data *data)
 	while (i < data->n_cmd)
 	{
 		j = 0;
+		printf("----- cmd n.%d -----\n", data->cmd[i].d.id);
 		printf("cmd[%d].pathname = |%s|\n", i, data->cmd[i].pathname);
-		while (j < data->cmd[i].n_arg || j < 1)
+		while (j < data->cmd[i].d.n_arg || j < 1)
 		{
 			printf("cmd[%d].argv[%d] = |%s|\n", i, j, data->cmd[i].argv[j]);
 			j++;
 		}
-		j = 0;
-		while (j < data->cmd[i].n_input)
-		{
-			printf("cmd[%d].fdIN[%d] = |%d|\n", i, j, data->cmd[i].fd_in[j]);
-			j++;
-		}
-		j = 0;
-		while (j < data->cmd[i].n_output)
-		{
-			printf("cmd[%d].fdOUT[%d] = |%d|\n", i, j, data->cmd[i].fd_out[j]);
-			j++;
-		}
+		printf("cmd[%d].fdIN = |%d|\n", i, data->cmd[i].fd_in);
+		printf("cmd[%d].fdOUT = |%d|\n", i, data->cmd[i].fd_out);
 		printf("\n");
 		i++;
 	}
