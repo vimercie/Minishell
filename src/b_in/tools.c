@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/02/23 15:30:22 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 15:37:04 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../inc/minishell.h"
-
-char* getShellName() {
-	char* shellName = getenv("SHELL");
-	if (shellName == NULL) {
-		perror("Erreur : impossible de trouver le shell");
-		exit(1);
-	}
-	int lastSlashIndex = 0;
-	for (int i = 0; i < strlen(shellName); i++) {
-		if (shellName[i] == '/') {
-			lastSlashIndex = i;
-		}
-	}
-	shellName[lastSlashIndex] = '\0';
-	return &shellName[lastSlashIndex + 1];
-}
 
 void print_env(char **env)
 {
@@ -43,15 +27,16 @@ void print_env(char **env)
     }
 }
 
-void print_ascii_order_env(char **env)
+int print_ascii_order_env(char **env)
 {
 	int i;
+	int j;
 	char *tmp;
 	
 	i = 0;
-	while (env[i] != NULL)
+	while (env[i + 1] != NULL)
 	{
-		int j = i + 1;
+		j = i + 1;
 		while (env[j] != NULL)
 		{
 			if (strcmp(env[i], env[j]) > 0) {
@@ -64,10 +49,10 @@ void print_ascii_order_env(char **env)
 		i++;
 	}
 	i = 0;
-	while (env[i] != NULL)
+	while (env[i + 1] != NULL)
 		printf("declare -x %s\n", env[i++]);
+	return (0);
 }
-
 
 char	**ft_copyenv(char **env)
 {
@@ -81,7 +66,9 @@ char	**ft_copyenv(char **env)
         nb_env++;
     copy_env = malloc(sizeof(char *) * (nb_env + 1));
     if (copy_env == NULL)
-        return NULL;
+	{
+        return (NULL);
+	}
 	i = 0;
 	while (i < nb_env)
 	{
@@ -92,7 +79,7 @@ char	**ft_copyenv(char **env)
             while (j < i)
                 free(copy_env[j++]);
             free(copy_env);
-            return NULL;
+            return (NULL);
         }
 		i++;
 	}

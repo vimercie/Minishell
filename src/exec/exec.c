@@ -1,40 +1,21 @@
 #include "../../inc/minishell.h"
 
-int     built_in_detection(t_command *cmd)
+int     built_in_detection(t_command *cmd, char **envp)
 {
     if (ft_strcmp(cmd->argv[0], "echo") == 0)
+    {
+        printf("using BUILT_IN\n");
         return (echo_n(cmd));
-    return (0);
+    }
+    else if (ft_strcmp(cmd->argv[0], "export") == 0 && cmd->d.n_arg == 1)
+        return (print_ascii_order_env(envp));
+    else if (ft_strcmp(cmd->argv[0], "export") == 0 && cmd->d.n_arg == 2)
+        return (export(cmd->argv[1], envp));
+    return (-1);
 }
 
-// int exec_cmd(t_command *cmd)
-// {
-// 	pid_t	pid;
-// 	int		status;
-
-//     if (built_in_detection(cmd) == 1)
-// 	{
-// 		return (EXIT_SUCCESS);
-// 	}
-//     pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		if (cmd->fd_in != STDIN_FILENO)
-// 		{
-// 			dup2(cmd->fd_in, STDIN_FILENO);
-// 			close(cmd->fd_in);
-// 		}
-// 		if (cmd->fd_out != STDOUT_FILENO)
-// 		{
-// 			dup2(cmd->fd_out, STDOUT_FILENO);
-// 			close(cmd->fd_out);
-// 		}
-// 		execve(cmd->pathname, cmd->argv, NULL);
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	else if (pid < 0)
-// 		return (EXIT_FAILURE);
-// 	waitpid(pid, &status, 0);
-// 	rl_on_new_line();
-// 	return (EXIT_SUCCESS);
-// }
+int     execute(t_command *cmd, char **envp)
+{
+    built_in_detection(cmd, envp);
+    return (0);
+}

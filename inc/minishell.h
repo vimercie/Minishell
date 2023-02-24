@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/24 13:19:44 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 16:51:30 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,17 @@ typedef struct	s_command
 	int			fd_out;
 }				t_command;
 
+typedef struct	s_env
+{
+	char		*name;
+	char		*value;
+}				t_env;
+
 typedef struct	s_data
 {
 	t_command	*cmd;
 	int			n_cmd;
+	char		**env;
 }				t_data;
 
 int		main_tester(t_data *data);
@@ -93,7 +100,7 @@ int		is_quote(char *s, int index);
 int		is_in_quotes(char *s, int index);
 
 // exec
-int		exec_cmd(t_command *cmd);
+int     execute(t_command *cmd, char **envp);
 
 //builts-in
 char	*get_current_dir(void);
@@ -105,7 +112,8 @@ int 	cd(int argc, char** argv);
 //builts-in tools
 
 void 	print_env(char **env);
-void 	print_ascii_order_env(char **env);
+int		ft_putenv(char *name, char *value, char **env);
+int 	print_ascii_order_env(char **env);
 char 	**ft_copyenv(char **env);
 
 #endif

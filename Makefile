@@ -23,7 +23,8 @@ SRC=		main.c						\
 			exit.c						\
 			pwd.c						\
 			unset.c						\
-			export.c					
+			export.c					\
+			tools.c
 
 OBJ=		${addprefix ${OBJDIR}/,		\
 			${SRC:.c=.o}}

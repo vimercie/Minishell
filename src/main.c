@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/23 16:17:32 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 16:54:06 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,32 +120,26 @@ void	handle_history(char *a, char *b)
 // 	}
 // }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
 	char	*buffer;
 	char	previous_buffer[1024];
 	// int		i;
-
+	
+	(void)ac;
+	(void)av;
+	data.env = ft_copyenv(envp);
 	previous_buffer[0] = 0;
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
 		parsing(buffer, &data);
-		main_tester(&data);
+		//main_tester(&data);
+		execute(&data.cmd[0], data.env);
 		handle_history(buffer, previous_buffer);
 		free(buffer);
 		exit_gigabash(&data);
-		// if (data.cmd != NULL)
-		// {
-		// 	i = 0;
-		// 	assign_fd(&data);
-		// 	while (data.cmd[i].cmd)
-		// 	{
-		// 		exec_cmd(&data.cmd[i]);
-		// 		i++;
-		// 	}
-		// }
 	}
 	return (0);
 }
