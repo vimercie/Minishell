@@ -6,7 +6,11 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/24 16:54:06 by mmajani          ###   ########lyon.fr   */
+=======
+/*   Updated: 2023/02/24 15:01:56 by vimercie         ###   ########lyon.fr   */
+>>>>>>> eda37382dfce5e27adcd0b518b3ef11101ab75ac
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +52,18 @@ void	exit_gigabash(t_data *data)
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		if (data->cmd[i].d.pipefd[0] > 2)
-			close(data->cmd[i].d.pipefd[0]);
+		if (data->cmd[i].fd_in > 2)
+		{
+			printf("closed cmd[%d].fd_in (%d)\n", i, data->cmd[i].fd_in);
+			close(data->cmd[i].fd_in);
+		}
 		if (data->cmd[i].d.pipefd[1] > 2)
-			close(data->cmd[i].d.pipefd[1]);
+		{
+			printf("closed cmd[%d].fd_out (%d)\n", i, data->cmd[i].fd_out);
+			close(data->cmd[i].fd_out);
+		}
 		free_cmd(&data->cmd[i]);
+		printf("\n");
 		i++;
 	}
 }
