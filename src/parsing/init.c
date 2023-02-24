@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/24 13:13:22 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 13:34:22 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,5 @@ void	cmd_init(char *input, t_command *cmd)
 {
 	argv_init(input, cmd);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
-	cmd->fd_in = 0;
-	cmd->fd_out = 1;
 	return ;
 }

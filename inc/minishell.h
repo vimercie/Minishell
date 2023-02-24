@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/24 13:19:44 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 14:40:42 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ typedef struct	s_cmd_data
 
 typedef struct	s_command
 {
-	t_data		*data;
-	t_cmd_data	d;
 	char		**argv;
 	char		*pathname;
 	int			fd_in;
 	int			fd_out;
+	t_cmd_data	d;
 }				t_command;
 
 typedef struct	s_data

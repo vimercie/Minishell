@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/23 16:28:02 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 14:39:30 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,28 @@ int	pipe_init(t_data *data)
 	i = 0;
 	while (i < data->n_cmd)
 	{
+		data->cmd[i].fd_in = 0;
+		data->cmd[i].fd_out = 1;
+		if (i < data->n_cmd - 1)
+			pipe(data->cmd[i].d.pipefd);
+		if (i != 0)
+		{
+			if (data->cmd[i].fd_in > 2)
+			{
+				printf("closed fd_in = %d\n", data->cmd[i].fd_in);
+				close(data->cmd[i].fd_in);
+			}
+			data->cmd[i].fd_in = data->cmd[i - 1].d.pipefd[0];
+		}
 		if (i < data->n_cmd - 1)
 		{
-			pipe(data->cmd[i].d.pipefd);
-			printf("pipefd[1] = %d\n\n", data->cmd[i].d.pipefd[1]);
-			printf("pipefd[0] = %d\n", data->cmd[i].d.pipefd[0]);
-		}
-		if (i != 0)
-			data->cmd[i].fd_in = data->cmd[i - 1].d.pipefd[0];
-		if (i < data->n_cmd - 1)
+			if (data->cmd[i].fd_out > 2)
+			{
+				printf("closed fd_out = %d\n", data->cmd[i].fd_out);
+				close(data->cmd[i].fd_out);
+			}
 			data->cmd[i].fd_out = data->cmd[i].d.pipefd[1];
+		}
 		i++;
 	}
 	return (1);
@@ -60,13 +72,14 @@ int	parsing(char *input, t_data *data)
 	data->n_cmd = cmd_count(input, '|');
 	data->cmd = ft_calloc(data->n_cmd, sizeof(t_command));
 	pipe_split = custom_split(input, '|', data->n_cmd);
+	pipe_init(data);
 	while (i < data->n_cmd)
 	{
-		data->cmd[i].data = data;
 		data->cmd[i].d.id = i + 1;
 		cmd_init(pipe_split[i], &data->cmd[i]);
+		redirect_fd(pipe_split[i], &data->cmd[i]);
 		i++;
 	}
-	pipe_init(data);
+	free_tab(pipe_split);
 	return (1);
 }
