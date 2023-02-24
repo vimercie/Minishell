@@ -6,11 +6,36 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/23 14:24:43 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 13:13:22 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char	*get_cmd_path(char *cmd)
+{
+	char	**path;
+	char	*res;
+	int		i;
+
+	i = 0;
+	res = NULL;
+	if (!cmd[0])
+		return (res);
+	path = ft_split(getenv("PATH"), ':');
+	while (path[i])
+	{
+		res = gather_full_path(path[i], cmd);
+		if (access(res, X_OK) == 0)
+			break ;
+		free(res);
+		i++;
+	}
+	if (!path[i])
+		res = ft_strdup(cmd);
+	free(path);
+	return (res);
+}
 
 void	argv_init(char *input, t_command *cmd)
 {

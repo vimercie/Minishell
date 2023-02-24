@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/22 11:39:28 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 13:11:41 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,6 @@ char	*gather_full_path(char *path, char *cmd)
 	full_path = ft_strjoin(path_slash, cmd);
 	free(path_slash);
 	return (full_path);
-}
-
-char	*get_cmd_path(char *cmd)
-{
-	char	**path;
-	char	*res;
-	int		i;
-
-	i = 0;
-	res = NULL;
-	if (!cmd[0])
-		return (res);
-	path = ft_split(getenv("PATH"), ':');
-	while (path[i])
-	{
-		res = gather_full_path(path[i], cmd);
-		if (access(res, X_OK) == 0)
-			break ;
-		free(res);
-		i++;
-	}
-	if (!path[i])
-		res = ft_strdup(cmd);
-	free(path);
-	return (res);
 }
 
 char	*remove_quotes(char *s)
