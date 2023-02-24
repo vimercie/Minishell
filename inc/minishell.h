@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/23 16:15:52 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 16:21:59 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,19 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct	s_data		t_data;
-typedef struct	s_command	t_command;
-typedef struct	s_cmd_data	t_cmd_data;
+typedef struct s_data		t_data;
+typedef struct s_command	t_command;
 
-typedef struct	s_cmd_data
+typedef struct s_command
 {
-	int			pipefd[2];
-	int			id;
-	int			n_arg;
-}				t_cmd_data;
-
-typedef struct	s_command
-{
-	t_data		*data;
-	char		**argv;
-	char		*pathname;
-	int			fd_in;
-	int			fd_out;
-	t_cmd_data	d;
+	t_data	*data;
+	char	**argv;
+	char	*pathname;
+	int		n_arg;
+	int		*fd_in;
+	int		*fd_out;
+	int		n_input;
+	int		n_output;
 }				t_command;
 
 typedef struct s_data
@@ -57,7 +51,7 @@ typedef struct s_data
 
 int		main_tester(t_data *data);
 int		free_tab(char **tab);
-int		free_cmd(t_command *cmd);
+int		free_cmd(t_data *data);
 
 // parsing
 int		parsing(char *input, t_data *data);
@@ -98,8 +92,14 @@ int		exec_cmd(t_command *cmd);
 //builts-in
 char	*get_current_dir(void);
 int 	echo_n(t_command *cmd);
-int		export(char *str, char **env);
+int 	export(char *str, char **envp);
 int		unset_env(char *name, char **env);
 int 	cd(int argc, char** argv);
+
+//builts-in tools
+
+void 	print_env(char **env);
+void 	print_ascii_order_env(char **env);
+char 	**ft_copyenv(char **env);
 
 #endif

@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
+/*   Updated: 2023/02/23 16:31:33 by mmajani          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../../inc/minishell.h"
 
 #include <stdlib.h>
@@ -11,6 +24,7 @@
 #include <signal.h>
 #include <termios.h>
 #include <dirent.h>
+
 
 int	ft_putenv(char *name, char *value, char **env)
 {
@@ -34,13 +48,14 @@ int	ft_putenv(char *name, char *value, char **env)
 	return (0);
 }
 
-int	export(char *str, char **env)
+int	export_with_value(char *str, char **env)
 {
 	char *name;
 	char *value;
 	int i;
 
 	i = 0;
+	printf("exporting \"%s\" to env", str);
 	while (str[i] && str[i] != '=')
 		i++;
 	if (!str[i])
@@ -57,30 +72,25 @@ int	export(char *str, char **env)
 	return (0);
 }
 
-// int main(int argc, char **argv, char **envp)
-// {
-// 	int i;
-//     char** env;
-//     env = ft_copyenv(envp);
+int export(char *str, char **envp)
+{	
+	if (str)
+	{
+		export_with_value(str, envp);
+		return (1);
+	}
+	else
+	{
+		printf("NOPE\n");
+		print_ascii_order_env(envp);
+		return (0);
+	}
+	return (0);
+}
 
-// 	if (argc < 2)
-// 	{
-// 		printf("usage: export <variable>=<value>\n");
-// 		return (1);
-// 	}
-// 	if (export(argv[1], env))
-// 	{
-// 		printf("Error: unable to export environment variable\n");
-// 		return (1);
-// 	}
-// 	printf("Exported environment variable:\n");
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		printf("%s\n", env[i]);
-// 		i++;
-// 	}
-//     // free(env[0]);
-//     free(env[i - 1]);
-// 	return (0);
-// }
+int main(int ac, char **av, char **envp)
+{
+
+    export(av[1], envp);
+    return 0;
+}
