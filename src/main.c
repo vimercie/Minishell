@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/02/24 16:54:06 by mmajani          ###   ########lyon.fr   */
-=======
-/*   Updated: 2023/02/24 15:01:56 by vimercie         ###   ########lyon.fr   */
->>>>>>> eda37382dfce5e27adcd0b518b3ef11101ab75ac
+/*   Updated: 2023/02/27 17:40:09 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +59,6 @@ void	exit_gigabash(t_data *data)
 			close(data->cmd[i].fd_out);
 		}
 		free_cmd(&data->cmd[i]);
-		printf("\n");
 		i++;
 	}
 }
@@ -136,7 +131,6 @@ int	main(int ac, char **av, char **envp)
 	t_data	data;
 	char	*buffer;
 	char	previous_buffer[1024];
-	// int		i;
 	
 	(void)ac;
 	(void)av;
@@ -146,8 +140,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		buffer = readline("GigaBash$ ");
 		parsing(buffer, &data);
-		//main_tester(&data);
-		execute(&data.cmd[0], data.env);
+		// main_tester(&data);
+		// execute(&data.cmd[0], data.env);
 		handle_history(buffer, previous_buffer);
 		free(buffer);
 		exit_gigabash(&data);

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/02/24 16:51:30 by mmajani          ###   ########lyon.fr   */
-=======
-/*   Updated: 2023/02/24 14:40:42 by vimercie         ###   ########lyon.fr   */
->>>>>>> eda37382dfce5e27adcd0b518b3ef11101ab75ac
+/*   Updated: 2023/02/27 15:31:21 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +57,8 @@ typedef struct	s_env
 typedef struct	s_data
 {
 	t_command	*cmd;
-	int			n_cmd;
 	char		**env;
+	int			n_cmd;
 }				t_data;
 
 int		main_tester(t_data *data);
@@ -96,11 +92,10 @@ int 	get_fd(char *input);
 int		redirect_count(char *input, char c);
 
 // checking
-int		is_meta_char(char c);
-int		is_prompt(char *s);
+int		is_metachar(char c);
 int		is_command(char *s);
 int		is_quote(char *s, int index);
-int		is_in_quotes(char *s, int index);
+int		is_quoted(char *s, int index);
 
 // exec
 int     execute(t_command *cmd, char **envp);

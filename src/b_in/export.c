@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/02/24 16:58:00 by mmajani          ###   ########lyon.fr   */
-=======
-/*   Updated: 2023/02/24 13:22:32 by vimercie         ###   ########lyon.fr   */
->>>>>>> eda37382dfce5e27adcd0b518b3ef11101ab75ac
+/*   Updated: 2023/02/27 12:18:49 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +31,7 @@ int	ft_putenv(char *name, char *value, char **env)
 	char *tmp;
 
 	i = 0;
-    tmp = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
+	tmp = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
 	if (!(tmp))
 		return (1);
 	strcpy(tmp, name);
@@ -43,7 +39,7 @@ int	ft_putenv(char *name, char *value, char **env)
 	strcat(tmp, value);
 	while (env[i])
 		i++;
-    env[i] = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
+	env[i] = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
 	if (!(env[i]))
 		return (1);
 	strcpy(env[i], tmp);
@@ -54,8 +50,8 @@ int	ft_putenv(char *name, char *value, char **env)
 int export(char *str, char **envp)
 {
 	t_env	var;
-	char *equalSign = strchr(str, '=');
-  	int equalSignPosition = equalSign - str;
+	char	*equalSign = strchr(str, '=');
+  	int		equalSignPosition = equalSign - str;
 
 	// Allouer la mémoire nécessaire pour le nom et la valeur 
 	var.name = malloc(equalSignPosition + 1);
@@ -69,11 +65,6 @@ int export(char *str, char **envp)
 	// Ajouter la variable à l'environnement
 	if (ft_putenv(var.name, var.value, envp) == 1)
 		return (1);
-<<<<<<< HEAD
-	return (0);
-}
-=======
-	}
 	else
 	{
 		printf("NOPE\n");
@@ -89,4 +80,3 @@ int export(char *str, char **envp)
 //     export(av[1], envp);
 //     return 0;
 // }
->>>>>>> eda37382dfce5e27adcd0b518b3ef11101ab75ac
