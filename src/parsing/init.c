@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/27 22:45:43 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:46:57 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	argv_init(char *input, t_command *cmd)
 	return ;
 }
 
-int		tokenLen(char *input)
+int	token_len(char *input)
 {
 	int	res;
 
@@ -103,28 +103,46 @@ int		tokenLen(char *input)
 	return (res);
 }
 
-void	tokenize_input(char *input)
+char	**tokenize_input(char *input)
 {
+	char	**res;
 	int		n_token;
+	int		start;
+	int		len;
 	int		i;
 
-	i = 0;
+	len = 0;
 	n_token = 0;
-	while (input[i])
+	while (is_command(input + len))
 	{
-		while (ft_isspace(input[i]) && input[i])
-			i++;
-		i += tokenLen(input + i);
-		printf("input + %d = |%s|\n", i, input + i);
+		while (ft_isspace(input[len]) && input[len])
+			len++;
+		len += token_len(input + len);
 		n_token++;
 	}
-	printf("n_token = %d\n", n_token);
-	return ;
+	res = ft_calloc(n_token + 1, sizeof(char *));
+	len = 0;
+	i = 0;
+	while (is_command(input + len))
+	{
+		while (ft_isspace(input[len]) && input[len])
+			len++;
+		start = len;
+		len += token_len(input + len);
+		res[i] = ft_substr(input, start, len - start);
+		printf("res[%d] = |%s|\n", i, res[i]);
+		i++;
+	}
+	printf("\n");
+	return (res);
 }
 
 void	cmd_init(char *input, t_command *cmd)
 {
-	tokenize_input(input);
+	char	**res;
+
+	res = tokenize_input(input);
+	(void)res;
 	argv_init(input, cmd);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	return ;
