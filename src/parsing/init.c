@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/28 13:46:57 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/01 01:12:38 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_cmd_path(char *cmd)
 
 	i = 0;
 	res = NULL;
-	if (!cmd[0])
+	if (!cmd)
 		return (res);
 	path = ft_split(getenv("PATH"), ':');
 	while (path[i])
@@ -37,15 +37,25 @@ char	*get_cmd_path(char *cmd)
 	return (res);
 }
 
+// void	argv_init_v2(char **tokens, t_command *cmd)
+// {
+// 	int	i;
+
+// 	while (tokens[i])
+// 	{
+		
+// 		i++;
+// 	}
+// }
+
 void	argv_init(char *input, t_command *cmd)
 {
-	int     arg_len;
-	int     i;
+	int	arg_len;
+	int	i;
 
 	if (!is_command(input))
 	{
 		cmd->argv = ft_calloc(1, sizeof(char *));
-		cmd->argv[0] = ft_calloc(1, sizeof(char));
 		return ;
 	}
 	i = 0;
@@ -67,83 +77,16 @@ void	argv_init(char *input, t_command *cmd)
 	return ;
 }
 
-int	token_len(char *input)
-{
-	int	res;
-
-	res = 0;
-	if (is_metachar(input[0])) 
-	{
-		res++;
-		if (input[0] == '$')
-		{
-			while (!ft_isspace(input[res]) && !is_metachar(input[res])
-				&& input[res])
-				res++;
-		}
-		else if (input[0] == '<' || input[0] == '>')
-		{
-			if (input[1] == input[0])
-				res++;
-		}
-		else if (input[0] == '\'' || input[0] == '\"')
-		{
-			while (is_quoted(input, res))
-				res++;
-			res++;
-		}
-	}
-	else
-	{
-		while (((input[res] != '<' && input[res] != '>'
-			&& !ft_isspace(input[res])) || is_quoted(input, res))
-			&& input[res])
-			res++;
-	}
-	return (res);
-}
-
-char	**tokenize_input(char *input)
-{
-	char	**res;
-	int		n_token;
-	int		start;
-	int		len;
-	int		i;
-
-	len = 0;
-	n_token = 0;
-	while (is_command(input + len))
-	{
-		while (ft_isspace(input[len]) && input[len])
-			len++;
-		len += token_len(input + len);
-		n_token++;
-	}
-	res = ft_calloc(n_token + 1, sizeof(char *));
-	len = 0;
-	i = 0;
-	while (is_command(input + len))
-	{
-		while (ft_isspace(input[len]) && input[len])
-			len++;
-		start = len;
-		len += token_len(input + len);
-		res[i] = ft_substr(input, start, len - start);
-		printf("res[%d] = |%s|\n", i, res[i]);
-		i++;
-	}
-	printf("\n");
-	return (res);
-}
-
 void	cmd_init(char *input, t_command *cmd)
 {
-	char	**res;
+	char	**tokens;
 
-	res = tokenize_input(input);
-	(void)res;
-	argv_init(input, cmd);
-	cmd->pathname = get_cmd_path(cmd->argv[0]);
+	tokens = tokenize_input(input);
+	if (tokens[0] != NULL)
+	{
+		argv_init(input, cmd);
+		cmd->pathname = get_cmd_path(cmd->argv[0]);
+	}
+	free_tab(tokens);
 	return ;
 }

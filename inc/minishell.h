@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/27 15:31:21 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:21:46 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,14 @@ int		free_cmd(t_command *cmd);
 // parsing
 int		parsing(char *input, t_data *data);
 int		check_syntax(char *input);
-// int		prompt_join(char *cmd_line);
 
 // init
 void	cmd_init(char *input, t_command *cmd);
 void	argv_init(char *input, t_command *cmd);
 void	fd_init(char *input, t_command *cmd);
+
+// token handling
+char	**tokenize_input(char *input);
 
 // parsing utils
 char	**custom_split(char *s, char c, int n_cmd);

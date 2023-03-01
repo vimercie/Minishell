@@ -14,6 +14,7 @@ SRC=		main.c						\
 			parsing_utils.c				\
 			init.c						\
 			init_utils.c				\
+			tokens_handler.c			\
 			syntax_error.c				\
 			redirection.c				\
 			checking.c					\

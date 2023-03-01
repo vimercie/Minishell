@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/27 17:40:09 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:52:47 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
-		parsing(buffer, &data);
-		// main_tester(&data);
-		// execute(&data.cmd[0], data.env);
 		handle_history(buffer, previous_buffer);
+		parsing(buffer, &data);
+		main_tester(&data);
+		// execute(&data.cmd[0], data.env);
 		free(buffer);
 		exit_gigabash(&data);
 	}
