@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/28 16:21:46 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/01 13:52:33 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		check_syntax(char *input);
 
 // init
 void	cmd_init(char *input, t_command *cmd);
-void	argv_init(char *input, t_command *cmd);
+char	**argv_init(char **tokens);
 void	fd_init(char *input, t_command *cmd);
 
 // token handling
@@ -85,7 +85,7 @@ int		cmd_count(char *s, char c);
 // init utils
 char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
-int		get_n_arg(char *input);
+int		get_n_arg(char **tokens);
 char	*remove_quotes(char *s);
 
 // redirection

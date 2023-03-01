@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/01 01:12:38 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/01 13:57:44 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,44 +37,27 @@ char	*get_cmd_path(char *cmd)
 	return (res);
 }
 
-// void	argv_init_v2(char **tokens, t_command *cmd)
-// {
-// 	int	i;
-
-// 	while (tokens[i])
-// 	{
-		
-// 		i++;
-// 	}
-// }
-
-void	argv_init(char *input, t_command *cmd)
+char	**argv_init(char **tokens)
 {
-	int	arg_len;
-	int	i;
+	char	**res;
+	int		i;
+	int		j;
 
-	if (!is_command(input))
-	{
-		cmd->argv = ft_calloc(1, sizeof(char *));
-		return ;
-	}
 	i = 0;
-	cmd->d.n_arg = get_n_arg(input);
-	cmd->argv = ft_calloc(cmd->d.n_arg, sizeof(char *));
-	while (is_command(input))
+	j = 0;
+	res = ft_calloc(get_n_arg(tokens) + 1, sizeof(char *));
+	while (tokens[i])
 	{
-		while (ft_isspace(input[0]) && input[0])
-			input++;
-		arg_len = 0;
-		while ((!ft_isspace(input[arg_len]) || is_quoted(input, arg_len))
-			&& input[arg_len])
-			arg_len++;
-		cmd->argv[i] = ft_strndup(input, arg_len);
-		cmd->argv[i] = remove_quotes(cmd->argv[i]);
+		if (tokens[i][0] == '>' || tokens[i][0] == '<')
+			i++;
+		else
+		{
+			res[j] = ft_strdup(tokens[i]);
+			j++;
+		}
 		i++;
-		input += arg_len;
 	}
-	return ;
+	return (res);
 }
 
 void	cmd_init(char *input, t_command *cmd)
@@ -84,7 +67,8 @@ void	cmd_init(char *input, t_command *cmd)
 	tokens = tokenize_input(input);
 	if (tokens[0] != NULL)
 	{
-		argv_init(input, cmd);
+		cmd->d.n_arg = get_n_arg(tokens);
+		cmd->argv = argv_init(tokens);
 		cmd->pathname = get_cmd_path(cmd->argv[0]);
 	}
 	free_tab(tokens);
