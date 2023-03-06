@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/02/27 12:18:49 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:22:02 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,5 @@ int export(char *str, char **envp)
 	// Ajouter la variable à l'environnement
 	if (ft_putenv(var.name, var.value, envp) == 1)
 		return (1);
-	else
-	{
-		printf("NOPE\n");
-		// print_ascii_order_env(envp);
-		return (0);
-	}
 	return (0);
 }
-
-// int main(int ac, char **av, char **envp)
-// {
-
-//     export(av[1], envp);
-//     return 0;
-// }
