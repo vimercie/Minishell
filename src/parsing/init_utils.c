@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/24 13:11:41 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/01 13:57:53 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,20 @@ char	*remove_quotes(char *s)
 	return (res);
 }
 
-int		get_n_arg(char *input)
+int		get_n_arg(char **tokens)
 {
-	int	n_arg;
+	int	res;
 	int	i;
 
-	if (!input[0])
-		return (0);
 	i = 0;
-	n_arg = 1;
-	while (ft_isspace(input[i]) && input[i])
-		i++;
-	while (input[i])
+	res = 0;
+	while (tokens[i])
 	{
-		if (ft_isspace(input[i]) && !is_in_quotes(input, i))
-		{
-			if (!is_command(input + i))
-				return (n_arg);
-			n_arg++;
-			while (ft_isspace(input[i]) && input[i])
-				i++;
-		}
-		else
+		if (tokens[i][0] == '>' || tokens[i][0] == '<')
 			i++;
+		else
+			res++;
+		i++;
 	}
-	return (n_arg);
+	return (res);
 }

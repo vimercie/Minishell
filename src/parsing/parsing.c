@@ -6,28 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/24 14:39:30 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/01 13:55:58 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	prompt_join(char *cmd_line)
-{
-	char	*buffer;
-	char	*tmp;
-
-	while (is_prompt(cmd_line))
-	{
-		tmp = ft_strjoin(cmd_line, "\n");
-		free(cmd_line);
-		buffer = readline("> ");
-		cmd_line = ft_strjoin(tmp, buffer);
-		free(buffer);
-		free(tmp);
-	}
-	return (1);
-}
 
 int	pipe_init(t_data *data)
 {

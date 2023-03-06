@@ -6,35 +6,20 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/16 14:02:30 by vimercie         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:38:49 by vimercie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_meta_char(char c)
+int	is_metachar(char c)
 {
-	if (c == '>'
+	if (c == '\''
+		|| c == '\"'
+		|| c == '>'
 		|| c == '<'
 		|| c == '$')
 		return (1);
-	return (0);
-}
-
-int	is_prompt(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '|')
-		{
-			if (!is_command(s + i + 1))
-				return (1);
-		}
-		i++;
-	}
 	return (0);
 }
 
@@ -54,15 +39,14 @@ int	is_command(char *s)
 
 int	is_quote(char *s, int index)
 {
-	if ((s[index] == '\"' || s[index] == '\'') && !is_in_quotes(s, index)
-		&& (is_in_quotes(s, index + 1) + is_in_quotes(s, index - 1) == 1
-		|| ((s[index + 1] == '\"' || s[index + 1] == '\'')
-		|| (s[index - 1] == '\"' || s[index - 1] == '\''))))
+	if ((s[index] == '\"' || s[index] == '\'') && !is_quoted(s, index)
+		&& (is_quoted(s, index + 1) + is_quoted(s, index - 1) == 1
+		|| (s[index + 1] == s[index] || s[index - 1] == s[index])))
 		return (1);
 	return (0);
 }
 
-int	is_in_quotes(char *s, int index)
+int	is_quoted(char *s, int index)
 {
 	int	opening_quote_index;
 	int	in_quote;

@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/06 12:19:41 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 12:22:02 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_putenv(char *name, char *value, char **env)
 	char *tmp;
 
 	i = 0;
-    tmp = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
+	tmp = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
 	if (!(tmp))
 		return (1);
 	strcpy(tmp, name);
@@ -39,7 +39,7 @@ int	ft_putenv(char *name, char *value, char **env)
 	strcat(tmp, value);
 	while (env[i])
 		i++;
-    env[i] = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
+	env[i] = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
 	if (!(env[i]))
 		return (1);
 	strcpy(env[i], tmp);
@@ -50,8 +50,8 @@ int	ft_putenv(char *name, char *value, char **env)
 int export(char *str, char **envp)
 {
 	t_env	var;
-	char *equalSign = strchr(str, '=');
-  	int equalSignPosition = equalSign - str;
+	char	*equalSign = strchr(str, '=');
+  	int		equalSignPosition = equalSign - str;
 
 	// Allouer la mémoire nécessaire pour le nom et la valeur 
 	var.name = malloc(equalSignPosition + 1);
