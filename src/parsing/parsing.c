@@ -6,13 +6,13 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/01 13:55:58 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 16:28:26 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	pipe_init(t_data *data)
+int	fd_init(t_data *data)
 {
 	int	i;
 
@@ -21,25 +21,11 @@ int	pipe_init(t_data *data)
 	{
 		data->cmd[i].fd_in = 0;
 		data->cmd[i].fd_out = 1;
-		if (i < data->n_cmd - 1)
+		if (i > 0)
+		{
 			pipe(data->cmd[i].d.pipefd);
-		if (i != 0)
-		{
-			if (data->cmd[i].fd_in > 2)
-			{
-				printf("closed fd_in = %d\n", data->cmd[i].fd_in);
-				close(data->cmd[i].fd_in);
-			}
-			data->cmd[i].fd_in = data->cmd[i - 1].d.pipefd[0];
-		}
-		if (i < data->n_cmd - 1)
-		{
-			if (data->cmd[i].fd_out > 2)
-			{
-				printf("closed fd_out = %d\n", data->cmd[i].fd_out);
-				close(data->cmd[i].fd_out);
-			}
-			data->cmd[i].fd_out = data->cmd[i].d.pipefd[1];
+			data->cmd[i].fd_in = data->cmd[i].d.pipefd[0];
+			data->cmd[i - 1].fd_out = data->cmd[i].d.pipefd[1];
 		}
 		i++;
 	}
@@ -49,18 +35,19 @@ int	pipe_init(t_data *data)
 int	parsing(char *input, t_data *data)
 {
 	char	**pipe_split;
+	char	**tokens;
 	int		i;
 
 	i = 0;
 	data->n_cmd = cmd_count(input, '|');
 	data->cmd = ft_calloc(data->n_cmd, sizeof(t_command));
 	pipe_split = custom_split(input, '|', data->n_cmd);
-	pipe_init(data);
+	fd_init(data);
 	while (i < data->n_cmd)
 	{
-		data->cmd[i].d.id = i + 1;
-		cmd_init(pipe_split[i], &data->cmd[i]);
-		redirect_fd(pipe_split[i], &data->cmd[i]);
+		tokens = tokenize_input(pipe_split[i]);
+		cmd_init(tokens, &data->cmd[i]);
+		free_tab(tokens);
 		i++;
 	}
 	free_tab(pipe_split);

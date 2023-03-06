@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/01 13:52:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 16:27:36 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,31 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct	s_env		t_env;
 typedef struct	s_data		t_data;
+typedef struct	s_redir		t_redir;
 typedef struct	s_command	t_command;
 typedef	struct	s_cmd_data	t_cmd_data;
 
+typedef struct	s_env
+{
+	char		*name;
+	char		*value;
+}				t_env;
+
 typedef struct	s_cmd_data
 {
-	int		pipefd[2];
-	int		id;
-	int		n_arg;
+	int			pipefd[2];
+	t_redir		*opened_fd;
+	int			n_arg;
+	int			n_redir;
 }				t_cmd_data;
+
+typedef struct	s_redir
+{
+	int			fd;
+	bool		is_outfile;
+}				t_redir;
 
 typedef struct	s_command
 {
@@ -48,16 +63,10 @@ typedef struct	s_command
 	t_cmd_data	d;
 }				t_command;
 
-typedef struct	s_env
-{
-	char		*name;
-	char		*value;
-}				t_env;
-
 typedef struct	s_data
 {
-	t_command	*cmd;
 	char		**env;
+	t_command	*cmd;
 	int			n_cmd;
 }				t_data;
 
@@ -70,9 +79,10 @@ int		parsing(char *input, t_data *data);
 int		check_syntax(char *input);
 
 // init
-void	cmd_init(char *input, t_command *cmd);
+void	cmd_init(char **tokens, t_command *cmd);
 char	**argv_init(char **tokens);
-void	fd_init(char *input, t_command *cmd);
+int		fd_init(t_data *data);
+
 
 // token handling
 char	**tokenize_input(char *input);
@@ -85,13 +95,13 @@ int		cmd_count(char *s, char c);
 // init utils
 char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
-int		get_n_arg(char **tokens);
 char	*remove_quotes(char *s);
+int		get_n_arg(char **tokens);
 
 // redirection
-int		redirect_fd(char *input, t_command *cmd);
-int 	get_fd(char *input);
-int		redirect_count(char *input, char c);
+int		assign_fd(t_command *cmd);
+int 	open_fd(char **tokens, t_command *cmd);
+int 	get_fd(char *operator, char *file_name);
 
 // checking
 int		is_metachar(char c);

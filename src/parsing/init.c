@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/01 13:57:44 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 16:28:53 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,12 @@ char	**argv_init(char **tokens)
 	return (res);
 }
 
-void	cmd_init(char *input, t_command *cmd)
+void	cmd_init(char **tokens, t_command *cmd)
 {
-	char	**tokens;
-
-	tokens = tokenize_input(input);
-	if (tokens[0] != NULL)
-	{
-		cmd->d.n_arg = get_n_arg(tokens);
-		cmd->argv = argv_init(tokens);
-		cmd->pathname = get_cmd_path(cmd->argv[0]);
-	}
-	free_tab(tokens);
+	cmd->d.n_arg = get_n_arg(tokens);
+	cmd->argv = argv_init(tokens);
+	cmd->pathname = get_cmd_path(cmd->argv[0]);
+	open_fd(tokens, cmd);
+	assign_fd(cmd);
 	return ;
 }
