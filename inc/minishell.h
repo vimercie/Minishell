@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/01 13:52:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 14:07:00 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 typedef struct	s_data		t_data;
 typedef struct	s_command	t_command;
 typedef	struct	s_cmd_data	t_cmd_data;
+typedef struct	s_env		t_env;
 
 typedef struct	s_cmd_data
 {
@@ -52,6 +53,8 @@ typedef struct	s_env
 {
 	char		*name;
 	char		*value;
+	int			val;
+	t_env		*next;
 }				t_env;
 
 typedef struct	s_data
@@ -100,20 +103,27 @@ int		is_quote(char *s, int index);
 int		is_quoted(char *s, int index);
 
 // exec
-int     execute(t_command *cmd, char **envp);
+int     execute(t_command *cmd, t_env *env);
+
+//env
+t_env	*lst_getenv(char **env);
+t_env   *lst_name(t_env *lst, char *to_find);
+int		print_list(t_env *head);
 
 //builts-in
 char	*get_current_dir(void);
 int 	echo_n(t_command *cmd);
-int 	export(char *str, char **envp);
+int		export(char *str, t_env *env);
 int		unset_env(char *name, char **env);
 int 	cd(int argc, char** argv);
 
 //builts-in tools
 
-void 	print_env(char **env);
-int		ft_putenv(char *name, char *value, char **env);
-int 	print_ascii_order_env(char **env);
+// void 	print_env(char **env);
+// int		ft_putenv(char *name, char *value, char **env);
+// int 	print_ascii_order_env(char **env);
+char	*get_left_part(char *string);
 char 	**ft_copyenv(char **env);
+void	assign_name_value(t_env *lst_new, char *string);
 
 #endif

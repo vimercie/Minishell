@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/06 12:22:02 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 14:47:51 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,45 +25,20 @@
 #include <termios.h>
 #include <dirent.h>
 
-int	ft_putenv(char *name, char *value, char **env)
+int	export(char *str, t_env *env)
 {
-	int i;
-	char *tmp;
+	t_env *lst_target;
 
-	i = 0;
-	tmp = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
-	if (!(tmp))
-		return (1);
-	strcpy(tmp, name);
-	strcat(tmp, "=");
-	strcat(tmp, value);
-	while (env[i])
-		i++;
-	env[i] = malloc(sizeof(char) * (strlen(name) + strlen(value) + 2));
-	if (!(env[i]))
-		return (1);
-	strcpy(env[i], tmp);
-	env[i + 1] = NULL;
+	lst_target = lst_name(env, get_left_part(str));
+//	printf("HERE\n");
+	if (lst_target->next == NULL)
+	{
+		lst_target->next = malloc(sizeof(*lst_target));
+		assign_name_value(lst_target, str);
+		lst_target->next->next = NULL;
+	}
+	else
+		assign_name_value(lst_target, str);
 	return (0);
 }
-
-int export(char *str, char **envp)
-{
-	t_env	var;
-	char	*equalSign = strchr(str, '=');
-  	int		equalSignPosition = equalSign - str;
-
-	// Allouer la mémoire nécessaire pour le nom et la valeur 
-	var.name = malloc(equalSignPosition + 1);
-	var.value = malloc(strlen(str) - equalSignPosition);
-
-	// Copier le nom et la valeur dans les variables respectives
-	strncpy(var.name, str, equalSignPosition);
-	strcpy(var.value, equalSign + 1);
-	var.name[equalSignPosition] = '\0';
-
-	// Ajouter la variable à l'environnement
-	if (ft_putenv(var.name, var.value, envp) == 1)
-		return (1);
-	return (0);
-}
+// strcpy() strcat() strchr()

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/28 17:52:47 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 14:41:30 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,20 +129,22 @@ void	handle_history(char *a, char *b)
 int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
+	t_env	*env;
 	char	*buffer;
 	char	previous_buffer[1024];
 	
 	(void)ac;
 	(void)av;
-	data.env = ft_copyenv(envp);
+	//data.env = ft_copyenv(envp);
 	previous_buffer[0] = 0;
+	env = lst_getenv(envp);
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		main_tester(&data);
-		// execute(&data.cmd[0], data.env);
+		//main_tester(&data);
+		execute(&data.cmd[0], env);
 		free(buffer);
 		exit_gigabash(&data);
 	}

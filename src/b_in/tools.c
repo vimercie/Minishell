@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/02/24 15:37:04 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 14:29:36 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,62 +27,63 @@ void print_env(char **env)
     }
 }
 
-int print_ascii_order_env(char **env)
+int	print_list(t_env *head)
 {
-	int i;
-	int j;
-	char *tmp;
-	
-	i = 0;
-	while (env[i + 1] != NULL)
+	t_env	*current;
+
+	current = head;
+	while (current->next != NULL)
 	{
-		j = i + 1;
-		while (env[j] != NULL)
-		{
-			if (strcmp(env[i], env[j]) > 0) {
-				tmp = env[i];
-				env[i] = env[j];
-				env[j] = tmp;
-			}
-			j++;
-		}
-		i++;
+		printf("declare -x %s", current->name);
+		if (current->val == 1)
+			printf("=\"%s\"\n", current->value);
+		current = current->next; 
 	}
-	i = 0;
-	while (env[i + 1] != NULL)
-		printf("declare -x %s\n", env[i++]);
-	return (0);
+	return (1);
 }
 
-char	**ft_copyenv(char **env)
+char *get_left_part(char *string)
 {
-	char	**copy_env;
-	int		nb_env;
-	int		i;
-	int		j;
-	
-    nb_env = 0;
-    while (env[nb_env] != NULL)
-        nb_env++;
-    copy_env = malloc(sizeof(char *) * (nb_env + 1));
-    if (copy_env == NULL)
+    int i;
+    int j;
+    char *left_part;
+    
+    left_part = malloc((strlen(string) + 1) * sizeof(char));
+    i = 0;
+    j = 0;
+    while (string[i] && string[i] != '=')
 	{
-        return (NULL);
-	}
-	i = 0;
-	while (i < nb_env)
-	{
-		copy_env[i] = strdup(env[i]);
-        if (copy_env[i] == NULL)
-		{
-			j = 0;
-            while (j < i)
-                free(copy_env[j++]);
-            free(copy_env);
-            return (NULL);
-        }
-		i++;
-	}
-    copy_env[nb_env] = NULL;    
-    return (copy_env);
+        left_part[j] = string[i];
+        i++;
+        j++;
+    }
+    left_part[j] = '\0';
+    return left_part;
 }
+
+// int print_ascii_order_env(char **env)
+// {
+// 	int i;
+// 	int j;
+// 	char *tmp;
+	
+// 	i = 0;
+// 	while (env[i + 1] != NULL)
+// 	{
+// 		j = i + 1;
+// 		while (env[j] != NULL)
+// 		{
+// 			if (strcmp(env[i], env[j]) > 0) {
+// 				tmp = env[i];
+// 				env[i] = env[j];
+// 				env[j] = tmp;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (env[i + 1] != NULL)
+// 		printf("declare -x %s\n", env[i++]);
+// 	return (0);
+// }
