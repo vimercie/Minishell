@@ -6,85 +6,85 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 02:11:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/24 15:57:29 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 16:38:00 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// compte le nombre de redirections
+// renvoie le fd du fichier en fonction de l'operateur de redirection
 
-int	redirect_count(char *input, char c)
+int	get_n_redir(char **tokens)
 {
 	int	res;
 	int	i;
 
 	i = 0;
 	res = 0;
-	while (input[i])
+	while (tokens[i])
 	{
-		if (input[i] == c)
-		{
+		if (tokens[i][0] == '>' || tokens[i][0] == '<')
 			res++;
-			while (input[i] == c)
-				i++;
-		}
 		i++;
 	}
 	return (res);
 }
 
-// renvoie le fd du fichier suivant l'operateur de redirection
-
-int get_fd(char *input)
+int get_fd(char *operator, char *file_name)
 {
-	char	*file_name;
-	int		start;
 	int		fd;
-	int 	i;
 
-	i = 0;
 	fd = -1;
-	while (input[i] == input[0])
-		i++;
-	while (ft_isspace(input[i]) && input[i])
-		i++;
-	start = i;
-	while (!ft_isspace(input[i]) && input[i])
-		i++;
-	file_name = ft_substr(input, start, i - start);
 	if (access(file_name, W_OK) == 0 || access(file_name, F_OK) == -1)
 	{
-		if (input[1] != input[0])
+		if (ft_strcmp(operator, ">") == 0)
 			fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0666);
-		else
+		else if (ft_strcmp(operator, ">>") == 0)
 			fd = open(file_name, O_CREAT | O_RDWR | O_APPEND, 0666);
+		else if (ft_strcmp(operator, "<") == 0)
+			fd = open(file_name, O_RDWR);
 	}
-	free(file_name);
 	return (fd);
 }
 
-int redirect_fd(char *input, t_command *cmd)
+int open_fd(char **tokens, t_command *cmd)
 {
-	char	c;
-	int 	i;
+	int	i;
+	int	j;
 
 	i = 0;
-	while (input[0])
+	j = 0;
+	cmd->d.n_redir = get_n_redir(tokens);
+	if (cmd->d.n_redir == 0)
+		return (1);
+	cmd->d.opened_fd = ft_calloc(cmd->d.n_redir, sizeof(t_redir));
+	while (tokens[i])
 	{
-		if (input[0] == '>' || input[0] == '<')
+		if (tokens[i][0] == '>' || tokens[i][0] == '<')
 		{
-			c = input[0];
-			cmd->fd_out = get_fd(input);
-			while (input[0] == c && input[0])
-				input++;
-			while (ft_isspace(input[0]) && input[0])
-				input++;
-			while (!ft_isspace(input[0]) && input[0])
-				input++;
+			cmd->d.opened_fd[j].fd = get_fd(tokens[i], tokens[i + 1]);
+			if (tokens[i][0] == '>')
+				cmd->d.opened_fd[j].is_outfile = 1;
+			else
+				cmd->d.opened_fd[j].is_outfile = 0;
+			j++;
 		}
+		i++;
+	}
+	return (1);
+}
+
+int	assign_fd(t_command *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd->d.n_redir)
+	{
+		if (cmd->d.opened_fd->is_outfile)
+			cmd->fd_out = cmd->d.opened_fd[i].fd;
 		else
-			input++;
+			cmd->fd_in = cmd->d.opened_fd[i].fd;
 		i++;
 	}
 	return (1);

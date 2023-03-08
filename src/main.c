@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/08 14:41:30 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 15:12:53 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exit_gigabash(t_data *data)
 			printf("closed cmd[%d].fd_in (%d)\n", i, data->cmd[i].fd_in);
 			close(data->cmd[i].fd_in);
 		}
-		if (data->cmd[i].d.pipefd[1] > 2)
+		if (data->cmd[i].fd_out > 2)
 		{
 			printf("closed cmd[%d].fd_out (%d)\n", i, data->cmd[i].fd_out);
 			close(data->cmd[i].fd_out);
@@ -72,7 +72,7 @@ int	main_tester(t_data *data)
 	while (i < data->n_cmd)
 	{
 		j = 0;
-		printf("----- cmd n.%d -----\n", data->cmd[i].d.id);
+		printf("----- cmd n.%d -----\n", i + 1);
 		printf("cmd[%d].pathname = |%s|\n", i, data->cmd[i].pathname);
 		while (j < data->cmd[i].d.n_arg || j < 1)
 		{
