@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:11:15 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/28 16:20:51 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 17:04:20 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	handle_metachar(char *input)
 	res = 1;
 	if (input[0] == '$')
 	{
-		while (!ft_isspace(input[res]) && !is_metachar(input[res])
+		while (!ft_isspace(input[res])
+			&& input[res] != '>' && input[res] != '<'
 			&& input[res])
 			res++;
 	}

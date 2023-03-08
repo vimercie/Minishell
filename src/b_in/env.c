@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/08 15:04:23 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 17:01:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,4 @@ t_env   *lst_getenv(char **env)
 	}
 	lst_new->next = NULL;
 	return (lst_start);
-}
-
-char	*concat(t_env *env, char *str)
-{
-	t_env *var;
-	char *tmp;
-	int i = 0;
-
-	while (str[i])
-	{
-		if (str[i] == '$')
-			var = lst_name(env, "tout a droite du dollar ou la fin de la string");
-		strcpy(tmp, var->value);
-	}
-	return (tmp);
 }

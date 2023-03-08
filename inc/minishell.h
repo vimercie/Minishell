@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/08 15:12:39 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 16:59:20 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ typedef struct	s_env
 
 typedef struct	s_data
 {
-	char		**env;
 	t_command	*cmd;
+	t_env		*env;
 	int			n_cmd;
 }				t_data;
 
@@ -79,12 +79,12 @@ int		free_cmd(t_command *cmd);
 // parsing
 int		parsing(char *input, t_data *data);
 int		check_syntax(char *input);
+char	*handle_env_var(char *input, t_env *env);
 
 // init
-void	cmd_init(char **tokens, t_command *cmd);
-char	**argv_init(char **tokens);
+void	cmd_init(char **tokens, t_command *cmd, t_env *env);
+char	**argv_init(char **tokens, t_env *env);
 int		fd_init(t_data *data);
-
 
 // token handling
 char	**tokenize_input(char *input);
@@ -114,12 +114,12 @@ int		is_quoted(char *s, int index);
 // exec
 int     execute(t_command *cmd, t_env *env);
 
-//env
+// env
 t_env	*lst_getenv(char **env);
 t_env   *lst_name(t_env *lst, char *to_find);
 int		print_list(t_env *head);
 
-//builts-in
+// builts-in
 char	*get_current_dir(void);
 int 	echo_n(t_command *cmd);
 int		export(char *str, t_env *env);

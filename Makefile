@@ -15,10 +15,12 @@ SRC=		main.c						\
 			init.c						\
 			init_utils.c				\
 			tokens_handler.c			\
+			env_var.c					\
 			syntax_error.c				\
 			redirection.c				\
 			checking.c					\
 			exec.c						\
+			env.c						\
 			cd.c						\
 			echo.c						\
 			exit.c						\
