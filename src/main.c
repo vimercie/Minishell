@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 20:40:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 23:31:51 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	exit_gigabash(t_data *data)
 		free_cmd(&data->cmd[i]);
 		i++;
 	}
+	lst_free(data->env);
 }
 
 int	main_tester(t_data *data)
@@ -143,8 +144,8 @@ int	main(int ac, char **av, char **envp)
 		buffer = readline("GigaBash$ ");
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		main_tester(&data);
-		// execute(&data.cmd[0], env);
+		//main_tester(&data);
+		execute(&data.cmd[0], data.env);
 		free(buffer);
 		exit_gigabash(&data);
 	}

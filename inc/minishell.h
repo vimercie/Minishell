@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 22:44:56 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 23:31:16 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,15 @@ int     execute(t_command *cmd, t_env *env);
 // env
 t_env	*lst_getenv(char **env);
 t_env   *lst_name(t_env *lst, char *to_find);
+void	lst_free(t_env *lst);
 int		print_list(t_env *head);
 
 // builts-in
-char	*get_current_dir(void);
+int		get_current_dir(void);
 int 	echo_n(t_command *cmd);
-int		export(char *str, t_env *env);
-int		unset_env(char *name, char **env);
+int		export_controller(t_command *cmd, t_env *env);
 int 	cd(int argc, char** argv);
+int		unset_var(t_command *cmd, t_env *env);
 
 //builts-in tools
 

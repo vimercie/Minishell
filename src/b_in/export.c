@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/09 22:46:38 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 23:24:59 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int		equal_index(char *string)
 {
 	int i;
-	
+
 	i = 0;
 	while (string[i])
 	{
@@ -55,10 +55,7 @@ int	assign_name_value(t_env *lst_new, char *string)
 	if (equal_index(string) != -1)
 		lst_new->val = 1;
 	else
-	{
-		
 		lst_new->val = 0;
-	}
 	return (0);
 }
 
@@ -75,5 +72,18 @@ int	export(char *str, t_env *env)
 	}
 	else
 		assign_name_value(lst_target, str);
+	return (0);
+}
+
+int export_controller(t_command *cmd, t_env *env)
+{
+		int i;
+
+	i = 1;
+	while (i < cmd->d.n_arg)
+	{
+		export(cmd->argv[i], env);
+		i++;
+	}
 	return (0);
 }

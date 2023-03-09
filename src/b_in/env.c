@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/09 22:47:51 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 23:08:22 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_env    *lst_init_env(void)
 	start->next = NULL;
 	return (start);
 }
-
 
 t_env   *lst_name(t_env *lst, char *to_find)
 {
