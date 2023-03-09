@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:03:33 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		cmd_count(char *s, char c);
 char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
 char	*remove_quotes(char *s);
-int		count_arg(char **tokens);
+int		count_args(char **tokens);
 
 // redirection
 int		assign_fd(t_command *cmd);

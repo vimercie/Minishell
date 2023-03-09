@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 02:11:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:22:34 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	count_redir(char **tokens)
 
 	i = 0;
 	res = 0;
+	if (!tokens)
+		return (res);
 	while (tokens[i])
 	{
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
@@ -56,7 +58,7 @@ int open_fd(char **tokens, t_command *cmd)
 	j = 0;
 	cmd->d.n_redir = count_redir(tokens);
 	if (cmd->d.n_redir == 0)
-		return (1);
+		return (0);
 	cmd->d.opened_fd = ft_calloc(cmd->d.n_redir, sizeof(t_redir));
 	while (tokens[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:11:15 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:12:11 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	token_len(char *input)
 	return (res);
 }
 
-int		count_token(char *input)
+int		count_tokens(char *input)
 {
 	int	n_token;
 	int	len;
@@ -80,8 +80,8 @@ char	**tokenize_input(char *input)
 	int		i;
 
 	if (is_string_blank(input))
-		return (ft_calloc(1, sizeof(char *)));
-	res = ft_calloc(count_token(input) + 1, sizeof(char *));
+		return (NULL);
+	res = ft_calloc(count_tokens(input) + 1, sizeof(char *));
 	len = 0;
 	i = 0;
 	while (!is_string_blank(input + len))

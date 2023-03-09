@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 19:19:41 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:15:09 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	is_string_blank(char *s)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (1);
 	while (s[i])
 	{
 		if (!ft_isspace(s[i]))
