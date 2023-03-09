@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/08 15:12:39 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 15:01:25 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,6 @@ int 	cd(int argc, char** argv);
 // int 	print_ascii_order_env(char **env);
 char	*get_left_part(char *string);
 char 	**ft_copyenv(char **env);
-void	assign_name_value(t_env *lst_new, char *string);
+int		assign_name_value(t_env *lst_new, char *string);
 
 #endif
