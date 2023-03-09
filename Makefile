@@ -25,7 +25,8 @@ SRC=		main.c						\
 			pwd.c						\
 			unset.c						\
 			export.c					\
-			tools.c
+			tools.c						\
+			env.c
 
 OBJ=		${addprefix ${OBJDIR}/,		\
 			${SRC:.c=.o}}
@@ -36,7 +37,7 @@ LIB=		Libft/libft.a
 
 CC=			cc
 
-CFLAGS=		-Wall -Wextra -Werror
+CFLAGS=		-Wall -Wextra
 
 all:		${OBJDIR} ${NAME}
 
