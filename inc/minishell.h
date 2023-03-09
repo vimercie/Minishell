@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 23:31:16 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 00:24:19 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		is_quote(char *s, int index);
 int		is_quoted(char *s, int index);
 
 // exec
-int     execute(t_command *cmd, t_env *env);
+int		execute(t_data *data);
 
 // env
 t_env	*lst_getenv(char **env);
@@ -127,6 +127,9 @@ int 	echo_n(t_command *cmd);
 int		export_controller(t_command *cmd, t_env *env);
 int 	cd(int argc, char** argv);
 int		unset_var(t_command *cmd, t_env *env);
+void	exit_gigabash(t_data *data);
+int     exit_bash(t_data *data);
+
 
 //builts-in tools
 

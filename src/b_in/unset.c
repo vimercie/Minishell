@@ -50,7 +50,10 @@ void		lst_free(t_env *lst)
 		current = current->next;
 		prev = prev->next;
 	}
-	free(prev->name);
-	free(prev->value);
-	free(prev);
+	if (prev && prev->name)
+		free(prev->name);
+	if (prev && prev->value)
+		free(prev->value);
+	if (prev)
+		free(prev);
 }

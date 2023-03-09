@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/09 23:24:59 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 00:08:16 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ int	assign_name_value(t_env *lst_new, char *string)
 {
 	int i;
 	int j;
+	int e_i;
 
 	i = 0;
 	j = 0;
-	if (lst_new->value && equal_index(string) == -1)
+	e_i = equal_index(string);
+	if (lst_new->value && e_i == -1)
 		return (1);
-	lst_new->name = malloc(sizeof(char) * 32760);
-	lst_new->value = malloc(sizeof(char) * 32760);
+	lst_new->name = calloc(sizeof(char), 32760);
+	lst_new->value = calloc(sizeof(char), 32760);
 	while (string[i] && string[i] != '=')
 	{
 		lst_new->name[i] = string[i];
@@ -52,7 +54,7 @@ int	assign_name_value(t_env *lst_new, char *string)
 		j++;
 	}
 	lst_new->value[j] = '\0';
-	if (equal_index(string) != -1)
+	if (e_i != -1)
 		lst_new->val = 1;
 	else
 		lst_new->val = 0;

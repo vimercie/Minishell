@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/09 23:08:22 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 00:12:36 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_env   *lst_getenv(char **env)
 	i = 0;
 	while (env[i] != NULL)
 	{
+		lst_new->value = NULL;
 		assign_name_value(lst_new, env[i]);
 		lst_new->next = malloc(sizeof(*lst_new));
 		lst_new = lst_new->next;
