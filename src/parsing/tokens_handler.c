@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:11:15 by vimercie          #+#    #+#             */
-/*   Updated: 2023/02/28 16:20:51 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:12:11 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	handle_metachar(char *input)
 	res = 1;
 	if (input[0] == '$')
 	{
-		while (!ft_isspace(input[res]) && !is_metachar(input[res])
+		while (!ft_isspace(input[res])
+			&& input[res] != '>' && input[res] != '<'
 			&& input[res])
 			res++;
 	}
@@ -54,14 +55,14 @@ int	token_len(char *input)
 	return (res);
 }
 
-int		get_n_token(char *input)
+int		count_tokens(char *input)
 {
 	int	n_token;
 	int	len;
 
 	len = 0;
 	n_token = 0;
-	while (is_command(input + len))
+	while (!is_string_blank(input + len))
 	{
 		while (ft_isspace(input[len]) && input[len])
 			len++;
@@ -78,12 +79,12 @@ char	**tokenize_input(char *input)
 	int		len;
 	int		i;
 
-	if (!is_command(input))
-		return (ft_calloc(1, sizeof(char *)));
-	res = ft_calloc(get_n_token(input) + 1, sizeof(char *));
+	if (is_string_blank(input))
+		return (NULL);
+	res = ft_calloc(count_tokens(input) + 1, sizeof(char *));
 	len = 0;
 	i = 0;
-	while (is_command(input + len))
+	while (!is_string_blank(input + len))
 	{
 		while (ft_isspace(input[len]) && input[len])
 			len++;

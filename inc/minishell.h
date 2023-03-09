@@ -6,9 +6,10 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 15:01:25 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 22:44:56 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 
@@ -67,8 +68,8 @@ typedef struct	s_env
 
 typedef struct	s_data
 {
-	char		**env;
 	t_command	*cmd;
+	t_env		*env;
 	int			n_cmd;
 }				t_data;
 
@@ -79,12 +80,12 @@ int		free_cmd(t_command *cmd);
 // parsing
 int		parsing(char *input, t_data *data);
 int		check_syntax(char *input);
+char	*handle_env_var(char *input, t_env *env);
 
 // init
-void	cmd_init(char **tokens, t_command *cmd);
-char	**argv_init(char **tokens);
+void	cmd_init(char **tokens, t_command *cmd, t_env *env);
+char	**argv_init(char **tokens, t_env *env);
 int		fd_init(t_data *data);
-
 
 // token handling
 char	**tokenize_input(char *input);
@@ -98,7 +99,7 @@ int		cmd_count(char *s, char c);
 char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
 char	*remove_quotes(char *s);
-int		get_n_arg(char **tokens);
+int		count_args(char **tokens);
 
 // redirection
 int		assign_fd(t_command *cmd);
@@ -107,19 +108,19 @@ int 	get_fd(char *operator, char *file_name);
 
 // checking
 int		is_metachar(char c);
-int		is_command(char *s);
+int		is_string_blank(char *s);
 int		is_quote(char *s, int index);
 int		is_quoted(char *s, int index);
 
 // exec
 int     execute(t_command *cmd, t_env *env);
 
-//env
+// env
 t_env	*lst_getenv(char **env);
 t_env   *lst_name(t_env *lst, char *to_find);
 int		print_list(t_env *head);
 
-//builts-in
+// builts-in
 char	*get_current_dir(void);
 int 	echo_n(t_command *cmd);
 int		export(char *str, t_env *env);

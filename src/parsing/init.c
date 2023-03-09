@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/06 16:28:53 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:26:19 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_cmd_path(char *cmd)
 	return (res);
 }
 
-char	**argv_init(char **tokens)
+char	**argv_init(char **tokens, t_env *env)
 {
 	char	**res;
 	int		i;
@@ -45,14 +45,19 @@ char	**argv_init(char **tokens)
 
 	i = 0;
 	j = 0;
-	res = ft_calloc(get_n_arg(tokens) + 1, sizeof(char *));
+	res = ft_calloc(count_args(tokens) + 1, sizeof(char *));
+	if (!tokens)
+		return (res);
 	while (tokens[i])
 	{
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
 			i++;
 		else
 		{
-			res[j] = ft_strdup(tokens[i]);
+			if (ft_strchr(tokens[i], '$') != NULL)
+				res[j] = handle_env_var(tokens[i], env);
+			else
+				res[j] = ft_strdup(tokens[i]);
 			j++;
 		}
 		i++;
@@ -60,10 +65,10 @@ char	**argv_init(char **tokens)
 	return (res);
 }
 
-void	cmd_init(char **tokens, t_command *cmd)
+void	cmd_init(char **tokens, t_command *cmd, t_env *env)
 {
-	cmd->d.n_arg = get_n_arg(tokens);
-	cmd->argv = argv_init(tokens);
+	cmd->d.n_arg = count_args(tokens);
+	cmd->argv = argv_init(tokens, env);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	open_fd(tokens, cmd);
 	assign_fd(cmd);
