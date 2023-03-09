@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/08 17:07:21 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,17 @@ char	**argv_init(char **tokens, t_env *env)
 
 	i = 0;
 	j = 0;
-	res = ft_calloc(get_n_arg(tokens) + 1, sizeof(char *));
+	res = ft_calloc(count_arg(tokens) + 1, sizeof(char *));
 	while (tokens[i])
 	{
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
 			i++;
-		else if (ft_strchr(tokens[i], '$') != NULL)
-		{
-			res[j] = handle_env_var(tokens[i], env);
-			j++;
-		}
 		else
 		{
-			res[j] = ft_strdup(tokens[i]);
+			if (ft_strchr(tokens[i], '$') != NULL)
+				res[j] = handle_env_var(tokens[i], env);
+			else
+				res[j] = ft_strdup(tokens[i]);
 			j++;
 		}
 		i++;
@@ -67,7 +65,7 @@ char	**argv_init(char **tokens, t_env *env)
 
 void	cmd_init(char **tokens, t_command *cmd, t_env *env)
 {
-	cmd->d.n_arg = get_n_arg(tokens);
+	cmd->d.n_arg = count_arg(tokens);
 	cmd->argv = argv_init(tokens, env);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	open_fd(tokens, cmd);

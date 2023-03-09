@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/08 16:58:27 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 19:11:31 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	parsing(char *input, t_data *data)
 	i = 0;
 	data->n_cmd = cmd_count(input, '|');
 	data->cmd = ft_calloc(data->n_cmd, sizeof(t_command));
-	pipe_split = custom_split(input, '|', data->n_cmd);
+	pipe_split = ft_split(input, '|');
 	fd_init(data);
 	while (i < data->n_cmd)
 	{

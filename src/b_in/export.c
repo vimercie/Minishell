@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/08 14:47:51 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 18:31:02 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ int	export(char *str, t_env *env)
 		assign_name_value(lst_target, str);
 	return (0);
 }
-// strcpy() strcat() strchr()

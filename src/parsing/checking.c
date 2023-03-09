@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/07 18:41:56 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 19:19:41 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_metachar(char c)
 	return (0);
 }
 
-int	is_command(char *s)
+int	is_string_blank(char *s)
 {
 	int	i;
 
@@ -31,10 +31,10 @@ int	is_command(char *s)
 	while (s[i])
 	{
 		if (!ft_isspace(s[i]))
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	is_quote(char *s, int index)

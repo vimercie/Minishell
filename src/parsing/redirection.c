@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 02:11:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/06 16:38:00 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // renvoie le fd du fichier en fonction de l'operateur de redirection
 
-int	get_n_redir(char **tokens)
+int	count_redir(char **tokens)
 {
 	int	res;
 	int	i;
@@ -54,7 +54,7 @@ int open_fd(char **tokens, t_command *cmd)
 
 	i = 0;
 	j = 0;
-	cmd->d.n_redir = get_n_redir(tokens);
+	cmd->d.n_redir = count_redir(tokens);
 	if (cmd->d.n_redir == 0)
 		return (1);
 	cmd->d.opened_fd = ft_calloc(cmd->d.n_redir, sizeof(t_redir));

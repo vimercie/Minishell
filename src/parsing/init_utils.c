@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/01 13:57:53 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*remove_quotes(char *s)
 	return (res);
 }
 
-int		get_n_arg(char **tokens)
+int		count_arg(char **tokens)
 {
 	int	res;
 	int	i;

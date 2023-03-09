@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/08 16:59:20 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		cmd_count(char *s, char c);
 char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
 char	*remove_quotes(char *s);
-int		get_n_arg(char **tokens);
+int		count_arg(char **tokens);
 
 // redirection
 int		assign_fd(t_command *cmd);
@@ -107,7 +107,7 @@ int 	get_fd(char *operator, char *file_name);
 
 // checking
 int		is_metachar(char c);
-int		is_command(char *s);
+int		is_string_blank(char *s);
 int		is_quote(char *s, int index);
 int		is_quoted(char *s, int index);
 

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:11:15 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/08 17:04:20 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 19:24:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ int	token_len(char *input)
 	return (res);
 }
 
-int		get_n_token(char *input)
+int		count_token(char *input)
 {
 	int	n_token;
 	int	len;
 
 	len = 0;
 	n_token = 0;
-	while (is_command(input + len))
+	while (!is_string_blank(input + len))
 	{
 		while (ft_isspace(input[len]) && input[len])
 			len++;
@@ -79,12 +79,12 @@ char	**tokenize_input(char *input)
 	int		len;
 	int		i;
 
-	if (!is_command(input))
+	if (is_string_blank(input))
 		return (ft_calloc(1, sizeof(char *)));
-	res = ft_calloc(get_n_token(input) + 1, sizeof(char *));
+	res = ft_calloc(count_token(input) + 1, sizeof(char *));
 	len = 0;
 	i = 0;
-	while (is_command(input + len))
+	while (!is_string_blank(input + len))
 	{
 		while (ft_isspace(input[len]) && input[len])
 			len++;
