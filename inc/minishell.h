@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/10 00:24:19 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 02:13:43 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "../Libft/inc/libft.h"
 # include <unistd.h>
 # include <stdio.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <sys/stat.h>
@@ -113,7 +114,7 @@ int		is_quote(char *s, int index);
 int		is_quoted(char *s, int index);
 
 // exec
-int		execute(t_data *data);
+int		execute(t_data *data, char *buffer);
 
 // env
 t_env	*lst_getenv(char **env);
@@ -128,7 +129,8 @@ int		export_controller(t_command *cmd, t_env *env);
 int 	cd(int argc, char** argv);
 int		unset_var(t_command *cmd, t_env *env);
 void	exit_gigabash(t_data *data);
-int     exit_bash(t_data *data);
+int     exit_bash(t_data *data, char *buffer);
+void	signal_exit(int signum);
 
 
 //builts-in tools

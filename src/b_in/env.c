@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/10 00:12:36 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 02:46:12 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_env   *lst_name(t_env *lst, char *to_find)
 			return (next);
 		next = next->next;
 	}
+	
 	return (next);
 }
 
@@ -85,11 +86,28 @@ t_env   *lst_getenv(char **env)
 	while (env[i] != NULL)
 	{
 		lst_new->value = NULL;
+		lst_new->name = NULL;
 		assign_name_value(lst_new, env[i]);
-		lst_new->next = malloc(sizeof(*lst_new));
+		lst_new->next = calloc(sizeof(*lst_new), 1);
 		lst_new = lst_new->next;
 		i++;
 	}
+	lst_new->name = NULL;
+	lst_new->value = NULL;
 	lst_new->next = NULL;
 	return (lst_start);
+}
+
+void	lst_free(t_env *lst)
+{
+	t_env *temp;
+
+	while (lst)
+	{
+		temp = lst;
+		lst = lst->next;
+		free(temp->name);
+		free(temp->value);
+		free(temp);
+	}
 }

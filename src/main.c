@@ -6,11 +6,13 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/10 00:24:44 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 02:55:42 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	signal_return = 0;
 
 int	free_tab(char **tab)
 {
@@ -34,6 +36,7 @@ int	free_cmd(t_command *cmd)
 	int	i;
 
 	i = 0;
+	printf("\n\nPATHNAME=%s\n\n", cmd->pathname);
 	free(cmd->pathname);
 	while (i < cmd->d.n_arg || i < 1)
 	{
@@ -43,27 +46,6 @@ int	free_cmd(t_command *cmd)
 	return (0);
 }
 
-void	exit_gigabash(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->n_cmd)
-	{
-		if (data->cmd[i].fd_in > 2)
-		{
-			printf("closed cmd[%d].fd_in (%d)\n", i, data->cmd[i].fd_in);
-			close(data->cmd[i].fd_in);
-		}
-		if (data->cmd[i].fd_out > 2)
-		{
-			printf("closed cmd[%d].fd_out (%d)\n", i, data->cmd[i].fd_out);
-			close(data->cmd[i].fd_out);
-		}
-		free_cmd(&data->cmd[i]);
-		i++;
-	}
-}
 
 int	main_tester(t_data *data)
 {
@@ -128,6 +110,31 @@ void	handle_history(char *a, char *b)
 // 	}
 // }
 
+void	exit_gigabash(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data)
+	{
+		while (i < data->n_cmd)
+		{
+			if (data->cmd[i].fd_in > 2)
+			{
+				printf("closed cmd[%d].fd_in (%d)\n", i, data->cmd[i].fd_in);
+				close(data->cmd[i].fd_in);
+			}
+			if (data->cmd[i].fd_out > 2)
+			{
+				printf("closed cmd[%d].fd_out (%d)\n", i, data->cmd[i].fd_out);
+				close(data->cmd[i].fd_out);
+			}
+			free_cmd(&data->cmd[i]);
+			i++;
+		}
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
@@ -138,16 +145,19 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	previous_buffer[0] = 0;
 	data.env = lst_getenv(envp);
+	signal_return = 0;
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
+		signal(SIGINT, signal_exit);
 		handle_history(buffer, previous_buffer);
+		if (exit_bash(&data, buffer) == 1)
+			return (1);
 		parsing(buffer, &data);
 		//main_tester(&data);
-		execute(&data);
+		execute(&data, buffer);
 		free(buffer);
 		exit_gigabash(&data);
 	}
-	lst_free(data.env);
 	return (0);
 }

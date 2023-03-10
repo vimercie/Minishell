@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	built_in_detection(t_data *data)
+int	built_in_detection(t_data *data, char *buffer)
 {
 	if (ft_strcmp(data->cmd->argv[0], "echo") == 0)
 		return (echo_n(data->cmd));
@@ -13,12 +13,12 @@ int	built_in_detection(t_data *data)
 	else if (ft_strcmp(data->cmd->argv[0], "pwd"))
 		return (unset_var(data->cmd, data->env));
 	else if (ft_strcmp(data->cmd->argv[0], "exit"))
-		return (exit_bash(data));
+		return (exit_bash(data, buffer));
 	return (-1);
 }
 
-int	execute(t_data *data)
+int	execute(t_data *data, char *buffer)
 {
-	built_in_detection(data);
+	built_in_detection(data, buffer);
 	return (0);
 }

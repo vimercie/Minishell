@@ -35,25 +35,3 @@ int		unset_var(t_command *cmd, t_env *env)
 	return (0);
 }
 
-void		lst_free(t_env *lst)
-{
-	t_env *prev;
-	t_env *current;
-
-	if (lst == NULL)
-		return ;
-	prev = lst;
-	current = lst->next;
-	while (current != NULL)
-	{
-		lst_del(lst, current->name);
-		current = current->next;
-		prev = prev->next;
-	}
-	if (prev && prev->name)
-		free(prev->name);
-	if (prev && prev->value)
-		free(prev->value);
-	if (prev)
-		free(prev);
-}
