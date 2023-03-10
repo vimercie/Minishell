@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/10 00:24:44 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 00:30:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ int	main(int ac, char **av, char **envp)
 		buffer = readline("GigaBash$ ");
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		//main_tester(&data);
-		execute(&data);
+		main_tester(&data);
+		// execute(&data);
 		free(buffer);
 		exit_gigabash(&data);
 	}
