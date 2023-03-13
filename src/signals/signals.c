@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/10 00:15:28 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/13 18:55:22 by mmajani          ###   ########lyon.fr   */
+/*   Created: 2023/03/13 16:33:20 by mmajani           #+#    #+#             */
+/*   Updated: 2023/03/13 18:26:13 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern int	signal_return;
+void sigint_handler(int signum)
+{	
+	(void)signum;
+	rl_replace_line("", 0);
+	ft_putchar_fd('\n', STDERR_FILENO);
+	rl_on_new_line();
+	rl_redisplay();
+}
 
-int	exit_bash(t_data *data, char *buffer)
+int signal_handling(struct sigaction sa, char *buffer)
 {
-	printf("exit bash\n");
-	if (buffer)
-		free(buffer);
-	lst_free(data->env);
-	exit(EXIT_SUCCESS);
+	if (!buffer)
+	{
+		exit(EXIT_SUCCESS);
+	}
+    sa.sa_handler = sigint_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL);
+    return (0);
 }

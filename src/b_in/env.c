@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/10 02:46:12 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 15:15:03 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_env   *lst_name(t_env *lst, char *to_find)
 			return (next);
 		next = next->next;
 	}
-	
+	next->next = lst_init_env();
 	return (next);
 }
 

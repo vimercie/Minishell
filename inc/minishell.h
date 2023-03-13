@@ -6,14 +6,14 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/10 02:13:43 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 18:25:56 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 
 # define MINISHELL_H
+# define _XOPEN_SOURCE 700
 
 # include "../Libft/inc/libft.h"
 # include <unistd.h>
@@ -132,6 +132,9 @@ void	exit_gigabash(t_data *data);
 int     exit_bash(t_data *data, char *buffer);
 void	signal_exit(int signum);
 
+// Signals
+
+int signal_handling(struct sigaction sa, char *buffer);
 
 //builts-in tools
 

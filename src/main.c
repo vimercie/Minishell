@@ -6,11 +6,12 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/10 02:57:52 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 18:58:01 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+# include "../inc/minishell.h"
+# include <signal.h>
 
 int	signal_return = 0;
 
@@ -36,7 +37,7 @@ int	free_cmd(t_command *cmd)
 	int	i;
 
 	i = 0;
-	printf("\n\nPATHNAME=%s\n\n", cmd->pathname);
+	//printf("\n\nPATHNAME=%s\n\n", cmd->pathname);
 	free(cmd->pathname);
 	while (i < cmd->d.n_arg || i < 1)
 	{
@@ -140,20 +141,18 @@ int	main(int ac, char **av, char **envp)
 	t_data	data;
 	char	*buffer;
 	char	previous_buffer[1024];
+	struct sigaction sa;
 	
 	(void)ac;
 	(void)av;
 	previous_buffer[0] = 0;
 	data.env = lst_getenv(envp);
-	signal_return = 0;
 	while (1)
 	{
 		buffer = readline("GigaBash$ ");
-		signal(SIGINT, signal_exit);
-		handle_history(buffer, previous_buffer);
-		if (exit_bash(&data, buffer) == 1)
-			return (1);
+		signal_handling(sa, buffer);
 		parsing(buffer, &data);
+		handle_history(buffer, previous_buffer);
 		//main_tester(&data);
 		execute(&data, buffer);
 		free(buffer);
