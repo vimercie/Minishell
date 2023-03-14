@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/13 18:58:01 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 15:31:02 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,10 @@ int	free_tab(char **tab)
 
 int	free_cmd(t_command *cmd)
 {
-	int	i;
-
-	i = 0;
-	//printf("\n\nPATHNAME=%s\n\n", cmd->pathname);
+	free_tab(cmd->argv);
 	free(cmd->pathname);
-	while (i < cmd->d.n_arg || i < 1)
-	{
-		free(cmd->argv[i]);
-		i++;
-	}
+	free(cmd->d.opened_fd);
+	free(cmd);
 	return (0);
 }
 
@@ -151,9 +145,9 @@ int	main(int ac, char **av, char **envp)
 	{
 		buffer = readline("GigaBash$ ");
 		signal_handling(sa, buffer);
-		parsing(buffer, &data);
 		handle_history(buffer, previous_buffer);
-		//main_tester(&data);
+		parsing(buffer, &data);
+		main_tester(&data);
 		execute(&data, buffer);
 		free(buffer);
 		exit_gigabash(&data);

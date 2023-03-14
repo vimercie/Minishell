@@ -3,7 +3,8 @@ NAME=		minishell
 VPATH=		src/						\
 			src/parsing					\
 			src/exec					\
-			src/b_in
+			src/b_in					\
+			src/signals
 
 OBJDIR=		obj
 
@@ -27,7 +28,8 @@ SRC=		main.c						\
 			pwd.c						\
 			unset.c						\
 			export.c					\
-			tools.c						
+			tools.c						\
+			signals.c
 
 OBJ=		${addprefix ${OBJDIR}/,		\
 			${SRC:.c=.o}}
