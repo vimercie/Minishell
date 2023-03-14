@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 02:11:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 20:22:34 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 19:01:37 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int get_fd(char *operator, char *file_name)
 		else if (ft_strcmp(operator, ">>") == 0)
 			fd = open(file_name, O_CREAT | O_RDWR | O_APPEND, 0666);
 		else if (ft_strcmp(operator, "<") == 0)
-			fd = open(file_name, O_RDWR);
+			fd = open(file_name, O_RDONLY);
 	}
 	return (fd);
 }

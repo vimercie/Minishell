@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:11:15 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/09 20:12:11 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 18:58:47 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ char	**tokenize_input(char *input)
 
 	if (is_string_blank(input))
 		return (NULL);
-	res = ft_calloc(count_tokens(input) + 1, sizeof(char *));
-	len = 0;
 	i = 0;
+	len = 0;
+	res = ft_calloc(count_tokens(input) + 1, sizeof(char *));
 	while (!is_string_blank(input + len))
 	{
 		while (ft_isspace(input[len]) && input[len])

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/14 17:42:38 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 17:48:17 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*handle_env_var(char *input, t_env *env)
 			while (!is_metachar(input[i]) && input[i])
 				i++;
 			var_name = ft_strndup(input, i);
-			printf("var_name = |%s|\n", var_name);
 			lst = lst_name(env, var_name);
 			res = ft_strjoin(tmp, lst->value);
 		}
