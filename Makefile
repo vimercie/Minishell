@@ -2,6 +2,7 @@ NAME=		minishell
 
 VPATH=		src/						\
 			src/parsing					\
+			src/utils					\
 			src/exec					\
 			src/b_in					\
 			src/signals

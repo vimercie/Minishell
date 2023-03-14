@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/13 15:15:03 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 17:45:45 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_env   *lst_name(t_env *lst, char *to_find)
 	if (lst == NULL)
 		return NULL;
 	next = lst;
-	while (next->next != NULL)
+	while (next->name != NULL)
 	{
 		if (strncmp(next->name, to_find, ft_strlen(next->name)) == 0)
 			return (next);
