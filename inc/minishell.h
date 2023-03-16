@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/13 18:25:56 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/16 15:37:54 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,10 @@ t_env	*lst_getenv(char **env);
 t_env   *lst_name(t_env *lst, char *to_find);
 void	lst_free(t_env *lst);
 int		print_list(t_env *head);
+char	**lst_env_to_tab_env(t_env *env);
+int		equal_index(char *string);
+char	*get_env_name(char *string);
+char	*get_env_value(char *string);
 
 // builts-in
 int		get_current_dir(void);

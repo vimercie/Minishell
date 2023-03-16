@@ -2,6 +2,8 @@
 
 int	built_in_detection(t_data *data, char *buffer)
 {
+	if (buffer[0] == '\0')
+		return (0);
 	if (ft_strncmp(data->cmd->argv[0], "echo", 4) == 0)
 		return (echo_n(data->cmd));
 	else if (ft_strncmp(data->cmd->argv[0], "export", 6) == 0 && data->cmd->d.n_arg == 1)
@@ -20,6 +22,5 @@ int	built_in_detection(t_data *data, char *buffer)
 int	execute(t_data *data, char *buffer)
 {
 	built_in_detection(data, buffer);
-	printf("out of execute\n");
 	return (0);
 }
