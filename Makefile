@@ -13,14 +13,15 @@ INCDIR=		inc
 
 SRC=		main.c						\
 			parsing.c					\
-			parsing_utils.c				\
-			init.c						\
-			init_utils.c				\
-			tokens.c			\
-			env_var.c					\
 			syntax_error.c				\
+			init.c						\
+			tokens.c					\
+			env_var.c					\
 			redirection.c				\
+			heredoc.c					\
 			checking.c					\
+			parsing_utils.c				\
+			init_utils.c				\
 			exec.c						\
 			env.c						\
 			cd.c						\

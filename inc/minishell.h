@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/13 18:25:56 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/16 15:39:48 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef	struct	s_cmd_data	t_cmd_data;
 
 typedef struct	s_cmd_data
 {
-	int			pipefd[2];
 	t_redir		*opened_fd;
+	int			pipefd[2];
 	int			n_arg;
 	int			n_redir;
 }				t_cmd_data;
@@ -81,7 +81,7 @@ int		free_cmd(t_command *cmd);
 // parsing
 int		parsing(char *input, t_data *data);
 int		check_syntax(char *input);
-char	*handle_env_var(char *input, t_env *env);
+char	*replace_env_var(char *input, t_env *env);
 
 // init
 void	cmd_init(char **tokens, t_command *cmd, t_env *env);
@@ -90,6 +90,20 @@ int		fd_init(t_data *data);
 
 // token handling
 char	**tokenize_input(char *input);
+
+// redirection
+int		assign_fd(t_command *cmd);
+int 	open_fd(char **tokens, t_command *cmd);
+int 	get_fd(char *operator, char *file_name);
+
+// heredoc
+int		heredoc(char *eof);
+
+// checking
+int		is_metachar(char c);
+int		is_string_blank(char *s);
+int		is_quote(char *s, int index);
+int		is_quoted(char *s, int index);
 
 // parsing utils
 char	**custom_split(char *s, char c, int n_cmd);
@@ -101,17 +115,6 @@ char	*get_cmd_path(char *cmd);
 char	*gather_full_path(char *path, char *cmd);
 char	*remove_quotes(char *s);
 int		count_args(char **tokens);
-
-// redirection
-int		assign_fd(t_command *cmd);
-int 	open_fd(char **tokens, t_command *cmd);
-int 	get_fd(char *operator, char *file_name);
-
-// checking
-int		is_metachar(char c);
-int		is_string_blank(char *s);
-int		is_quote(char *s, int index);
-int		is_quoted(char *s, int index);
 
 // exec
 int		execute(t_data *data, char *buffer);

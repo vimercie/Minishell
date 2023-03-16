@@ -6,13 +6,13 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/14 17:48:17 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/16 14:27:28 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*handle_env_var(char *input, t_env *env)
+char	*replace_env_var(char *input, t_env *env)
 {
 	t_env	*lst;
 	char	*res;

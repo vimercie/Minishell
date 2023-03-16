@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/14 15:22:39 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/16 14:27:28 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**argv_init(char **tokens, t_env *env)
 		else
 		{
 			if (ft_strchr(tokens[i], '$') != NULL)
-				res[j] = handle_env_var(tokens[i], env);
+				res[j] = replace_env_var(tokens[i], env);
 			else
 				res[j] = ft_strdup(tokens[i]);
 			j++;
