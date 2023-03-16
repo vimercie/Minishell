@@ -24,6 +24,7 @@ SRC=		main.c						\
 			init_utils.c				\
 			exec.c						\
 			env.c						\
+			env_tools.c					\
 			cd.c						\
 			echo.c						\
 			exit.c						\
@@ -31,7 +32,9 @@ SRC=		main.c						\
 			unset.c						\
 			export.c					\
 			tools.c						\
-			signals.c
+			signals.c					\
+			sync_env.c					
+
 
 OBJ=		${addprefix ${OBJDIR}/,		\
 			${SRC:.c=.o}}

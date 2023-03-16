@@ -6,59 +6,50 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/13 15:14:13 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/16 15:43:09 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-int		equal_index(char *string)
+int	memory_handling(t_env *current, char *name, char* value)
 {
-	int i;
-
-	i = 0;
-	while (string[i])
-	{
-		if (string[i] == '=')
-			return (i);
-		i++;
-	}
-	return (-1);
+	if (current->value && value == NULL)
+    {
+        free(name);
+        return (1);
+    }
+    if (current->name == NULL)
+        current->name = calloc(sizeof(char), 32760);
+    if (current->value == NULL)
+        current->value = calloc(sizeof(char), 32760);
+    if (current->name == NULL || current->value == NULL)
+    {
+        free(name);
+        free(value);
+        return (1);
+    }
+	return (0);
 }
 
 int	assign_name_value(t_env *lst_new, char *string) 
 {
-	int i;
-	int j;
-	int e_i;
+    char *name = get_env_name(string);
+    char *value = get_env_value(string);
 
-	i = 0;
-	j = 0;
-	e_i = equal_index(string);
-	if (lst_new->value && e_i == -1)
+	if (memory_handling(lst_new, name, value) == 1)
 		return (1);
-	lst_new->name = calloc(sizeof(char), 32760);
-	lst_new->value = calloc(sizeof(char), 32760);
-	while (string[i] && string[i] != '=')
-	{
-		lst_new->name[i] = string[i];
-		i++;
-	}
-	lst_new->name[i] = '\0';
-	i++;
-	while (string[i] != '\0')
-	{
-		lst_new->value[j] = string[i];
-		i++;
-		j++;
-	}
-	lst_new->value[j] = '\0';
-	if (e_i != -1)
-		lst_new->val = 1;
-	else
-		lst_new->val = 0;
-	return (0);
+    ft_strlcpy(lst_new->name, name, ft_strlen(name) + 1);
+    free(name);
+    if (value)
+    {
+        ft_strlcpy(lst_new->value, value, ft_strlen(value) + 1);
+        lst_new->val = 1;
+    }
+    else
+        lst_new->val = 0;
+    free(value);
+    return (0);
 }
 
 int export(char *str, t_env *env)
