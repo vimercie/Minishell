@@ -6,11 +6,38 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/16 14:27:28 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/20 23:48:51 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+t_file_table	*files_init(char **tokens, int n_redir)
+{
+	t_file_table	*files;
+	int				i;
+	int				j;
+
+	i = 0;
+	j = 0;
+	if (!tokens || n_redir == 0)
+		return (NULL);
+	files = ft_calloc(n_redir + 1, sizeof(t_file_table));
+	while (tokens[i])
+	{
+		if (tokens[i][0] == '>' || tokens[i][0] == '<')
+		{
+			files[j].file_name = ft_strdup(tokens[i + 1]);
+			files[j].fd = get_fd(tokens[i], tokens[i + 1]);
+			files[j].is_outfile = 0;
+			if (tokens[i][0] == '>')
+				files[j].is_outfile = 1;
+			j++;
+		}
+		i++;
+	}
+	return (files);
+}
 
 char	*get_cmd_path(char *cmd)
 {
@@ -68,9 +95,9 @@ char	**argv_init(char **tokens, t_env *env)
 void	cmd_init(char **tokens, t_command *cmd, t_env *env)
 {
 	cmd->d.n_arg = count_args(tokens);
+	cmd->d.n_redir = count_redir(tokens);
+	cmd->d.files = files_init(tokens, cmd->d.n_redir);
 	cmd->argv = argv_init(tokens, env);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
-	open_fd(tokens, cmd);
-	assign_fd(cmd);
 	return ;
 }

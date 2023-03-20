@@ -6,13 +6,13 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:28:45 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/16 15:49:57 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/16 16:17:05 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	heredoc_loop(char *eof)
+char	*heredoc_loop(char *delimiter)
 {
 	char	*buffer;
 	char	*res;
@@ -24,7 +24,7 @@ void	heredoc_loop(char *eof)
 	while (1)
 	{
 		buffer = readline("> ");
-		if (!ft_strcmp(buffer, eof))
+		if (buffer[0] && !ft_strcmp(buffer, delimiter))
 			break ;
 		if (res)
 			tmp = ft_strjoin(res, "\n");
@@ -33,13 +33,16 @@ void	heredoc_loop(char *eof)
 		free(tmp);
 		free(buffer);
 	}
-	printf("\nres = %s\n", res);
-	free(res);
-	return ;
+	free(buffer);
+	return (res);
 }
 
-int	heredoc(char *eof)
+int	heredoc(char *delimiter)
 {
-	heredoc_loop(eof);
+	char	*hd;
+
+	hd = heredoc_loop(delimiter);
+	printf("%s\n", hd);
+	free(hd);
 	return (0);
 }

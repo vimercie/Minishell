@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/16 15:51:34 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/20 23:48:27 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,48 +30,49 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct	s_env		t_env;
-typedef struct	s_data		t_data;
-typedef struct	s_redir		t_redir;
-typedef struct	s_command	t_command;
-typedef	struct	s_cmd_data	t_cmd_data;
+typedef struct	s_env			t_env;
+typedef struct	s_data			t_data;
+typedef struct	s_command		t_command;
+typedef	struct	s_cmd_data		t_cmd_data;
+typedef struct	s_file_table	t_file_table;
+
+typedef struct	s_file_table
+{
+	char 			*file_name;
+	int				fd;
+	bool			is_outfile;
+}				t_file_table;
 
 typedef struct	s_cmd_data
 {
-	t_redir		*opened_fd;
-	int			pipefd[2];
-	int			n_arg;
-	int			n_redir;
+	t_file_table	*files;
+	int				n_redir;
+	int				pipefd[2];
+	int				n_arg;
 }				t_cmd_data;
-
-typedef struct	s_redir
-{
-	int			fd;
-	bool		is_outfile;
-}				t_redir;
 
 typedef struct	s_command
 {
-	char		**argv;
-	char		*pathname;
-	int			fd_in;
-	int			fd_out;
-	t_cmd_data	d;
+	char			**argv;
+	char			*pathname;
+	int				fd_in;
+	int				fd_out;
+	t_cmd_data		d;
 }				t_command;
 
 typedef struct	s_env
 {
-	char		*name;
-	char		*value;
-	int			val;
-	t_env		*next;
+	char			*name;
+	char			*value;
+	int				val;
+	t_env			*next;
 }				t_env;
 
 typedef struct	s_data
 {
-	t_command	*cmd;
-	t_env		*env;
-	int			n_cmd;
+	t_command		*cmd;
+	t_env			*env;
+	int				n_cmd;
 }				t_data;
 
 int		main_tester(t_data *data);
@@ -92,8 +93,6 @@ int		fd_init(t_data *data);
 char	**tokenize_input(char *input);
 
 // redirection
-int		assign_fd(t_command *cmd);
-int 	open_fd(char **tokens, t_command *cmd);
 int 	get_fd(char *operator, char *file_name);
 
 // heredoc
@@ -106,9 +105,8 @@ int		is_quote(char *s, int index);
 int		is_quoted(char *s, int index);
 
 // parsing utils
-char	**custom_split(char *s, char c, int n_cmd);
-char	*get_next_word(char *s, char c, int *i);
-int		cmd_count(char *s, char c);
+int		count_cmd(char *s);
+int		count_redir(char **tokens);
 
 // init utils
 char	*get_cmd_path(char *cmd);
