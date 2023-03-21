@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/16 14:27:28 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 22:52:32 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*replace_env_var(char *input, t_env *env)
 	int		i;
 
 	res = NULL;
+	if (!input)
+		return (res);
 	while (input[0])
 	{
 		i = 0;

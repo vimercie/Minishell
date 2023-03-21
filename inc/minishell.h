@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/20 23:48:27 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 22:51:51 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
+# include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -41,6 +42,7 @@ typedef struct	s_file_table
 	char 			*file_name;
 	int				fd;
 	bool			is_outfile;
+	bool			is_heredoc;
 }				t_file_table;
 
 typedef struct	s_cmd_data
@@ -75,79 +77,80 @@ typedef struct	s_data
 	int				n_cmd;
 }				t_data;
 
-int		main_tester(t_data *data);
-int		free_tab(char **tab);
-int		free_cmd(t_command *cmd);
+int				main_tester(t_data *data);
+int				free_tab(char **tab);
+int				free_cmd(t_command *cmd);
 
 // parsing
-int		parsing(char *input, t_data *data);
-int		check_syntax(char *input);
-char	*replace_env_var(char *input, t_env *env);
+int				parsing(char *input, t_data *data);
+int				check_syntax(char *input);
+char			*replace_env_var(char *input, t_env *env);
+int				fd_init(t_data *data);
 
 // init
-void	cmd_init(char **tokens, t_command *cmd, t_env *env);
-char	**argv_init(char **tokens, t_env *env);
-int		fd_init(t_data *data);
+void			cmd_init(char **tokens, t_command *cmd, t_data *data);
+char			**argv_init(char **tokens, t_env *env);
+char			*get_cmd_path(char *cmd);
+t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
 
 // token handling
-char	**tokenize_input(char *input);
+char			**tokenize_input(char *input);
 
 // redirection
-int 	get_fd(char *operator, char *file_name);
+int get_fd(char *operator, char *file_name, t_data *data);
 
 // heredoc
-int		heredoc(char *eof);
+int				heredoc(char *delimiter, t_data *data);
 
 // checking
-int		is_metachar(char c);
-int		is_string_blank(char *s);
-int		is_quote(char *s, int index);
-int		is_quoted(char *s, int index);
+int				is_metachar(char c);
+int				is_string_blank(char *s);
+int				is_quote(char *s, int index);
+int				is_quoted(char *s, int index);
 
 // parsing utils
-int		count_cmd(char *s);
-int		count_redir(char **tokens);
+char			*gather_full_path(char *path, char *cmd);
+char			*remove_quotes(char *s);
 
 // init utils
-char	*get_cmd_path(char *cmd);
-char	*gather_full_path(char *path, char *cmd);
-char	*remove_quotes(char *s);
-int		count_args(char **tokens);
+int				count_cmd(char *s);
+int				count_redir(char **tokens);
+int				count_args(char **tokens);
 
 // exec
-int		execute(t_data *data, char *buffer);
+int				execute(t_data *data, char *buffer);
 
 // env
-t_env	*lst_getenv(char **env);
-t_env   *lst_name(t_env *lst, char *to_find);
-void	lst_free(t_env *lst);
-int		print_list(t_env *head);
-char	**lst_env_to_tab_env(t_env *env);
-int		equal_index(char *string);
-char	*get_env_name(char *string);
-char	*get_env_value(char *string);
+t_env			*lst_getenv(char **env);
+t_env   		*lst_name(t_env *lst, char *to_find);
+void			lst_free(t_env *lst);
+int				print_list(t_env *head);
+char			**lst_env_to_tab_env(t_env *env);
+int				equal_index(char *string);
+char			*get_env_name(char *string);
+char			*get_env_value(char *string);
 
 // builts-in
-int		get_current_dir(void);
-int 	echo_n(t_command *cmd);
-int		export_controller(t_command *cmd, t_env *env);
-int 	cd(int argc, char** argv);
-int		unset_var(t_command *cmd, t_env *env);
-void	exit_gigabash(t_data *data);
-int     exit_bash(t_data *data, char *buffer);
-void	signal_exit(int signum);
+int				get_current_dir(void);
+int 			echo_n(t_command *cmd);
+int				export_controller(t_command *cmd, t_env *env);
+int 			cd(int argc, char** argv);
+int				unset_var(t_command *cmd, t_env *env);
+void			free_memory(t_data *data);
+int     		exit_bash(t_data *data, char *buffer);
+void			signal_exit(int signum);
 
 // Signals
 
-int signal_handling(struct sigaction sa, char *buffer);
+int 			signal_handling(struct sigaction sa, char *buffer);
 
 //builts-in tools
 
 // void 	print_env(char **env);
 // int		ft_putenv(char *name, char *value, char **env);
 // int 	print_ascii_order_env(char **env);
-char	*get_left_part(char *string);
-char 	**ft_copyenv(char **env);
-int		assign_name_value(t_env *lst_new, char *string);
+char			*get_left_part(char *string);
+char 			**ft_copyenv(char **env);
+int				assign_name_value(t_env *lst_new, char *string);
 
 #endif

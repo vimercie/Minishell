@@ -6,48 +6,50 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/20 23:01:37 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 14:21:46 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	count_redir(char **tokens)
+char	*gather_full_path(char *path, char *cmd)
 {
-	int	res;
-	int	i;
+	char	*path_slash;
+	char	*full_path;
 
-	i = 0;
-	res = 0;
-	while (tokens[i])
-	{
-		if (tokens[i][0] == '>' || tokens[i][0] == '<')
-			res++;
-		i++;
-	}
-	return (res);
+	path_slash = ft_strjoin(path, "/");
+	full_path = ft_strjoin(path_slash, cmd);
+	free(path_slash);
+	return (full_path);
 }
 
-int	count_cmd(char *s)
+char	*remove_quotes(char *s)
 {
+	char	*res;
+	int		n_quote;
 	int		i;
-	int		res;
+	int		j;
 
-	if (!s)
-		return (0);
 	i = 0;
-	res = 1;
+	n_quote = 0;
 	while (s[i])
 	{
-		if (s[i] == '|'
-			&& s[i + 1] != '|'
-			&& s[i - 1] != '|')
+		if (is_quote(s, i))
+			n_quote++;
+		i++;
+	}
+	res = ft_calloc(i - n_quote + 1, sizeof(char));
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (!is_quote(s, i))
 		{
-			if(is_string_blank((s + i) + 1))
-				return (res);
-			res++;
+			res[j] = s[i];
+			j++;
 		}
 		i++;
 	}
+	free(s);
 	return (res);
 }
