@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/27 14:03:41 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 15:06:30 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	free_tab(char **tab)
 
 int	main_tester(t_data *data)
 {
-	char	buffer[10];
+	char	*buffer;
 	int		i;
 	int		j;
 
 	i = 0;
-	ft_bzero(buffer, 10);
+	buffer = NULL;
 	while (i < data->n_cmd)
 	{
 		j = 0;
@@ -61,9 +61,20 @@ int	main_tester(t_data *data)
 		}
 		if (data->cmd[i].fd_in > 2)
 		{
-			read(data->cmd[i].fd_in, buffer, 10);
-			if (buffer[0])
-				printf("buffer = |%s|\n", buffer);
+			printf("infile = ");
+			buffer = get_next_line(data->cmd[i].fd_in);
+			if (!buffer)
+				printf("(null)");
+			else
+			{
+				printf("\n");
+				while (buffer)
+				{
+					printf("%s", buffer);
+					free(buffer);
+					buffer = get_next_line(data->cmd[i].fd_in);
+				}
+			}
 		}
 		printf("\n");
 		i++;
@@ -180,10 +191,6 @@ int	main(int ac, char **av, char **envp)
 		signal_handling(sa, buffer);
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		//main_tester(&data);
-		execute(&data, buffer);
-		//data.tab_env = lst_env_to_tab_env(data.env);
-		// heredoc(buffer);
 		main_tester(&data);
 		// execute(&data, buffer);
 		envp = lst_env_to_tab_env(data.env);
