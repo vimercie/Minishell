@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:41:17 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/16 15:13:20 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 15:18:45 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**lst_env_to_tab_env(t_env *env)
 	current = env;
 	while (current->next != NULL && size++ > -1)
 		current = current->next;
-	new_env = malloc(sizeof(char *) * size);
+	new_env = calloc(sizeof(char *) , size + 1);
 	i = 0;
 	current = env;
 	while (i < size)
