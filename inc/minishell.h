@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/16 15:37:54 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/19 15:52:46 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct	s_env
 	char		*name;
 	char		*value;
 	int			val;
+	int			index;
 	t_env		*next;
 }				t_env;
 
@@ -71,6 +72,8 @@ typedef struct	s_data
 {
 	t_command	*cmd;
 	t_env		*env;
+	char		**tab_env;
+	int			env_size;
 	int			n_cmd;
 }				t_data;
 
@@ -119,21 +122,24 @@ int		execute(t_data *data, char *buffer);
 // env
 t_env	*lst_getenv(char **env);
 t_env   *lst_name(t_env *lst, char *to_find);
-void	lst_free(t_env *lst);
-int		print_list(t_env *head);
 char	**lst_env_to_tab_env(t_env *env);
-int		equal_index(char *string);
 char	*get_env_name(char *string);
 char	*get_env_value(char *string);
+int		print_list(t_data *data);
+int		equal_index(char *string);
+int		export(char *str, t_env *env);
+int		print_sorted_list(t_env *env);
+void	index_env(t_env *env);
+void	lst_free(t_env *lst);
 
 // builts-in
 int		get_current_dir(void);
 int 	echo_n(t_command *cmd);
 int		export_controller(t_command *cmd, t_env *env);
-int 	cd(int argc, char** argv);
+int		cd(t_data *data);
 int		unset_var(t_command *cmd, t_env *env);
-void	exit_gigabash(t_data *data);
 int     exit_bash(t_data *data, char *buffer);
+void	exit_gigabash(t_data *data);
 void	signal_exit(int signum);
 
 // Signals

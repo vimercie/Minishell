@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/16 14:08:21 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 13:18:59 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,86 +15,84 @@
 #include <string.h>
 #include "../../inc/minishell.h"
 
-void swap_elements(t_env *ptr1, t_env *ptr2)
+int count_env(t_env *start)
 {
-	char *temp_name;
-	char *temp_value;
-	int temp_val;
+	t_env *head;
+	int count;
 
-	temp_name = ptr1->name;
-	temp_value = ptr1->value;
-	temp_val = ptr1->val;
-	ptr1->name = ptr2->name;
-	ptr1->value = ptr2->value;
-	ptr1->val = ptr2->val;
-	ptr2->name = temp_name;
-	ptr2->value = temp_value;
-	ptr2->val = temp_val;
-}
-
-void sort_list_ascii(t_env **head)
-{
-	t_env *ptr1;
-	t_env *ptr2;
-
-	ptr1 = *head;
-	while (ptr1->next != NULL)
+	count = 0;
+	head = start;
+	while (head)
 	{
-		ptr2 = ptr1->next;
-		while (ptr2 != NULL)
-		{
-			if (strcmp(ptr1->name, ptr2->name) > 0)
-				swap_elements(ptr1, ptr2);
-			ptr2 = ptr2->next;
-		}
-		ptr1 = ptr1->next;
+		count++;
+		head = head->next;
 	}
+	return (count);
 }
 
-void print_env(char **env)
+int	print_sorted_list(t_env *env)
 {
-    char **envp = env;
+	int		i;
+	t_env	*current;
+	int		size;
 
-    while (*envp != NULL)
+	index_env(env);
+	i = 1;
+	size = count_env(env);
+	while (i <= size)
 	{
-        printf("declare -x ");
-        printf("%s\n", *envp);
-        envp++;
-    }
+		current = env;
+		while (current->next)
+		{
+			if (i == current->index)
+			{
+				printf("declare -x %s", current->name);
+				if (current->val == 1)
+					printf("=\"%s\"", current->value);
+				printf("\n");
+			}
+			current = current->next;
+		}
+		i++;
+	}
+	return (0);
 }
 
-int	print_list(t_env *head)
+int	print_list(t_data *data)
 {
 	t_env	*current;
+	t_env   *start;
 
-	current = head;
+	current = data->env;
+	start = current;
 	while (current->next != NULL)
 	{
 		printf("declare -x %s", current->name);
 		if (current->val == 1)
 			printf("=\"%s\"\n", current->value);
-        else
-            printf("\n");
+		else
+			printf("\n");
 		current = current->next; 
 	}
+	lst_free(start);
 	return (1);
 }
 
 char *get_left_part(char *string)
 {
-    int i;
-    int j;
-    char *left_part;
-    
-    left_part = malloc((strlen(string) + 1) * sizeof(char));
-    i = 0;
-    j = 0;
-    while (string[i] && string[i] != '=')
+	int i;
+	int j;
+	char *left_part;
+	
+	left_part = malloc((strlen(string) + 1) * sizeof(char));
+	i = 0;
+	j = 0;
+	while (string[i] && string[i] != '=')
 	{
-        left_part[j] = string[i];
-        i++;
-        j++;
-    }
-    left_part[j] = '\0';
-    return (left_part);
+		left_part[j] = string[i];
+		i++;
+		j++;
+	}
+	left_part[j] = '\0';
+	return (left_part);
 }

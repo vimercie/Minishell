@@ -1,63 +1,97 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 16:07:06 by mmajani           #+#    #+#             */
+/*   Updated: 2023/03/27 13:59:27 by mmajani          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-// déclaration des variables
-int argc; // nombre d'arguments passés à la fonction cd
-char** argv; // tableau des arguments passés à la fonction cd
-char* homeDir; // chemin absolu du répertoire HOME
-
-
-// fonction pour aller au répertoire HOME
-void goToHomeDir() {
-	char* homeDir;
-	homeDir = getenv("HOME"); // récupérer le chemin absolu du répertoire HOME
-	if (homeDir == NULL) {
+void goToHomeDir()
+{
+	char*	homeDir;
+	homeDir = getenv("HOME");
+	if (homeDir == NULL)
+	{
 		perror("");
 		exit(1);
 	}
-	else {
-		// changer le répertoire courant au répertoire HOME
-		if (chdir(homeDir) == -1) {
+	else
+	{
+		if (chdir(homeDir) == -1)
+		{
 			perror("");
 			exit(1);
 		}
 	}
 }
 
-// fonction pour aller à un chemin absolu
-void goToAbsolutePath(char* path) {
-	// changer le répertoire courant au chemin spécifié
-	if (chdir(path) == -1) {
-		perror("");
-		exit(1);
-	}
-}
-
-// fonction pour aller à un chemin relatif
-void goToRelativePath(char* path) {
-	// changer le répertoire courant au chemin spécifié
-	if (chdir(path) == -1) {
-		perror("");
-		exit(1);
-	}
-}
-
-// fonction principale
-int cd(int argc, char** argv) {
-	if (argc == 1)
-		goToHomeDir();
-	else
-		if (argv[1][0] == '/')
-			goToAbsolutePath(argv[1]);
-		else
-			goToRelativePath(argv[1]);
-	return 0;
-}
-
-// int main(int argc, char** argv) {
-//     dprintf(1, "%s\n", get_current_dir());
-// 	if (cd(argc, argv) == 0) {
-// 		printf("Le répertoire a été changé avec succès.\n");
+// int	goToAbsolutePath(char* path)
+// {
+// 	if (chdir(path) == -1)
+// 	{
+// 		perror("");
+// 		return (1);
 // 	}
-//     dprintf(1, "%s\n", get_current_dir());
-// 	return 0;
+// 	return (0);
 // }
+
+int	goToRelativePath(char* path)
+{
+	if (chdir(path) == -1)
+	{
+		perror("");
+		return (1);
+	}
+	return (0);
+}
+
+void	refresh_pwds_to_env(t_data *data, char *oldpwd)
+{
+	char *new;
+	char *tmp;
+
+	tmp = getcwd(NULL, 4096);
+	new = calloc(sizeof(char), 32760);
+	ft_strlcpy(new, "PWD=", 5);
+	ft_strlcat(new, tmp, 4096);
+	export(new, data->env);
+	export(oldpwd, data->env);
+	free(new);
+	free(oldpwd);
+	if (tmp)
+		free(tmp);
+}
+
+int	cd(t_data *data)
+{
+	char	*oldpwd;
+	char	*tmp;
+
+
+	if (data->cmd->d.n_arg > 2)
+	{
+		printf("cd: too many arguments\n");
+		return (1);
+	}
+	oldpwd = calloc(sizeof(char), 32760);
+	tmp = getcwd(NULL, 4096);
+	ft_strlcpy(oldpwd, "OLDPWD=", 8);
+	ft_strlcat(oldpwd, tmp, 4096);
+	if (data->cmd->d.n_arg == 2)
+		if (goToRelativePath(data->cmd->argv[1]) == 0)
+			refresh_pwds_to_env(data, oldpwd);
+	if (data->cmd->d.n_arg == 1)
+	{
+		goToHomeDir();
+		refresh_pwds_to_env(data, oldpwd);
+	}
+	if (tmp)
+		free(tmp);
+	return (0);
+}

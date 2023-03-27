@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/14 17:45:45 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/19 13:42:27 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ char	**ft_copyenv(char **env)
 		nb_env++;
 	copy_env = malloc(sizeof(char *) * (nb_env + 1));
 	if (copy_env == NULL)
-	{
 		return (NULL);
-	}
 	i = 0;
 	while (i < nb_env)
 	{

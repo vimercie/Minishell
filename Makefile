@@ -32,7 +32,8 @@ SRC=		main.c						\
 			export.c					\
 			tools.c						\
 			signals.c					\
-			sync_env.c					
+			sync_env.c					\
+			sort.c
 
 
 OBJ=		${addprefix ${OBJDIR}/,		\
