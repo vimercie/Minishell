@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/21 14:21:56 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 15:38:57 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	count_redir(char **tokens)
 
 	i = 0;
 	res = 0;
+	if (!tokens)
+		return (res);
 	while (tokens[i])
 	{
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
