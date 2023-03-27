@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/27 15:22:31 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 15:36:05 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ int	main(int ac, char **av, char **envp)
 		signal_handling(sa, buffer);
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		main_tester(&data);
 		// execute(&data, buffer);
 		envp = lst_env_to_tab_env(data.env);
 		//main_tester(&data);
