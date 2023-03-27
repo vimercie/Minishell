@@ -6,14 +6,13 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/19 14:48:33 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 14:03:41 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/minishell.h"
-# include <signal.h>
 
-int	signal_return = 0;
+// int	signal_return = 0;
 
 int	free_tab(char **tab)
 {
@@ -32,22 +31,14 @@ int	free_tab(char **tab)
 	return (0);
 }
 
-int	free_cmd(t_command *cmd)
-{
-	free_tab(cmd->argv);
-	free(cmd->pathname);
-	free(cmd->d.opened_fd);
-	free(cmd);
-	return (0);
-}
-
-
 int	main_tester(t_data *data)
 {
-	int	i;
-	int	j;
+	char	buffer[10];
+	int		i;
+	int		j;
 
 	i = 0;
+	ft_bzero(buffer, 10);
 	while (i < data->n_cmd)
 	{
 		j = 0;
@@ -60,6 +51,20 @@ int	main_tester(t_data *data)
 		}
 		printf("cmd[%d].fdIN = |%d|\n", i, data->cmd[i].fd_in);
 		printf("cmd[%d].fdOUT = |%d|\n", i, data->cmd[i].fd_out);
+		j = 0;
+		while (j < data->cmd[i].d.n_redir)
+		{
+			printf("cmd[%d].files[%d].file_name = |%s|\n", i, j, data->cmd[i].d.files[j].file_name);
+			printf("cmd[%d].files[%d].fd = |%d|\n", i, j, data->cmd[i].d.files[j].fd);
+			printf("cmd[%d].files[%d].is_outfile = |%d|\n", i, j, data->cmd[i].d.files[j].is_outfile);
+			j++;
+		}
+		if (data->cmd[i].fd_in > 2)
+		{
+			read(data->cmd[i].fd_in, buffer, 10);
+			if (buffer[0])
+				printf("buffer = |%s|\n", buffer);
+		}
 		printf("\n");
 		i++;
 	}
@@ -105,28 +110,55 @@ void	handle_history(char *a, char *b)
 // 	}
 // }
 
-void	exit_gigabash(t_data *data)
+int	close_pipes(t_data *data)
 {
 	int	i;
 
 	i = 0;
+	while (i < data->n_cmd)
+	{
+		if (data->cmd[i].d.pipefd[0] > 2
+			|| data->cmd[i].d.pipefd[1] > 2)
+		{
+			close(data->cmd[i].d.pipefd[0]);
+			close(data->cmd[i].d.pipefd[1]);
+			printf("closed pipe[0] = %d\n", data->cmd[i].d.pipefd[0]);
+			printf("closed pipe[1] = %d\n", data->cmd[i].d.pipefd[1]);
+			return (0);
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	free_memory(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
 	if (data)
 	{
+		close_pipes(data);
 		while (i < data->n_cmd)
 		{
-			if (data->cmd[i].fd_in > 2)
+			j = 0;
+			free_tab(data->cmd[i].argv);
+			while (j < data->cmd[i].d.n_redir)
 			{
-				printf("closed cmd[%d].fd_in (%d)\n", i, data->cmd[i].fd_in);
-				close(data->cmd[i].fd_in);
+				if (data->cmd[i].d.files[j].fd > 2)
+				{
+					close(data->cmd[i].d.files[j].fd);
+					printf("closed fd = %d\n", data->cmd[i].d.files[j].fd);
+				}
+				free(data->cmd[i].d.files[j].file_name);
+				j++;
 			}
-			if (data->cmd[i].fd_out > 2)
-			{
-				printf("closed cmd[%d].fd_out (%d)\n", i, data->cmd[i].fd_out);
-				close(data->cmd[i].fd_out);
-			}
-			free_cmd(&data->cmd[i]);
+			free(data->cmd[i].d.files);
+			free(data->cmd[i].pathname);
 			i++;
 		}
+		free(data->cmd);
 	}
 }
 
@@ -151,8 +183,12 @@ int	main(int ac, char **av, char **envp)
 		//main_tester(&data);
 		execute(&data, buffer);
 		//data.tab_env = lst_env_to_tab_env(data.env);
+		// heredoc(buffer);
+		main_tester(&data);
+		// execute(&data, buffer);
+		envp = lst_env_to_tab_env(data.env);
 		free(buffer);
-		exit_gigabash(&data);
+		free_memory(&data);
 	}
 	return (0);
 }
