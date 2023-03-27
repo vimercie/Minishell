@@ -12,6 +12,7 @@ OBJDIR=		obj
 INCDIR=		inc
 
 SRC=		main.c						\
+			testing.c					\
 			parsing.c					\
 			syntax_error.c				\
 			init.c						\
@@ -22,6 +23,7 @@ SRC=		main.c						\
 			checking.c					\
 			parsing_utils.c				\
 			init_utils.c				\
+			cleaning.c					\
 			exec.c						\
 			env.c						\
 			env_tools.c					\
