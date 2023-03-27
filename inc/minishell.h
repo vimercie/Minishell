@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/27 15:32:02 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 17:16:35 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ typedef struct	s_data
 }				t_data;
 
 int				main_tester(t_data *data);
-int				free_tab(char **tab);
-int				free_cmd(t_command *cmd);
 
 // parsing
 int				parsing(char *input, t_data *data);
@@ -119,6 +117,11 @@ char			*remove_quotes(char *s);
 int				count_cmd(char *s);
 int				count_redir(char **tokens);
 int				count_args(char **tokens);
+
+// cleaning
+void			free_memory(t_data *data);
+int				free_tab(char **tab);
+int				close_pipes(t_data *data);
 
 // exec
 int				execute(t_data *data, char *buffer);
