@@ -5,7 +5,7 @@ int	built_in_detection(t_data *data, char *buffer)
 	if (buffer[0] == '\0')
 		return (0);
 	else if (ft_strncmp(data->cmd->argv[0], "echo", 4) == 0)
-		return (echo_n(data->cmd));
+		return (echo_controller(data->cmd));
 	else if (ft_strncmp(data->cmd->argv[0], "cd", 2) == 0)
 		return (cd(data));
 	else if (ft_strncmp(data->cmd->argv[0], "export", 6) == 0 && data->cmd->d.n_arg == 1)

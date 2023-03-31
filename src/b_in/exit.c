@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:15:28 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/13 18:55:22 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 14:40:46 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	exit_bash(t_data *data, char *buffer)
 	if (buffer)
 		free(buffer);
 	lst_free(data->env);
+	free(data->tab_env);
 	exit(EXIT_SUCCESS);
 }

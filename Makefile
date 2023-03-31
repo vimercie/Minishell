@@ -48,7 +48,7 @@ LIB=		Libft/libft.a
 
 CC=			cc
 
-CFLAGS=		-Wall -Wextra -Werror
+CFLAGS=		-Wall -Wextra
 
 all:		${OBJDIR} ${NAME}
 

@@ -1,25 +1,42 @@
 #include "../../inc/minishell.h"
 
-int echo_n(t_command *cmd)
+int echo(char *str)
 {
-    int n;
+	printf("%s", str);
+	return (0);
+}
 
-    if (cmd->argv[1] == NULL)
-    {
-        printf("\n");
-        return (1);
-    }
-    else if (cmd->argv[1] && ft_strcmp(cmd->argv[1], "-n") == 0)
-        n = 1;
-    else if (cmd->argv[1] && ft_strcmp(cmd->argv[1], "-n") == 1)
-        n = 0;
-    if (n == 1)
-    {
-        if (cmd->argv[2] == NULL)
-            return (1);
-        printf("%s", cmd->argv[2]);
-    }
-    else
-        printf("%s\n", cmd->argv[1]);
-    return (1);
+int has_n_option(t_command *cmd)
+{
+	int	i;
+
+	i = 1;
+	if (cmd->argv[i] && ft_strcmp(cmd->argv[1], "-n") != 0)
+		return (0);
+	while (cmd->argv[i] && (ft_strcmp(cmd->argv[i], "-n") == 0))
+		i++;
+	return (i);
+}
+
+int echo_controller(t_command *cmd)
+{
+	int i;
+	int n_option;
+
+	i = 1;
+	if (!cmd->argv[1])
+		return (printf("\n"));
+	n_option = has_n_option(cmd);
+	if (n_option > 0)
+		i = n_option;
+	while (cmd->argv[i] && i < cmd->d.n_arg)
+	{
+		echo(cmd->argv[i]);
+		if (cmd->argv[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (n_option == 0)
+		printf("\n");
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:41:17 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/27 15:31:58 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 15:07:34 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ char	**lst_env_to_tab_env(t_env *env)
 	char 	**new_env;
 	t_env	*current;
 
+	
 	size = 0;
 	current = env;
 	while (current->next != NULL && size++ > -1)
 		current = current->next;
-	new_env = calloc(sizeof(char *) , size + 1);
+	new_env = calloc(sizeof(char *) , size + 2);
 	i = 0;
 	current = env;
 	while (i < size)
@@ -55,4 +56,9 @@ char	**lst_env_to_tab_env(t_env *env)
 		i++;
 	}
 	return (new_env);
+}
+
+int	sync_envs(t_data *data)
+{
+	;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/27 17:16:35 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 15:41:09 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ t_env   *lst_name(t_env *lst, char *to_find);
 char	**lst_env_to_tab_env(t_env *env);
 char	*get_env_name(char *string);
 char	*get_env_value(char *string);
+int		sync_envs(t_data *data);
 int		print_list(t_data *data);
 int		equal_index(char *string);
 int		export(char *str, t_env *env);
@@ -141,7 +142,7 @@ void	lst_free(t_env *lst);
 
 // builts-in
 int		get_current_dir(void);
-int 	echo_n(t_command *cmd);
+int		echo_controller(t_command *cmd);
 int		export_controller(t_command *cmd, t_env *env);
 int		cd(t_data *data);
 int		unset_var(t_command *cmd, t_env *env);
@@ -151,7 +152,7 @@ void	signal_exit(int signum);
 
 // Signals
 
-int 			signal_handling(struct sigaction sa, char *buffer);
+int 			signal_handling(struct sigaction sa, t_data *data);
 
 //builts-in tools
 
