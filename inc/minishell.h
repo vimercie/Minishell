@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/30 15:41:09 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 18:18:45 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ typedef struct	s_command		t_command;
 typedef	struct	s_cmd_data		t_cmd_data;
 typedef struct	s_file_table	t_file_table;
 
+typedef struct	s_env
+{
+	char		*name;
+	char		*value;
+	int			val;
+	int			index;
+	t_env		*next;
+}				t_env;
+
 typedef struct	s_file_table
 {
 	char 			*file_name;
@@ -48,8 +57,8 @@ typedef struct	s_file_table
 typedef struct	s_cmd_data
 {
 	t_file_table	*files;
-	int				n_redir;
 	int				pipefd[2];
+	int				n_redir;
 	int				n_arg;
 }				t_cmd_data;
 
@@ -61,15 +70,6 @@ typedef struct	s_command
 	int				fd_out;
 	t_cmd_data		d;
 }				t_command;
-
-typedef struct	s_env
-{
-	char		*name;
-	char		*value;
-	int			val;
-	int			index;
-	t_env		*next;
-}				t_env;
 
 typedef struct	s_data
 {
@@ -96,6 +96,9 @@ t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
 
 // token handling
 char			**tokenize_input(char *input);
+int				token_len(char *input);
+int				handle_metachar(char *input);
+int				count_tokens(char *input);
 
 // redirection
 int get_fd(char *operator, char *file_name, t_data *data);

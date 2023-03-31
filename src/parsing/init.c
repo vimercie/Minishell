@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/21 23:15:38 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 18:08:19 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ char	**argv_init(char **tokens, t_env *env)
 void	cmd_init(char **tokens, t_command *cmd, t_data *data)
 {
 	cmd->d.n_arg = count_args(tokens);
-	cmd->d.n_redir = count_redir(tokens);
-	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
 	set_fd(cmd);
 	cmd->argv = argv_init(tokens, data->env);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
+	cmd->d.n_redir = count_redir(tokens);
+	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
 	return ;
 }

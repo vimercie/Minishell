@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/30 15:06:07 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 18:20:31 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ int	main(int ac, char **av, char **envp)
 		parsing(buffer, &data);
 		// main_tester(&data);
 		execute(&data, buffer);
+		main_tester(&data);
+		// execute(&data, buffer);
+		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);
 		free_memory(&data);
 	}

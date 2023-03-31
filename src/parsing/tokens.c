@@ -12,6 +12,23 @@
 
 #include "../../inc/minishell.h"
 
+int		count_tokens(char *input)
+{
+	int	n_token;
+	int	len;
+
+	len = 0;
+	n_token = 0;
+	while (!is_string_blank(input + len))
+	{
+		while (ft_isspace(input[len]) && input[len])
+			len++;
+		len += token_len(input + len);
+		n_token++;
+	}
+	return (n_token);
+}
+
 int	handle_metachar(char *input)
 {
 	int	res;
@@ -20,7 +37,7 @@ int	handle_metachar(char *input)
 	if (input[0] == '$')
 	{
 		while (!ft_isspace(input[res])
-			&& input[res] != '>' && input[res] != '<'
+			&& input[res] != '>' && input[res] != '<' && input[res] != '|'
 			&& input[res])
 			res++;
 	}
@@ -31,7 +48,7 @@ int	handle_metachar(char *input)
 	}
 	else if (input[0] == '\'' || input[0] == '\"')
 	{
-		while (is_quoted(input, res))
+		while (is_quoted(input, res) != 0)
 			res++;
 		res++;
 	}
@@ -53,23 +70,6 @@ int	token_len(char *input)
 			res++;
 	}
 	return (res);
-}
-
-int		count_tokens(char *input)
-{
-	int	n_token;
-	int	len;
-
-	len = 0;
-	n_token = 0;
-	while (!is_string_blank(input + len))
-	{
-		while (ft_isspace(input[len]) && input[len])
-			len++;
-		len += token_len(input + len);
-		n_token++;
-	}
-	return (n_token);
 }
 
 char	**tokenize_input(char *input)
