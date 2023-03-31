@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/21 22:38:44 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 18:03:07 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	parsing(char *input, t_data *data)
 	i = 0;
 	if (!data_init(input, data))
 		return (0);
+	fd_init(data);
 	pipe_split = ft_split(input, '|');
 	if (!pipe_split)
 		return (0);
-	fd_init(data);
 	while (i < data->n_cmd)
 	{
 		tokens = tokenize_input(pipe_split[i]);
@@ -64,5 +64,7 @@ int	parsing(char *input, t_data *data)
 		i++;
 	}
 	free_tab(pipe_split);
+	if (!check_syntax(input))
+		return (0);
 	return (1);
 }
