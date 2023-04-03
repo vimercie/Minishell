@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/31 18:18:45 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 17:02:09 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ int				free_tab(char **tab);
 int				close_pipes(t_data *data);
 
 // exec
-int				execute(t_data *data, char *buffer);
+void			execute_commands(t_data *data);
+void			redirect_fds(t_data *data, int i);
 
 // env
 t_env	*lst_getenv(char **env);
