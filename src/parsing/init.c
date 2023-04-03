@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/31 18:08:19 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 18:28:16 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ char	**argv_init(char **tokens, t_env *env)
 	while (tokens[i])
 	{
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
-			i++;
+		{
+			if (tokens[i + 1])
+				i++;
+		}
 		else
 		{
 			res[j] = replace_env_var(tokens[i], env);
@@ -80,8 +83,8 @@ char	**argv_init(char **tokens, t_env *env)
 
 void	cmd_init(char **tokens, t_command *cmd, t_data *data)
 {
-	cmd->d.n_arg = count_args(tokens);
 	set_fd(cmd);
+	cmd->d.n_arg = count_args(tokens);
 	cmd->argv = argv_init(tokens, data->env);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	cmd->d.n_redir = count_redir(tokens);

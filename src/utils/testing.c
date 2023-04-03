@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:58:57 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/27 15:59:10 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 18:58:43 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int	main_tester(t_data *data)
 {
-	char	*buffer;
+	// char	*buffer;
 	int		i;
 	int		j;
 
 	i = 0;
-	buffer = NULL;
+	// buffer = NULL;
+	if (!data->cmd)
+		return (printf("cmd = (null)\n"));
 	while (i < data->n_cmd)
 	{
 		j = 0;
@@ -40,22 +42,22 @@ int	main_tester(t_data *data)
 			printf("cmd[%d].files[%d].is_outfile = |%d|\n", i, j, data->cmd[i].d.files[j].is_outfile);
 			j++;
 		}
-		if (data->cmd[i].fd_in > 2)
-		{
-			printf("infile = ");
-			buffer = get_next_line(data->cmd[i].fd_in);
-			if (!buffer)
-				printf("(null)");
-			else
-			{
-				while (buffer)
-				{
-					printf("%s", buffer);
-					free(buffer);
-					buffer = get_next_line(data->cmd[i].fd_in);
-				}
-			}
-		}
+		// if (data->cmd[i].fd_in > 2)
+		// {
+		// 	printf("infile = ");
+		// 	buffer = get_next_line(data->cmd[i].fd_in);
+		// 	if (!buffer)
+		// 		printf("(null)");
+		// 	else
+		// 	{
+		// 		while (buffer)
+		// 		{
+		// 			printf("%s", buffer);
+		// 			free(buffer);
+		// 			buffer = get_next_line(data->cmd[i].fd_in);
+		// 		}
+		// 	}
+		// }
 		printf("\n");
 		i++;
 	}

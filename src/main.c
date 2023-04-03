@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/31 18:20:31 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 18:59:43 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,6 @@ void	handle_history(char *a, char *b)
 		add_history(a);
 	ft_strlcpy(b, a, ft_strlen(a) + 1);
 }
-
-// void	assign_fd(t_data *data)
-// {
-// 	int	prev_fd_out;
-// 	int	i;
-
-// 	prev_fd_out = STDIN_FILENO;
-// 	i = 0;
-// 	while (i < data->n_cmd) // while (i < cmd->length)
-// 	{
-// 		data->cmd[i].fd_in = prev_fd_out;
-// 		if (i == data->n_cmd - 1) // if (i == cmd->length - 1)
-// 			data->cmd[i].fd_out = STDOUT_FILENO;
-// 		else
-// 		{
-// 			int	pipefd[2];
-
-// 			if (pipe(pipefd) < 0)
-// 				return ;
-// 			data->cmd[i].fd_out = pipefd[1];
-// 			prev_fd_out = pipefd[0];
-// 		}
-// 		i++;
-// 	}
-// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -78,8 +53,6 @@ int	main(int ac, char **av, char **envp)
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
 		// main_tester(&data);
-		execute(&data, buffer);
-		main_tester(&data);
 		// execute(&data, buffer);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);

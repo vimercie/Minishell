@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:14:30 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/27 17:16:39 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 18:58:02 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	free_memory(t_data *data)
 	i = 0;
 	if (data)
 	{
+		if (!data->cmd)
+			return ;
 		close_pipes(data);
 		while (i < data->n_cmd)
 		{

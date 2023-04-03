@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/27 15:38:57 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 18:23:06 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ int		count_args(char **tokens)
 	res = 0;
 	if (!tokens)
 		return (res);
-	while (tokens[i])
+	while (tokens[i]) 
 	{
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
-			i++;
+		{
+			if (tokens[i + 1])
+				i++;
+		}
 		else
 			res++;
 		i++;
