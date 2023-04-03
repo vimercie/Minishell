@@ -6,13 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/03 18:59:43 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 19:03:43 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/minishell.h"
-
-// int	signal_return = 0;
 
 void	handle_history(char *a, char *b)
 {
