@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/03 17:02:09 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 17:23:33 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int				handle_metachar(char *input);
 int				count_tokens(char *input);
 
 // redirection
-int get_fd(char *operator, char *file_name, t_data *data);
+int 			get_fd(char *operator, char *file_name, t_data *data);
 
 // heredoc
 int				heredoc(char *delimiter, t_data *data);
@@ -120,6 +120,9 @@ char			*remove_quotes(char *s);
 int				count_cmd(char *s);
 int				count_redir(char **tokens);
 int				count_args(char **tokens);
+
+// error
+int				print_error(char *token, int errnum);
 
 // cleaning
 void			free_memory(t_data *data);

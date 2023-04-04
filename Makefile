@@ -23,6 +23,7 @@ SRC=		main.c						\
 			checking.c					\
 			parsing_utils.c				\
 			init_utils.c				\
+			error.c						\
 			cleaning.c					\
 			exec.c						\
 			env.c						\

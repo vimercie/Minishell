@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/03 18:27:04 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 18:32:59 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	close_exec_exit(t_data *data, int i)
 	close(data->cmd[i].d.pipefd[1]);
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 	perror_exit("execve");
+	return ;
 }
 
 void child_p(t_data *data, int i)
@@ -75,7 +76,7 @@ void	execute_commands(t_data *data)
 		else if (pid == 0)
 			child_p(data, i);
 		else
-		{ // parent process
+		{
 			close(data->cmd[i].fd_in);
 			close(data->cmd[i].fd_out);
 			waitpid(pid, NULL, 0);

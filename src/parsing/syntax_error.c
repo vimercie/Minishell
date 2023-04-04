@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:36:41 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/31 18:10:04 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 17:25:00 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,10 @@ int	check_consecutive_metachar(char **tokens)
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
 		{
 			if (tokens[i + 1] == NULL)
-				return (write(2, "syntax error near unexpected token `newline'\n", 45) - 44);
+				return (print_error("newline", 2));
 			if (tokens[i + 1][0] == '>' || tokens[i + 1][0] == '<'
 				|| tokens[i + 1][0] == '|')
-			{
-				write(2, "syntax error near unexpected token `", 36);
-				ft_putstr_fd(tokens[i + 1], 2);
-				write(2, "'\n", 2);
-				return (1);
-			}
+				return (print_error(tokens[i + 1], 2));
 		}
 		i++;
 	}

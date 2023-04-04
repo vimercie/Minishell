@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/03 19:03:43 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 18:15:04 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	main(int ac, char **av, char **envp)
 		}
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
+		execute_commands(&data);
 		// main_tester(&data);
-		// execute(&data, buffer);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);
 		free_memory(&data);
