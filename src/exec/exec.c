@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/04 18:32:59 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 02:37:52 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,23 @@ void	perror_exit(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	close_exec_exit(t_data *data, int i)
-{
-	close(data->cmd[i].d.pipefd[0]);
-	close(data->cmd[i].d.pipefd[1]);
-	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
-	perror_exit("execve");
-	return ;
-}
-
 void child_p(t_data *data, int i)
 {
     if (data->cmd[i].fd_in != STDIN_FILENO)
+	{
         if (dup2(data->cmd[i].fd_in, STDIN_FILENO) == -1)
             perror_exit("dup2");
+		close(data->cmd[i].fd_in);
+	}
     if (data->cmd[i].fd_out != STDOUT_FILENO)
+	{
         if (dup2(data->cmd[i].fd_out, STDOUT_FILENO) == -1)
             perror_exit("dup2");
-    close_exec_exit(data, i);
+		close(data->cmd[i].fd_out);
+	}
+	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
+	perror_exit("execve");
+	return ;
 }
 
 void	execute_commands(t_data *data)
@@ -77,10 +76,13 @@ void	execute_commands(t_data *data)
 			child_p(data, i);
 		else
 		{
-			close(data->cmd[i].fd_in);
-			close(data->cmd[i].fd_out);
-			waitpid(pid, NULL, 0);
+			if (data->cmd[i].fd_in != STDIN_FILENO)
+				close(data->cmd[i].fd_in);
+			if (data->cmd[i].fd_out != STDOUT_FILENO)
+				close(data->cmd[i].fd_out);
+			waitpid(0, NULL, 0);
 		}
 		i++;
 	}
+	return ;
 }

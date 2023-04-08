@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:33:20 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/04 18:28:58 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 19:33:12 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int signal_handling(struct sigaction sa, t_data *data)
 	// 	printf("_______________!BUFFER == TRUE________________\n");
 	// 	exit(EXIT_SUCCESS);
 	// }
-    sa.sa_handler = sigint_handler;
+    sa.sa_handler = &sigint_handler;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
     sigaction(SIGINT, &sa, NULL);
