@@ -58,7 +58,7 @@ char	**lst_env_to_tab_env(t_env *env)
 	return (new_env);
 }
 
-int	sync_envs(t_data *data)
-{
-	;
-}
+// int	sync_envs(t_data *data)
+// {
+// 	;
+// }

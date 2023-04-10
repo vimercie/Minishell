@@ -69,6 +69,8 @@ void	execute_commands(t_data *data)
 	i = 0;
 	while (i < data->n_cmd)
 	{
+		if (!data->cmd[i].pathname)
+			return ;
 		pid = fork();
 		if (pid == -1)
 			perror_exit("fork");

@@ -12,27 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// int	close_pipes(t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < data->n_cmd)
-// 	{
-// 		if (data->cmd[i].d.pipefd[0] > 2
-// 			|| data->cmd[i].d.pipefd[1] > 2)
-// 		{
-// 			close(data->cmd[i].d.pipefd[0]);
-// 			close(data->cmd[i].d.pipefd[1]);
-// 			printf("closed pipe[0] = %d\n", data->cmd[i].d.pipefd[0]);
-// 			printf("closed pipe[1] = %d\n", data->cmd[i].d.pipefd[1]);
-// 			return (0);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 int	free_tab(char **tab)
 {
 	int	i;

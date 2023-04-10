@@ -37,20 +37,21 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	previous_buffer[0] = 0;
 	data.env = lst_getenv(envp);
+	data.tab_env = lst_env_to_tab_env(data.env);
 	while (1)
 	{
-		data.tab_env = lst_env_to_tab_env(data.env);
-		signal_handling(sa, &data);
+		signal_handling(sa);
 		buffer = readline("GigaBash$ ");
 		if (buffer == NULL)
 		{
 			printf("EXIT_BASH\n\n");
 			free_tab(data.tab_env);
+			lst_free(data.env);
 			exit(EXIT_SUCCESS);
 		}
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		// main_tester(&data);
+		main_tester(&data);
 		execute_commands(&data);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);

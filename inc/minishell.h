@@ -159,7 +159,7 @@ void	signal_exit(int signum);
 
 // Signals
 
-int 			signal_handling(struct sigaction sa, t_data *data);
+int 			signal_handling(struct sigaction sa);
 
 //builts-in tools
 
