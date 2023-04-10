@@ -160,6 +160,6 @@ void			exit_gigabash(t_data *data);
 void			signal_exit(int signum);
 
 // Signals
-int				signal_handling(struct sigaction sa, t_data *data);
+int				signal_handling(struct sigaction sa);
 
 #endif
