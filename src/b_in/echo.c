@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/10 15:31:59 by mmajani           #+#    #+#             */
+/*   Updated: 2023/04/10 15:32:17 by mmajani          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-int echo(char *str)
+int	echo(char *str)
 {
 	printf("%s", str);
 	return (0);
 }
 
-int has_n_option(t_command *cmd)
+int	has_n_option(t_command *cmd)
 {
 	int	i;
 
@@ -18,10 +30,10 @@ int has_n_option(t_command *cmd)
 	return (i);
 }
 
-int echo_controller(t_command *cmd)
+int	echo_controller(t_command *cmd)
 {
-	int i;
-	int n_option;
+	int	i;
+	int	n_option;
 
 	i = 1;
 	if (!cmd->argv[1])

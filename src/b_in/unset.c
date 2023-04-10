@@ -1,10 +1,21 @@
-#include "../../inc/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/10 15:42:44 by mmajani           #+#    #+#             */
+/*   Updated: 2023/04/10 15:43:03 by mmajani          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 
 void	lst_del(t_env *lst, char *to_find)
 {
-	t_env *prev;
-	t_env *next;
+	t_env	*prev;
+	t_env	*next;
 
 	if (lst == NULL)
 		return ;
@@ -22,9 +33,9 @@ void	lst_del(t_env *lst, char *to_find)
 	free(next);
 }
 
-int		unset_var(t_command *cmd, t_env *env)
+int	unset_var(t_command *cmd, t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (i < cmd->d.n_arg)
@@ -34,4 +45,3 @@ int		unset_var(t_command *cmd, t_env *env)
 	}
 	return (0);
 }
-

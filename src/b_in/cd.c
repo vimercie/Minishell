@@ -6,24 +6,25 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:07:06 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/27 13:59:27 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/10 18:13:04 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void goToHomeDir()
+void	gotohomedir(void)
 {
-	char*	homeDir;
-	homeDir = getenv("HOME");
-	if (homeDir == NULL)
+	char	*homedir;
+
+	homedir = getenv("HOME");
+	if (homedir == NULL)
 	{
 		perror("");
 		exit(1);
 	}
 	else
 	{
-		if (chdir(homeDir) == -1)
+		if (chdir(homedir) == -1)
 		{
 			perror("");
 			exit(1);
@@ -41,7 +42,7 @@ void goToHomeDir()
 // 	return (0);
 // }
 
-int	goToRelativePath(char* path)
+int	gotorelativepath(char *path)
 {
 	if (chdir(path) == -1)
 	{
@@ -53,8 +54,8 @@ int	goToRelativePath(char* path)
 
 void	refresh_pwds_to_env(t_data *data, char *oldpwd)
 {
-	char *new;
-	char *tmp;
+	char	*new;
+	char	*tmp;
 
 	tmp = getcwd(NULL, 4096);
 	new = calloc(sizeof(char), 32760);
@@ -73,7 +74,6 @@ int	cd(t_data *data)
 	char	*oldpwd;
 	char	*tmp;
 
-
 	if (data->cmd->d.n_arg > 2)
 	{
 		printf("cd: too many arguments\n");
@@ -88,7 +88,7 @@ int	cd(t_data *data)
 			refresh_pwds_to_env(data, oldpwd);
 	if (data->cmd->d.n_arg == 1)
 	{
-		goToHomeDir();
+		gotohomedir();
 		refresh_pwds_to_env(data, oldpwd);
 	}
 	if (tmp)

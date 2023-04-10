@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/27 14:59:36 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/10 16:00:41 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <string.h>
 #include "../../inc/minishell.h"
 
-int count_env(t_env *start)
+int	count_env(t_env *start)
 {
-	t_env *head;
-	int count;
+	t_env	*head;
+	int		count;
 
 	count = 0;
 	head = start;
@@ -61,29 +61,29 @@ int	print_sorted_list(t_env *env)
 int	print_list(t_data *data)
 {
 	t_env	*current;
-	t_env   *start;
+	t_env	*start;
 
 	current = data->env;
 	start = current;
 	while (current->next != NULL)
 	{
-		printf("declare -x %s", current->name);
+		printf("%s", current->name);
 		if (current->val == 1)
-			printf("=\"%s\"\n", current->value);
+			printf("=%s\n", current->value);
 		else
 			printf("\n");
-		current = current->next; 
+		current = current->next;
 	}
 	lst_free(start);
 	return (1);
 }
 
-char *get_left_part(char *string)
+char	*get_left_part(char *string)
 {
-	int i;
-	int j;
-	char *left_part;
-	
+	int		i;
+	int		j;
+	char	*left_part;
+
 	left_part = malloc((strlen(string) + 1) * sizeof(char));
 	i = 0;
 	j = 0;
