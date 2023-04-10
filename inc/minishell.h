@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/04 17:23:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/10 18:12:55 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct	s_env			t_env;
-typedef struct	s_data			t_data;
-typedef struct	s_command		t_command;
-typedef	struct	s_cmd_data		t_cmd_data;
-typedef struct	s_file_table	t_file_table;
+typedef struct s_env			t_env;
+typedef struct s_data			t_data;
+typedef struct s_command		t_command;
+typedef struct s_cmd_data		t_cmd_data;
+typedef struct s_file_table		t_file_table;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char		*name;
 	char		*value;
@@ -46,15 +46,15 @@ typedef struct	s_env
 	t_env		*next;
 }				t_env;
 
-typedef struct	s_file_table
+typedef struct s_file_table
 {
-	char 			*file_name;
+	char			*file_name;
 	int				fd;
 	bool			is_outfile;
 	bool			is_heredoc;
 }				t_file_table;
 
-typedef struct	s_cmd_data
+typedef struct s_cmd_data
 {
 	t_file_table	*files;
 	int				pipefd[2];
@@ -62,7 +62,7 @@ typedef struct	s_cmd_data
 	int				n_arg;
 }				t_cmd_data;
 
-typedef struct	s_command
+typedef struct s_command
 {
 	char			**argv;
 	char			*pathname;
@@ -71,7 +71,7 @@ typedef struct	s_command
 	t_cmd_data		d;
 }				t_command;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	t_command	*cmd;
 	t_env		*env;
@@ -101,7 +101,7 @@ int				handle_metachar(char *input);
 int				count_tokens(char *input);
 
 // redirection
-int 			get_fd(char *operator, char *file_name, t_data *data);
+int				get_fd(char *operator, char *file_name, t_data *data);
 
 // heredoc
 int				heredoc(char *delimiter, t_data *data);
@@ -134,40 +134,32 @@ void			execute_commands(t_data *data);
 void			redirect_fds(t_data *data, int i);
 
 // env
-t_env	*lst_getenv(char **env);
-t_env   *lst_name(t_env *lst, char *to_find);
-char	**lst_env_to_tab_env(t_env *env);
-char	*get_env_name(char *string);
-char	*get_env_value(char *string);
-int		sync_envs(t_data *data);
-int		print_list(t_data *data);
-int		equal_index(char *string);
-int		export(char *str, t_env *env);
-int		print_sorted_list(t_env *env);
-void	index_env(t_env *env);
-void	lst_free(t_env *lst);
+t_env			*lst_getenv(char **env);
+t_env			*lst_name(t_env *lst, char *to_find);
+char			**lst_env_to_tab_env(t_env *env);
+char			*get_env_name(char *string);
+char			*get_env_value(char *string);
+char			*get_left_part(char *string);
+int				assign_name_value(t_env *lst_new, char *string);
+int				sync_envs(t_data *data);
+int				print_list(t_data *data);
+int				equal_index(char *string);
+int				export(char *str, t_env *env);
+int				print_sorted_list(t_env *env);
+void			index_env(t_env *env);
+void			lst_free(t_env *lst);
 
 // builts-in
-int		get_current_dir(void);
-int		echo_controller(t_command *cmd);
-int		export_controller(t_command *cmd, t_env *env);
-int		cd(t_data *data);
-int		unset_var(t_command *cmd, t_env *env);
-int     exit_bash(t_data *data, char *buffer);
-void	exit_gigabash(t_data *data);
-void	signal_exit(int signum);
+int				get_current_dir(void);
+int				echo_controller(t_command *cmd);
+int				export_controller(t_command *cmd, t_env *env);
+int				cd(t_data *data);
+int				unset_var(t_command *cmd, t_env *env);
+int				exit_bash(t_data *data, char *buffer);
+void			exit_gigabash(t_data *data);
+void			signal_exit(int signum);
 
 // Signals
-
-int 			signal_handling(struct sigaction sa, t_data *data);
-
-//builts-in tools
-
-// void 	print_env(char **env);
-// int		ft_putenv(char *name, char *value, char **env);
-// int 	print_ascii_order_env(char **env);
-char			*get_left_part(char *string);
-char 			**ft_copyenv(char **env);
-int				assign_name_value(t_env *lst_new, char *string);
+int				signal_handling(struct sigaction sa, t_data *data);
 
 #endif

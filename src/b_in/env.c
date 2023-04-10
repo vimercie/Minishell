@@ -6,46 +6,15 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:12:18 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/19 13:42:27 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/10 18:13:15 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	**ft_copyenv(char **env)
+t_env	*lst_init_env(void)
 {
-	char	**copy_env;
-	int		nb_env;
-	int		i;
-	int		j;
-	
-	nb_env = 0;
-	while (env[nb_env] != NULL)
-		nb_env++;
-	copy_env = malloc(sizeof(char *) * (nb_env + 1));
-	if (copy_env == NULL)
-		return (NULL);
-	i = 0;
-	while (i < nb_env)
-	{
-		copy_env[i] = strdup(env[i]);
-		if (copy_env[i] == NULL)
-		{
-			j = 0;
-			while (j < i)
-				free(copy_env[j++]);
-			free(copy_env);
-			return (NULL);
-		}
-		i++;
-	}
-	copy_env[nb_env] = NULL;    
-	return (copy_env);
-}
-
-t_env    *lst_init_env(void)
-{
-	t_env   *start;
+	t_env	*start;
 
 	start = malloc(sizeof(*start));
 	start->name = NULL;
@@ -55,12 +24,12 @@ t_env    *lst_init_env(void)
 	return (start);
 }
 
-t_env   *lst_name(t_env *lst, char *to_find)
+t_env	*lst_name(t_env *lst, char *to_find)
 {
-	t_env *next;
+	t_env	*next;
 
 	if (lst == NULL)
-		return NULL;
+		return (NULL);
 	next = lst;
 	while (next->name != NULL)
 	{
@@ -72,12 +41,12 @@ t_env   *lst_name(t_env *lst, char *to_find)
 	return (next);
 }
 
-t_env   *lst_getenv(char **env)
+t_env	*lst_getenv(char **env)
 {
 	t_env	*lst_start;
 	t_env	*lst_new;
-	int i;
-	
+	int		i;
+
 	lst_start = lst_init_env();
 	lst_new = lst_start;
 	i = 0;
@@ -98,7 +67,7 @@ t_env   *lst_getenv(char **env)
 
 void	lst_free(t_env *lst)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	while (lst)
 	{

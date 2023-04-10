@@ -6,13 +6,13 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:50:43 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/19 13:55:30 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/10 15:41:19 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	memory_handling(t_env *current, char *name, char* value)
+int	memory_handling(t_env *current, char *name, char *value)
 {
 	if (current->value && value == NULL)
 	{
@@ -32,11 +32,13 @@ int	memory_handling(t_env *current, char *name, char* value)
 	return (0);
 }
 
-int	assign_name_value(t_env *lst_new, char *string) 
+int	assign_name_value(t_env *lst_new, char *string)
 {
-	char *name = get_env_name(string);
-	char *value = get_env_value(string);
+	char	*name;
+	char	*value;
 
+	name = get_env_name(string);
+	value = get_env_value(string);
 	if (memory_handling(lst_new, name, value) == 1)
 		return (1);
 	ft_strlcpy(lst_new->name, name, ft_strlen(name) + 1);
@@ -52,10 +54,10 @@ int	assign_name_value(t_env *lst_new, char *string)
 	return (0);
 }
 
-int export(char *str, t_env *env)
+int	export(char *str, t_env *env)
 {
-	t_env *lst_target;
-	char *left_part;
+	t_env	*lst_target;
+	char	*left_part;
 
 	left_part = get_left_part(str);
 	lst_target = lst_name(env, left_part);
@@ -71,9 +73,9 @@ int export(char *str, t_env *env)
 	return (0);
 }
 
-int export_controller(t_command *cmd, t_env *env)
+int	export_controller(t_command *cmd, t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (i < cmd->d.n_arg)
