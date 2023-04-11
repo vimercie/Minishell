@@ -24,6 +24,7 @@ int	close_files(t_command *cmd)
 			return (0);
 		if (!close(cmd->d.files[i].fd))
 			return (0);
+		printf("closed fd=%d\n", cmd->d.files[i].fd);
 		i++;
 	}
 	return (1);
@@ -60,7 +61,8 @@ void	free_loop(t_data *data)
 			free(data->cmd[i].pathname);
 			free_tab(data->cmd[i].argv);
 			close_files(&data->cmd[i]);
-			free(data->cmd[i].d.files);
+			if (data->cmd[i].d.files)
+				free(data->cmd[i].d.files);
 			i++;
 		}
 		free(data->cmd);

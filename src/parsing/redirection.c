@@ -41,7 +41,7 @@ int	get_fd(char *operator, char *file_name, t_data *data)
 		return (-1);
 	if (operator[0] == '>')
 	{
-		if (access(file_name, F_OK) == 0 && access(file_name, X_OK) == -1)
+		if (access(file_name, F_OK) == 0 && access(file_name, W_OK) == -1)
 			return (-1);
 		if (ft_strcmp(operator, ">") == 0)
 			fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0666);

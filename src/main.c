@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 		handle_history(buffer, previous_buffer);
 		if (parsing(buffer, &data))
 			execute_commands(&data);
-		// main_tester(&data);
+		main_tester(&data);
 		free_tab(data.tab_env);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);

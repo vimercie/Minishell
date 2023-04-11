@@ -35,12 +35,14 @@ int	check_consecutive_metachar(char **tokens)
 int	check_syntax(char *input)
 {
 	char	**tokens;
+	int		return_val;
 
+	return_val = 1;
 	tokens = tokenize_input(input);
 	if (!tokens)
-		return (1);
-	if (check_consecutive_metachar(tokens))
 		return (0);
+	if (check_consecutive_metachar(tokens))
+		return_val = 0;
 	free_tab(tokens);
-	return (1);
+	return (return_val);
 }
