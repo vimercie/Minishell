@@ -67,7 +67,7 @@ int	parsing(char *input, t_data *data)
 		tokens = tokenize_input(pipe_split[i]);
 		cmd_init(tokens, &data->cmd[i], data);
 		free_tab(tokens);
-		if (access(data->cmd[i].pathname, X_OK) == -1)
+		if (data->cmd[i].pathname && access(data->cmd[i].pathname, X_OK) == -1)
 		{
 			return_val = 0;
 			print_error(data->cmd[i].pathname, 127);
