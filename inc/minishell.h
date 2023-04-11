@@ -93,7 +93,7 @@ void			cmd_init(char **tokens, t_command *cmd, t_data *data);
 char			**argv_init(char **tokens, t_env *env);
 char			*get_cmd_path(char *cmd);
 t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
-void			set_fd(t_data *data);
+int				set_fd(t_data *data);
 
 // token handling
 char			**tokenize_input(char *input);

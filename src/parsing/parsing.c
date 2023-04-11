@@ -21,7 +21,8 @@ int	pipe_init(t_data *data)
 	{
 		if (i > 0)
 		{
-			pipe(data->cmd[i].d.pipefd);
+			if (!pipe(data->cmd[i].d.pipefd))
+				return (0);
 			data->cmd[i].fd_in = data->cmd[i].d.pipefd[0];
 			data->cmd[i - 1].fd_out = data->cmd[i].d.pipefd[1];
 		}
@@ -47,11 +48,9 @@ int	parsing(char *input, t_data *data)
 {
 	char	**pipe_split;
 	char	**tokens;
-	int		return_val;
 	int		i;
 
 	i = 0;
-	return_val = 1;
 	if (!data_init(input, data))
 		return (0);
 	pipe_split = ft_split(input, '|');
@@ -64,7 +63,8 @@ int	parsing(char *input, t_data *data)
 		free_tab(tokens);
 		i++;
 	}
-	set_fd(data);
 	free_tab(pipe_split);
-	return (return_val);
+	if (!set_fd(data))
+		return (0);
+	return (1);
 }

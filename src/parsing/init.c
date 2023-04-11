@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void	set_fd(t_data *data)
+int	set_fd(t_data *data)
 {
 	int	i;
 	int	j;
@@ -24,6 +24,11 @@ void	set_fd(t_data *data)
 		j = 0;
 		while (j < data->cmd[i].d.n_redir)
 		{
+			if (data->cmd[i].d.files[j].fd == -1)
+			{
+				print_linux_error(data->cmd[i].d.files[j].file_name, 2);
+				return (0);
+			}
 			if (data->cmd[i].d.files[j].is_outfile == 0)
 				data->cmd[i].fd_in = data->cmd[i].d.files[j].fd;
 			else
@@ -32,7 +37,7 @@ void	set_fd(t_data *data)
 		}
 		i++;
 	}
-	return ;
+	return (1);
 }
 
 char	*get_cmd_path(char *cmd)

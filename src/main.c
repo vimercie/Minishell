@@ -50,9 +50,9 @@ int	main(int ac, char **av, char **envp)
 			return (0);
 		}
 		handle_history(buffer, previous_buffer);
-		parsing(buffer, &data);
+		if (parsing(buffer, &data))
+			execute_commands(&data);
 		// main_tester(&data);
-		execute_commands(&data);
 		free_tab(data.tab_env);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);
