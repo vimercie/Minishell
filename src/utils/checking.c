@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/31 18:01:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 14:11:46 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_quote(char *s, int index)
 {
 	if ((s[index] == '\"' || s[index] == '\'') && !is_quoted(s, index)
 		&& (is_quoted(s, index + 1) + is_quoted(s, index - 1) == 1
-		|| (s[index + 1] == s[index] || s[index - 1] == s[index])))
+			|| (s[index + 1] == s[index] || s[index - 1] == s[index])))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:41:17 by mmajani           #+#    #+#             */
-/*   Updated: 2023/03/30 15:07:34 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 14:12:54 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*t_env_to_str(t_env *env)
 
 	i = 0;
 	j = 0;
-	str = malloc(sizeof(char) *
-		ft_strlen(env->name) + ft_strlen(env->value) + 2);
+	str = malloc(sizeof(char)
+			* ft_strlen(env->name) + ft_strlen(env->value) + 2);
 	while (i < ft_strlen(env->name) - 1)
 	{
 		str[i] = env->name[i];
@@ -39,15 +39,14 @@ char	**lst_env_to_tab_env(t_env *env)
 {
 	int		i;
 	int		size;
-	char 	**new_env;
+	char	**new_env;
 	t_env	*current;
 
-	
 	size = 0;
 	current = env;
 	while (current->next != NULL && size++ > -1)
 		current = current->next;
-	new_env = calloc(sizeof(char *) , size + 2);
+	new_env = calloc(sizeof(char *), size + 2);
 	i = 0;
 	current = env;
 	while (i < size)
@@ -56,9 +55,4 @@ char	**lst_env_to_tab_env(t_env *env)
 		i++;
 	}
 	return (new_env);
-}
-
-int	sync_envs(t_data *data)
-{
-	;
 }

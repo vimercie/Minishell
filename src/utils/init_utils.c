@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/03 18:23:06 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 14:12:05 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		count_args(char **tokens)
+int	count_args(char **tokens)
 {
 	int	res;
 	int	i;
@@ -21,7 +21,7 @@ int		count_args(char **tokens)
 	res = 0;
 	if (!tokens)
 		return (res);
-	while (tokens[i]) 
+	while (tokens[i])
 	{
 		if (tokens[i][0] == '>' || tokens[i][0] == '<')
 		{
@@ -68,7 +68,7 @@ int	count_cmd(char *s)
 			&& s[i + 1] != '|'
 			&& s[i - 1] != '|')
 		{
-			if(is_string_blank((s + i) + 1))
+			if (is_string_blank((s + i) + 1))
 				return (res);
 			res++;
 		}

@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/10 18:12:55 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 14:17:07 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ char			*get_env_name(char *string);
 char			*get_env_value(char *string);
 char			*get_left_part(char *string);
 int				assign_name_value(t_env *lst_new, char *string);
-int				sync_envs(t_data *data);
 int				print_list(t_data *data);
 int				equal_index(char *string);
 int				export(char *str, t_env *env);
@@ -160,6 +159,6 @@ void			exit_gigabash(t_data *data);
 void			signal_exit(int signum);
 
 // Signals
-int				signal_handling(struct sigaction sa, t_data *data);
+int				signal_handling(struct sigaction sa);
 
 #endif

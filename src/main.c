@@ -6,11 +6,11 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/10 15:44:33 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 14:18:37 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/minishell.h"
+#include "../inc/minishell.h"
 
 void	handle_history(char *a, char *b)
 {
@@ -28,11 +28,11 @@ void	handle_history(char *a, char *b)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data	data;
-	char	*buffer;
-	char	previous_buffer[1024];
-	struct sigaction sa;
-	
+	t_data				data;
+	char				*buffer;
+	char				previous_buffer[1024];
+	struct sigaction	sa;
+
 	(void)ac;
 	(void)av;
 	previous_buffer[0] = 0;
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		data.tab_env = lst_env_to_tab_env(data.env);
-		signal_handling(sa, &data);
+		signal_handling(sa);
 		buffer = readline("GigaBash$ ");
 		if (buffer == NULL)
 		{

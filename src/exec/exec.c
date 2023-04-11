@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/10 18:52:10 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 14:16:44 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	built_in_detection(t_data *data, char *buffer)
 		&& data->cmd->d.n_arg >= 2)
 		return (export_controller(data->cmd, data->env));
 	else if (ft_strncmp(data->cmd->argv[0], "env", 3) == 0)
-		return (print_list(data->env));
+		return (print_list(data));
 	else if (ft_strncmp(data->cmd->argv[0], "pwd", 3) == 0)
 		return (get_current_dir());
 	else if (ft_strncmp(data->cmd->argv[0], "unset", 5) == 0)

@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:07:06 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/10 18:13:04 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 14:10:08 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	cd(t_data *data)
 	ft_strlcpy(oldpwd, "OLDPWD=", 8);
 	ft_strlcat(oldpwd, tmp, 4096);
 	if (data->cmd->d.n_arg == 2)
-		if (goToRelativePath(data->cmd->argv[1]) == 0)
+		if (gotorelativepath(data->cmd->argv[1]) == 0)
 			refresh_pwds_to_env(data, oldpwd);
 	if (data->cmd->d.n_arg == 1)
 	{
