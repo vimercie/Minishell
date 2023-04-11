@@ -83,9 +83,11 @@ char	**argv_init(char **tokens, t_env *env)
 
 void	cmd_init(char **tokens, t_command *cmd, t_data *data)
 {
-	cmd->d.n_arg = count_args(tokens);
 	cmd->argv = argv_init(tokens, data->env);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
+	cmd->fd_in = 0;
+	cmd->fd_out = 1;
+	cmd->d.n_arg = count_args(tokens);
 	cmd->d.n_redir = count_redir(tokens);
 	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
 	set_fd(cmd);

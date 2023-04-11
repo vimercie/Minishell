@@ -40,23 +40,23 @@ int	main(int ac, char **av, char **envp)
 	data.tab_env = lst_env_to_tab_env(data.env);
 	while (1)
 	{
-		data.tab_env = lst_env_to_tab_env(data.env);
 		signal_handling(sa);
 		buffer = readline("GigaBash$ ");
-		if (buffer == NULL)
+		if (!buffer)
 		{
 			printf("EXIT_BASH\n\n");
 			free_tab(data.tab_env);
 			lst_free(data.env);
-			exit(EXIT_SUCCESS);
+			return (0);
 		}
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		main_tester(&data);
+		// main_tester(&data);
 		execute_commands(&data);
+		free_tab(data.tab_env);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);
-		free_memory(&data);
+		free_loop(&data);
 	}
 	return (0);
 }

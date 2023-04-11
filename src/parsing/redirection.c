@@ -33,27 +33,32 @@ int	close_pipe(int fd_to_close, t_data *data)
 	return (0);
 }
 
-int get_fd(char *operator, char *file_name, t_data *data)
+int	get_fd(char *operator, char *file_name, t_data *data)
 {
 	int		fd;
 
-	fd = -1;
 	if (!file_name)
-		return (fd);
+		return (-1);
 	if (operator[0] == '>')
 	{
-		if (access(file_name, W_OK) == 0 || access(file_name, F_OK) == -1)
+		if (access(file_name, F_OK) == 0 && access(file_name, X_OK) == -1)
 		{
-			if (ft_strcmp(operator, ">") == 0)
-				fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-			else if (ft_strcmp(operator, ">>") == 0)
-				fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0666);
+			print_linux_error(file_name, 2);
+			return (-1);
 		}
+		if (ft_strcmp(operator, ">") == 0)
+			fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+		else if (ft_strcmp(operator, ">>") == 0)
+			fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0666);
 	}
 	else if (ft_strcmp(operator, "<") == 0)
 	{
-		if (access(file_name, R_OK) == 0)
-			fd = open(file_name, O_RDONLY);
+		if (access(file_name, R_OK) == -1)
+		{
+			print_linux_error(file_name, 2);
+			return (-1);
+		}
+		fd = open(file_name, O_RDONLY);
 	}
 	else if (ft_strcmp(operator, "<<") == 0)
 		fd = heredoc(file_name, data);

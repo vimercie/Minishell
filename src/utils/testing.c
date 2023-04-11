@@ -14,12 +14,10 @@
 
 int	main_tester(t_data *data)
 {
-	// char	*buffer;
 	int		i;
 	int		j;
 
 	i = 0;
-	// buffer = NULL;
 	if (!data->cmd)
 		return (printf("cmd = (null)\n"));
 	while (i < data->n_cmd)
@@ -42,22 +40,6 @@ int	main_tester(t_data *data)
 			printf("cmd[%d].files[%d].is_outfile = |%d|\n", i, j, data->cmd[i].d.files[j].is_outfile);
 			j++;
 		}
-		// if (data->cmd[i].fd_in > 2)
-		// {
-		// 	printf("infile = ");
-		// 	buffer = get_next_line(data->cmd[i].fd_in);
-		// 	if (!buffer)
-		// 		printf("(null)");
-		// 	else
-		// 	{
-		// 		while (buffer)
-		// 		{
-		// 			printf("%s", buffer);
-		// 			free(buffer);
-		// 			buffer = get_next_line(data->cmd[i].fd_in);
-		// 		}
-		// 	}
-		// }
 		printf("\n");
 		i++;
 	}

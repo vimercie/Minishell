@@ -12,7 +12,18 @@
 
 #include "../../inc/minishell.h"
 
-int	print_error(char *token, int errnum)
+int	print_linux_error(char *token, int errnum)
+{
+	if (errnum == 2)
+	{
+		ft_putstr_fd("Gigabash: ", 2);
+		perror(token);
+
+	}
+	return (1);
+}
+
+int	print_bash_error(char *token, int errnum)
 {
 	if (errnum == 2)
 	{

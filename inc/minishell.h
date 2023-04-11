@@ -56,8 +56,8 @@ typedef struct s_file_table
 
 typedef struct s_cmd_data
 {
-	t_file_table	*files;
 	int				pipefd[2];
+	t_file_table	*files;
 	int				n_redir;
 	int				n_arg;
 }				t_cmd_data;
@@ -86,7 +86,7 @@ int				main_tester(t_data *data);
 int				parsing(char *input, t_data *data);
 int				check_syntax(char *input);
 char			*replace_env_var(char *input, t_env *env);
-int				fd_init(t_data *data);
+int				pipe_init(t_data *data);
 
 // init
 void			cmd_init(char **tokens, t_command *cmd, t_data *data);
@@ -122,10 +122,11 @@ int				count_redir(char **tokens);
 int				count_args(char **tokens);
 
 // error
-int				print_error(char *token, int errnum);
+int				print_bash_error(char *token, int errnum);
+int				print_linux_error(char *token, int errnum);
 
 // cleaning
-void			free_memory(t_data *data);
+void			free_loop(t_data *data);
 int				free_tab(char **tab);
 int				close_pipes(t_data *data);
 

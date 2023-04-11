@@ -12,15 +12,13 @@
 
 #include "../../inc/minishell.h"
 
-int	fd_init(t_data *data)
+int	pipe_init(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		data->cmd[i].fd_in = 0;
-		data->cmd[i].fd_out = 1;
 		if (i > 0)
 		{
 			pipe(data->cmd[i].d.pipefd);
@@ -56,9 +54,6 @@ int	parsing(char *input, t_data *data)
 	return_val = 1;
 	if (!data_init(input, data))
 		return (0);
-	if (!data->cmd)
-		return (0);
-	fd_init(data);
 	pipe_split = ft_split(input, '|');
 	if (!pipe_split)
 		return (0);
@@ -67,13 +62,9 @@ int	parsing(char *input, t_data *data)
 		tokens = tokenize_input(pipe_split[i]);
 		cmd_init(tokens, &data->cmd[i], data);
 		free_tab(tokens);
-		if (data->cmd[i].pathname && access(data->cmd[i].pathname, X_OK) == -1)
-		{
-			return_val = 0;
-			print_error(data->cmd[i].pathname, 127);
-		}
 		i++;
 	}
 	free_tab(pipe_split);
+	pipe_init(data);
 	return (return_val);
 }
