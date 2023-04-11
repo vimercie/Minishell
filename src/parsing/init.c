@@ -12,17 +12,24 @@
 
 #include "../../inc/minishell.h"
 
-void	set_fd(t_command *cmd)
+void	set_fd(t_data *data)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (i < cmd->d.n_redir)
+	pipe_init(data);
+	while (i < data->n_cmd)
 	{
-		if (cmd->d.files[i].is_outfile == 0)
-			cmd->fd_in = cmd->d.files[i].fd;
-		else
-			cmd->fd_out = cmd->d.files[i].fd;
+		j = 0;
+		while (j < data->cmd[i].d.n_redir)
+		{
+			if (data->cmd[i].d.files[j].is_outfile == 0)
+				data->cmd[i].fd_in = data->cmd[i].d.files[j].fd;
+			else
+				data->cmd[i].fd_out = data->cmd[i].d.files[j].fd;
+			j++;
+		}
 		i++;
 	}
 	return ;
@@ -83,13 +90,12 @@ char	**argv_init(char **tokens, t_env *env)
 
 void	cmd_init(char **tokens, t_command *cmd, t_data *data)
 {
-	cmd->argv = argv_init(tokens, data->env);
-	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	cmd->fd_in = 0;
 	cmd->fd_out = 1;
+	cmd->argv = argv_init(tokens, data->env);
+	cmd->pathname = get_cmd_path(cmd->argv[0]);
 	cmd->d.n_arg = count_args(tokens);
 	cmd->d.n_redir = count_redir(tokens);
 	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
-	set_fd(cmd);
 	return ;
 }

@@ -19,9 +19,11 @@ int	close_files(t_command *cmd)
 	i = 0;
 	while (i < cmd->d.n_redir)
 	{
+		free(cmd->d.files[i].file_name);
+		if (cmd->d.files[i].fd == -1)
+			return (0);
 		if (!close(cmd->d.files[i].fd))
 			return (0);
-		free(cmd->d.files[i].file_name);
 		i++;
 	}
 	return (1);

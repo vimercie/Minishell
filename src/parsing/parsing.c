@@ -64,7 +64,7 @@ int	parsing(char *input, t_data *data)
 		free_tab(tokens);
 		i++;
 	}
+	set_fd(data);
 	free_tab(pipe_split);
-	pipe_init(data);
 	return (return_val);
 }

@@ -18,7 +18,6 @@ int	print_linux_error(char *token, int errnum)
 	{
 		ft_putstr_fd("Gigabash: ", 2);
 		perror(token);
-
 	}
 	return (1);
 }

@@ -86,7 +86,7 @@ void	execute_commands(t_data *data)
 				close(data->cmd[i].fd_in);
 			if (data->cmd[i].fd_out != STDOUT_FILENO)
 				close(data->cmd[i].fd_out);
-			waitpid(0, NULL, 0);
+			waitpid(pid, NULL, 0);
 		}
 		i++;
 	}
