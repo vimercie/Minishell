@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/11 14:22:33 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 19:59:41 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 		handle_history(buffer, previous_buffer);
 		if (parsing(buffer, &data))
 			execute_commands(&data);
-		main_tester(&data);
+		// main_tester(&data);
 		free_tab(data.tab_env);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);

@@ -19,6 +19,7 @@ SRC=		main.c						\
 			tokens.c					\
 			env_var.c					\
 			redirection.c				\
+			file_descriptor.c			\
 			heredoc.c					\
 			checking.c					\
 			parsing_utils.c				\

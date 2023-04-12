@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/11 14:16:44 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 19:30:13 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	child_p(t_data *data, int i)
 	if (data->cmd[i].fd_in != STDIN_FILENO)
 	{
 		if (dup2(data->cmd[i].fd_in, STDIN_FILENO) == -1)
-			perror_exit("dup2");
+			perror_exit("dup2 stdin");
 		close(data->cmd[i].fd_in);
 	}
 	if (data->cmd[i].fd_out != STDOUT_FILENO)
 	{
 		if (dup2(data->cmd[i].fd_out, STDOUT_FILENO) == -1)
-			perror_exit("dup2");
+			perror_exit("dup2 stdout");
 		close(data->cmd[i].fd_out);
 	}
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);

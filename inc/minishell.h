@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/11 14:17:07 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 18:51:58 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct s_file_table
 
 typedef struct s_cmd_data
 {
-	int				pipefd[2];
 	t_file_table	*files;
+	int				pipefd[2];
 	int				n_redir;
 	int				n_arg;
 }				t_cmd_data;
@@ -121,6 +121,9 @@ char			*remove_quotes(char *s);
 int				count_cmd(char *s);
 int				count_redir(char **tokens);
 int				count_args(char **tokens);
+
+// file descriptor
+int				pipe_init(t_data *data);
 
 // error
 int				print_bash_error(char *token, int errnum);
