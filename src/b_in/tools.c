@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/13 13:45:48 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 19:19:53 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	print_list(t_env *env)
 	index_env(env);
 	i = 1;
 	size = count_env(env);
-	while (i < size - 1)
+	while (i <= size + 1)
 	{
 		current = env;
 		while (current->next)
