@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/13 19:03:14 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 19:17:57 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	child_p(t_data *data, int i, char *buffer)
 		execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 		perror_exit("execve");
 	}
-	else
-		exit(0);
 	return ;
 }
 
