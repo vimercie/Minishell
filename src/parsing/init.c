@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 17:39:31 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 19:22:56 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ char	**argv_init(char **tokens, t_env *env)
 		}
 		else
 		{
-			res[j] = replace_env_var(tokens[i], env);
+			res[j] = handle_env_var(tokens[i], env);
+			res[j] = remove_quotes(res[j]);
 			j++;
 		}
 		i++;

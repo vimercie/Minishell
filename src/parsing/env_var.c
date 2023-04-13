@@ -6,48 +6,80 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/21 22:52:32 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 17:22:01 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*replace_env_var(char *input, t_env *env)
+char	*find_env_var_value(char *to_find, t_env *env)
 {
-	t_env	*lst;
+	t_env	*current;
+
+	if (!env)
+		return (NULL);
+	current = env;
+	while (current->next)
+	{
+		if (ft_strcmp(to_find, current->name) == 0)
+			return (ft_strdup(current->value));
+		current = current->next;
+	}
+	return (NULL);
+}
+
+char	*replace_env_var(char *input, int *index, t_env *env)
+{
 	char	*res;
-	char	*tmp;
-	char	*var_name;
+	char	*name;
 	int		i;
 
-	res = NULL;
+	i = 0;
+	if (input[0] == '$')
+	{
+		input++;
+		*index += 1;
+		if (!input[0])
+			return (ft_strdup("$"));
+		while (!is_metachar(input[i]) && input[i])
+			i++;
+		name = ft_strndup(input, i);
+		res = find_env_var_value(name, env);
+		free(name);
+	}
+	else
+	{
+		while (input[i] != '$' && input[i])
+			i++;
+		res = ft_strndup(input, i);
+	}
+	*index += i;
+	return (res);
+}
+
+char	*handle_env_var(char *input, t_env *env)
+{
+	char	*res;
+	char	*buffer;
+	char	*value;
+	int		i;
+
 	if (!input)
-		return (res);
+		return (NULL);
+	res = NULL;
+	if (is_quote(input, 0) == 1)
+		return (ft_strdup(input));
 	while (input[0])
 	{
 		i = 0;
-		var_name = NULL;
-		tmp = ft_strdup(res);
+		value = NULL;
+		buffer = ft_strdup(res);
 		free(res);
-		if (input[0] == '$')
-		{
-			input++;
-			while (!is_metachar(input[i]) && input[i])
-				i++;
-			var_name = ft_strndup(input, i);
-			lst = lst_name(env, var_name);
-			res = ft_strjoin(tmp, lst->value);
-		}
-		else
-		{
-			while (input[i] != '$' && input[i])
-				i++;
-			var_name = ft_strndup(input, i);
-			res = ft_strjoin(tmp, var_name);
-		}
-		free(tmp);
-		free(var_name);
+		value = replace_env_var(input, &i, env);
+		res = ft_strjoin(buffer, value);
 		input += i;
+		free(buffer);
+		free(value);
 	}
 	return (res);
 }

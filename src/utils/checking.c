@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/11 14:11:46 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 16:42:53 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,17 @@ int	is_string_blank(char *s)
 
 int	is_quote(char *s, int index)
 {
+	if (!s)
+		return (0);
 	if ((s[index] == '\"' || s[index] == '\'') && !is_quoted(s, index)
 		&& (is_quoted(s, index + 1) + is_quoted(s, index - 1) == 1
 			|| (s[index + 1] == s[index] || s[index - 1] == s[index])))
-		return (1);
+	{
+		if (s[index] == '\'')
+			return (1);
+		else
+			return (2);
+	}
 	return (0);
 }
 

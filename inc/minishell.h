@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 13:48:33 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 15:31:22 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int				main_tester(t_data *data);
 // parsing
 int				parsing(char *input, t_data *data);
 int				check_syntax(char *input);
-char			*replace_env_var(char *input, t_env *env);
+char			*handle_env_var(char *input, t_env *env);
 int				pipe_init(t_data *data);
 
 // init

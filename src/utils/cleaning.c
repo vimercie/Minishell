@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:14:30 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/12 19:54:40 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 17:27:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	close_files(t_command *cmd)
 			return (0);
 		if (!close(cmd->d.files[i].fd))
 			return (0);
-		printf("closed fd=%d\n", cmd->d.files[i].fd);
 		i++;
 	}
 	return (1);
