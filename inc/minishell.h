@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/11 15:39:52 by mmajani          ###   ########lyon.fr   */
-=======
-/*   Updated: 2023/04/12 18:51:58 by vimercie         ###   ########lyon.fr   */
->>>>>>> f1a3bc95f1f57f5fc00b4380534e81da404b5944
+/*   Updated: 2023/04/13 13:48:33 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
