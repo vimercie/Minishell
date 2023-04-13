@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/13 13:49:54 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 14:11:20 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	child_p(t_data *data, int i, char *buffer)
 		execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 		perror_exit("execve");
 	}
+	else
+		exit(0);
 	return ;
 }
 
