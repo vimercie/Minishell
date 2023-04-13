@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/11 15:39:52 by mmajani          ###   ########lyon.fr   */
+=======
+/*   Updated: 2023/04/12 18:51:58 by vimercie         ###   ########lyon.fr   */
+>>>>>>> f1a3bc95f1f57f5fc00b4380534e81da404b5944
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +90,14 @@ int				main_tester(t_data *data);
 int				parsing(char *input, t_data *data);
 int				check_syntax(char *input);
 char			*replace_env_var(char *input, t_env *env);
-int				fd_init(t_data *data);
+int				pipe_init(t_data *data);
 
 // init
 void			cmd_init(char **tokens, t_command *cmd, t_data *data);
 char			**argv_init(char **tokens, t_env *env);
 char			*get_cmd_path(char *cmd);
 t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
+int				set_fd(t_data *data);
 
 // token handling
 char			**tokenize_input(char *input);
@@ -121,11 +126,15 @@ int				count_cmd(char *s);
 int				count_redir(char **tokens);
 int				count_args(char **tokens);
 
+// file descriptor
+int				pipe_init(t_data *data);
+
 // error
-int				print_error(char *token, int errnum);
+int				print_bash_error(char *token, int errnum);
+int				print_linux_error(char *token, int errnum);
 
 // cleaning
-void			free_memory(t_data *data);
+void			free_loop(t_data *data);
 int				free_tab(char **tab);
 int				close_pipes(t_data *data);
 

@@ -6,27 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/08 04:27:14 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 19:58:59 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	set_fd(t_command *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (i < cmd->d.n_redir)
-	{
-		if (cmd->d.files[i].is_outfile == 0)
-			cmd->fd_in = cmd->d.files[i].fd;
-		else
-			cmd->fd_out = cmd->d.files[i].fd;
-		i++;
-	}
-	return ;
-}
 
 char	*get_cmd_path(char *cmd)
 {
@@ -38,7 +22,11 @@ char	*get_cmd_path(char *cmd)
 	res = NULL;
 	if (!cmd)
 		return (res);
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
 	path = ft_split(getenv("PATH"), ':');
+	if (!path)
+		return (NULL);
 	while (path[i])
 	{
 		res = gather_full_path(path[i], cmd);
@@ -48,7 +36,7 @@ char	*get_cmd_path(char *cmd)
 		i++;
 	}
 	if (!path[i])
-		res = ft_strdup(cmd);
+		res = NULL;
 	free_tab(path);
 	return (res);
 }
@@ -83,11 +71,12 @@ char	**argv_init(char **tokens, t_env *env)
 
 void	cmd_init(char **tokens, t_command *cmd, t_data *data)
 {
-	cmd->d.n_arg = count_args(tokens);
 	cmd->argv = argv_init(tokens, data->env);
 	cmd->pathname = get_cmd_path(cmd->argv[0]);
+	if (cmd->argv[0] && !cmd->pathname)
+		print_bash_error(cmd->argv[0], 127);
+	cmd->d.n_arg = count_args(tokens);
 	cmd->d.n_redir = count_redir(tokens);
 	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
-	set_fd(cmd);
 	return ;
 }

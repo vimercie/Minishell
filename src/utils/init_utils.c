@@ -58,7 +58,7 @@ int	count_cmd(char *s)
 	int		i;
 	int		res;
 
-	if (!s)
+	if (!s[0])
 		return (0);
 	i = 0;
 	res = 1;

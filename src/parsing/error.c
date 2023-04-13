@@ -12,7 +12,17 @@
 
 #include "../../inc/minishell.h"
 
-int	print_error(char *token, int errnum)
+int	print_linux_error(char *token, int errnum)
+{
+	if (errnum == 2)
+	{
+		ft_putstr_fd("Gigabash: ", 2);
+		perror(token);
+	}
+	return (0);
+}
+
+int	print_bash_error(char *token, int errnum)
 {
 	if (errnum == 2)
 	{
@@ -25,5 +35,5 @@ int	print_error(char *token, int errnum)
 		ft_putstr_fd(token, 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
-	return (1);
+	return (0);
 }

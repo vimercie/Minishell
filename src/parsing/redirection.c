@@ -5,55 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 02:11:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/03/21 23:27:02 by vimercie         ###   ########lyon.fr   */
+/*   Created: 2023/04/12 19:04:19 by vimercie          #+#    #+#             */
+/*   Updated: 2023/04/12 19:06:25 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	close_pipe(int fd_to_close, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->n_cmd)
-	{
-		if (fd_to_close > 2
-			&& (fd_to_close == data->cmd[i].d.pipefd[0]
-			|| fd_to_close == data->cmd[i].d.pipefd[1]))
-		{
-			close(data->cmd[i].d.pipefd[0]);
-			close(data->cmd[i].d.pipefd[1]);
-			printf("closed pipe :\nfd[0] = %d\nfd[1] = %d\n", data->cmd[i].d.pipefd[0], data->cmd[i].d.pipefd[1]);
-			return (0);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int get_fd(char *operator, char *file_name, t_data *data)
+int	get_fd(char *operator, char *file_name, t_data *data)
 {
 	int		fd;
 
-	fd = -1;
 	if (!file_name)
-		return (fd);
+		return (-1);
 	if (operator[0] == '>')
 	{
-		if (access(file_name, W_OK) == 0 || access(file_name, F_OK) == -1)
-		{
-			if (ft_strcmp(operator, ">") == 0)
-				fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-			else if (ft_strcmp(operator, ">>") == 0)
-				fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0666);
-		}
+		if (access(file_name, F_OK) == 0 && access(file_name, W_OK) == -1)
+			return (-1);
+		if (ft_strcmp(operator, ">") == 0)
+			fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+		else if (ft_strcmp(operator, ">>") == 0)
+			fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0666);
 	}
 	else if (ft_strcmp(operator, "<") == 0)
 	{
-		if (access(file_name, R_OK) == 0)
-			fd = open(file_name, O_RDONLY);
+		if (access(file_name, R_OK) == -1)
+			return (-1);
+		fd = open(file_name, O_RDONLY);
 	}
 	else if (ft_strcmp(operator, "<<") == 0)
 		fd = heredoc(file_name, data);

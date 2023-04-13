@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:14:30 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/11 14:12:02 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 19:54:40 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	close_files(t_command *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd->d.n_redir)
+	{
+		free(cmd->d.files[i].file_name);
+		if (cmd->d.files[i].fd == -1)
+			return (0);
+		if (!close(cmd->d.files[i].fd))
+			return (0);
+		printf("closed fd=%d\n", cmd->d.files[i].fd);
+		i++;
+	}
+	return (1);
+}
 
 int	free_tab(char **tab)
 {
@@ -29,10 +47,9 @@ int	free_tab(char **tab)
 	return (0);
 }
 
-void	free_memory(t_data *data)
+void	free_loop(t_data *data)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	if (data)
@@ -41,22 +58,11 @@ void	free_memory(t_data *data)
 			return ;
 		while (i < data->n_cmd)
 		{
-			j = 0;
-			free_tab(data->cmd[i].argv);
-			while (j < data->cmd[i].d.n_redir)
-			{
-				if (data->cmd[i].d.files[j].fd > 2
-					&& (data->cmd[i].d.files[j].fd != data->cmd[i].fd_in
-						&& data->cmd[i].d.files[j].fd != data->cmd[i].fd_out))
-				{
-					close(data->cmd[i].d.files[j].fd);
-					printf("closed fd = %d\n", data->cmd[i].d.files[j].fd);
-				}
-				free(data->cmd[i].d.files[j].file_name);
-				j++;
-			}
-			free(data->cmd[i].d.files);
 			free(data->cmd[i].pathname);
+			free_tab(data->cmd[i].argv);
+			close_files(&data->cmd[i]);
+			if (data->cmd[i].d.files)
+				free(data->cmd[i].d.files);
 			i++;
 		}
 		free(data->cmd);
