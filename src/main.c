@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 19:10:45 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 19:27:20 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,33 @@ int	exec_gigabash(int ac, char **av, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
-	int	exit_status;
+	t_data				data;
+	char				*buffer;
+	char				previous_buffer[1024];
+	struct sigaction	sa;
 
-	exit_status = exec_gigabash(ac, av, envp);
-	exit(exit_status);
+	(void)ac;
+	(void)av;
+	previous_buffer[0] = 0;
+	data.env = lst_getenv(envp);
+	data.tab_env = lst_env_to_tab_env(data.env);
+	while (1)
+	{
+		signal_handling(sa);
+		buffer = readline("GigaBash$ ");
+		if (!buffer)
+		{
+			free_tab(data.tab_env);
+			lst_free(data.env);
+			return (0);
+		}
+		handle_history(buffer, previous_buffer);
+		if (parsing(buffer, &data))
+			execute_commands(&data, buffer);
+		free_tab(data.tab_env);
+		data.tab_env = lst_env_to_tab_env(data.env);
+		free(buffer);
+		free_loop(&data);
+	}
 	return (0);
 }
