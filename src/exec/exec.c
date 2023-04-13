@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/13 14:11:20 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 18:51:13 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void	execute_commands(t_data *data, char *buffer)
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		if (!data->cmd[i].pathname)
-			return ;
 		pid = fork();
 		if (pid == -1)
 			perror_exit("fork");
