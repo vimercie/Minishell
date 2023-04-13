@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/13 14:11:20 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 15:30:14 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ int	built_in_detection(t_data *data, t_command *cmd, char *buffer, t_env *env)
 		return (echo_controller(cmd));
 	else if (ft_strncmp(cmd->argv[0], "cd", 2) == 0)
 		return (cd(data));
-	else if (ft_strncmp(cmd->argv[0], "export", 6) == 0
-		&& cmd->d.n_arg == 1)
+	else if (ft_strncmp(cmd->argv[0], "export", 6) == 0 && cmd->d.n_arg == 1)
 		return (print_sorted_list(env));
-	else if (ft_strncmp(cmd->argv[0], "export", 6) == 0
-		&& cmd->d.n_arg >= 2)
+	else if (ft_strncmp(cmd->argv[0], "export", 6) == 0 && cmd->d.n_arg >= 2)
 		return (export_controller(cmd, env));
-	else if (ft_strncmp(cmd->argv[0], "env", 4) == 0)
+	else if (ft_strncmp(cmd->argv[0], "env", 3) == 0)
 		return (print_list(data->env));
 	else if (ft_strncmp(cmd->argv[0], "pwd", 3) == 0)
 		return (get_current_dir());
@@ -78,8 +76,6 @@ void	execute_commands(t_data *data, char *buffer)
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		if (!data->cmd[i].pathname)
-			return ;
 		pid = fork();
 		if (pid == -1)
 			perror_exit("fork");
