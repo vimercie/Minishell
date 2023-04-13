@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/11 14:22:33 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 15:55:14 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int ac, char **av, char **envp)
 	data.tab_env = lst_env_to_tab_env(data.env);
 	while (1)
 	{
-		data.tab_env = lst_env_to_tab_env(data.env);
 		signal_handling(sa);
 		buffer = readline("GigaBash$ ");
 		if (buffer == NULL)
@@ -52,9 +51,8 @@ int	main(int ac, char **av, char **envp)
 		}
 		handle_history(buffer, previous_buffer);
 		parsing(buffer, &data);
-		main_tester(&data);
-		execute_commands(&data);
-		data.tab_env = lst_env_to_tab_env(data.env);
+	//	main_tester(&data);
+		execute_commands(&data, buffer);
 		free(buffer);
 		free_memory(&data);
 	}

@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/11 14:16:26 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 13:45:48 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,32 @@ int	print_sorted_list(t_env *env)
 	return (0);
 }
 
-int	print_list(t_data *data)
+int	print_list(t_env *env)
 {
+	int		i;
 	t_env	*current;
-	t_env	*start;
+	int		size;
 
-	current = data->env;
-	start = current;
-	while (current->next != NULL)
+	index_env(env);
+	i = 1;
+	size = count_env(env);
+	while (i < size - 1)
 	{
-		printf("%s", current->name);
-		if (current->val == 1)
-			printf("=%s\n", current->value);
-		else
-			printf("\n");
-		current = current->next;
+		current = env;
+		while (current->next)
+		{
+			if (i == current->index)
+			{
+				printf("%s", current->name);
+				if (current->val == 1)
+					printf("=%s", current->value);
+				printf("\n");
+			}
+			current = current->next;
+		}
+		i++;
 	}
-	lst_free(start);
-	return (1);
+	return (0);
 }
 
 char	*get_left_part(char *string)

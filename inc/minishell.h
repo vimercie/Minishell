@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/11 14:17:07 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 15:39:52 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int				free_tab(char **tab);
 int				close_pipes(t_data *data);
 
 // exec
-void			execute_commands(t_data *data);
+void			execute_commands(t_data *data, char *buffer);
 void			redirect_fds(t_data *data, int i);
 
 // env
@@ -141,7 +141,7 @@ char			*get_env_name(char *string);
 char			*get_env_value(char *string);
 char			*get_left_part(char *string);
 int				assign_name_value(t_env *lst_new, char *string);
-int				print_list(t_data *data);
+int				print_list(t_env *env);
 int				equal_index(char *string);
 int				export(char *str, t_env *env);
 int				print_sorted_list(t_env *env);
