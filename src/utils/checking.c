@@ -6,11 +6,28 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 16:18:43 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 18:42:48 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	is_builtin(char *str)
+{
+	if (!str)
+		return (0);
+	if (ft_strcmp(str, "echo") == 0
+		|| ft_strcmp(str, "cd") == 0
+		|| ft_strcmp(str, "export") == 0
+		|| ft_strcmp(str, "env") == 0
+		|| ft_strcmp(str, "pwd") == 0
+		|| ft_strcmp(str, "unset") == 0
+		|| ft_strcmp(str, "exit") == 0
+		|| ft_strcmp(str, "minishell") == 0
+		|| ft_strcmp(str, "./minishell") == 0)
+		return (1);
+	return (0);
+}
 
 int	is_metachar(char c)
 {

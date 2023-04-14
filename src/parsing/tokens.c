@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-int		count_tokens(char *input)
+int	count_tokens(char *input)
 {
 	int	n_token;
 	int	len;

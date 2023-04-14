@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 17:05:11 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 18:42:14 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int				get_fd(char *operator, char *file_name, t_data *data);
 int				heredoc(char *delimiter, t_data *data);
 
 // checking
+int				is_builtin(char *str);
 int				is_metachar(char c);
 int				is_string_blank(char *s);
 int				is_quote(char *s, int index);
