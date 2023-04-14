@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 23:47:22 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 23:57:20 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ char	**argv_init(char **tokens, t_env *env)
 		{
 			res[j] = handle_env_var(tokens[i], env);
 			res[j] = remove_quotes(res[j]);
-			printf("res[%d] = |%s|\n", j, res[j]);
 			j++;
 		}
 		i++;
