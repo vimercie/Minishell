@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_error.c                                     :+:      :+:    :+:   */
+/*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:36:41 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/08 02:27:09 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 16:49:17 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_consecutive_metachar(char **tokens)
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	check_syntax(char *input)
@@ -41,7 +41,7 @@ int	check_syntax(char *input)
 	tokens = tokenize_input(input);
 	if (!tokens)
 		return (0);
-	if (check_consecutive_metachar(tokens))
+	if (!check_consecutive_metachar(tokens))
 		return_val = 0;
 	free_tab(tokens);
 	return (return_val);

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 15:04:06 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 16:44:05 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char			*handle_env_var(char *input, t_env *env);
 int				pipe_init(t_data *data);
 
 // init
-void			cmd_init(char **tokens, t_command *cmd, t_data *data);
+int				cmd_init(char **tokens, t_command *cmd, t_data *data);
 char			**argv_init(char **tokens, t_env *env);
 char			*get_cmd_path(char *cmd);
 t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
