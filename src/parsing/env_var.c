@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 17:22:01 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 16:41:08 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*find_env_var_value(char *to_find, t_env *env)
 {
 	t_env	*current;
 
-	if (!env)
+	if (!env || !to_find)
 		return (NULL);
 	current = env;
 	while (current->next)
@@ -37,19 +37,16 @@ char	*replace_env_var(char *input, int *index, t_env *env)
 	i = 0;
 	if (input[0] == '$')
 	{
-		input++;
-		*index += 1;
-		if (!input[0])
-			return (ft_strdup("$"));
+		i++;
 		while (!is_metachar(input[i]) && input[i])
 			i++;
 		name = ft_strndup(input, i);
-		res = find_env_var_value(name, env);
+		res = find_env_var_value(name + 1, env);
 		free(name);
 	}
 	else
 	{
-		while (input[i] != '$' && input[i])
+		while ((input[i] != '$' || is_quoted(input, i) == 1) && input[i])
 			i++;
 		res = ft_strndup(input, i);
 	}
@@ -60,7 +57,7 @@ char	*replace_env_var(char *input, int *index, t_env *env)
 char	*handle_env_var(char *input, t_env *env)
 {
 	char	*res;
-	char	*buffer;
+	char	*tmp;
 	char	*value;
 	int		i;
 
@@ -72,13 +69,12 @@ char	*handle_env_var(char *input, t_env *env)
 	while (input[0])
 	{
 		i = 0;
-		value = NULL;
-		buffer = ft_strdup(res);
-		free(res);
 		value = replace_env_var(input, &i, env);
-		res = ft_strjoin(buffer, value);
 		input += i;
-		free(buffer);
+		tmp = ft_strdup(res);
+		free(res);
+		res = ft_strjoin(tmp, value);
+		free(tmp);
 		free(value);
 	}
 	return (res);

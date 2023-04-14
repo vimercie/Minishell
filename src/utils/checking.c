@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 15:54:39 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 16:18:43 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	is_quote(char *s, int index)
 int	is_quoted(char *s, int index)
 {
 	int	opening_quote_index;
-	int	is_dquote;
 	int	res;
 	int	i;
 
@@ -68,21 +67,22 @@ int	is_quoted(char *s, int index)
 	while (s[i])
 	{
 		res = 0;
-		is_dquote = 0;
 		opening_quote_index = i;
 		if (s[i] == '\"' || s[i] == '\'')
 		{
-			if (s[i] == '\"')
-				is_dquote = 1;
 			i++;
 			while (s[i] != s[opening_quote_index] && s[i])
 			{
 				if (i == index)
-					res = 1;
+				{
+					res++;
+					if (s[opening_quote_index] == '\"')
+						res++;
+				}
 				i++;
 			}
-			if (s[i] == s[opening_quote_index] && res == 1)
-				return (res + is_dquote);
+			if (s[i] == s[opening_quote_index] && res > 0)
+				return (res);
 		}
 		i++;
 	}
