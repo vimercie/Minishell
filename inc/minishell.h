@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 15:31:22 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 15:04:06 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 # define MINISHELL_H
 # define _XOPEN_SOURCE 700
+# define NO_CMD 0
+# define BI_CMD 1
+# define EX_CMD 2
 
 # include "../Libft/inc/libft.h"
 # include <unistd.h>

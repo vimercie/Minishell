@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 16:42:53 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 15:54:39 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int	is_string_blank(char *s)
 
 int	is_quote(char *s, int index)
 {
-	if (!s)
+	if (!s || !s[index])
 		return (0);
-	if ((s[index] == '\"' || s[index] == '\'') && !is_quoted(s, index)
-		&& (is_quoted(s, index + 1) + is_quoted(s, index - 1) == 1
+	if ((s[index] == '\"' || s[index] == '\'')
+		&& !is_quoted(s, index)
+		&& ((is_quoted(s, index + 1) || is_quoted(s, index - 1))
 			|| (s[index + 1] == s[index] || s[index - 1] == s[index])))
 	{
 		if (s[index] == '\'')
@@ -80,7 +81,7 @@ int	is_quoted(char *s, int index)
 					res = 1;
 				i++;
 			}
-			if (s[i] == s[opening_quote_index] && res)
+			if (s[i] == s[opening_quote_index] && res == 1)
 				return (res + is_dquote);
 		}
 		i++;

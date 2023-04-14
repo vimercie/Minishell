@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 19:27:20 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 15:00:33 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	exec_gigabash(int ac, char **av, char **envp)
 			return (0);
 		}
 		handle_history(buffer, previous_buffer);
+		main_tester(&data);
 		if (parsing(buffer, &data))
 			execute_commands(&data, buffer);
 		free_tab(data.tab_env);
