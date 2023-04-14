@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 15:00:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 17:22:22 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,38 @@ void	handle_history(char *a, char *b)
 	ft_strlcpy(b, a, ft_strlen(a) + 1);
 }
 
-int	exec_gigabash(int ac, char **av, char **envp)
-{
-	t_data				data;
-	char				*buffer;
-	char				previous_buffer[1024];
-	struct sigaction	sa;
+// int	exec_gigabash(int ac, char **av, char **envp)
+// {
+// 	t_data				data;
+// 	char				*buffer;
+// 	char				previous_buffer[1024];
+// 	struct sigaction	sa;
 
-	(void)ac;
-	(void)av;
-	previous_buffer[0] = 0;
-	data.env = lst_getenv(envp);
-	data.tab_env = lst_env_to_tab_env(data.env);
-	while (1)
-	{
-		signal_handling(sa);
-		buffer = readline("GigaBash$ ");
-		if (!buffer)
-		{
-			free_tab(data.tab_env);
-			lst_free(data.env);
-			return (0);
-		}
-		handle_history(buffer, previous_buffer);
-		main_tester(&data);
-		if (parsing(buffer, &data))
-			execute_commands(&data, buffer);
-		free_tab(data.tab_env);
-		data.tab_env = lst_env_to_tab_env(data.env);
-		free(buffer);
-		free_loop(&data);
-	}
-}
+// 	(void)ac;
+// 	(void)av;
+// 	previous_buffer[0] = 0;
+// 	data.env = lst_getenv(envp);
+// 	data.tab_env = lst_env_to_tab_env(data.env);
+// 	while (1)
+// 	{
+// 		signal_handling(sa);
+// 		buffer = readline("GigaBash$ ");
+// 		if (!buffer)
+// 		{
+// 			free_tab(data.tab_env);
+// 			lst_free(data.env);
+// 			return (0);
+// 		}
+// 		handle_history(buffer, previous_buffer);
+// 		main_tester(&data);
+// 		if (parsing(buffer, &data))
+// 			execute_commands(&data, buffer);
+// 		free_tab(data.tab_env);
+// 		data.tab_env = lst_env_to_tab_env(data.env);
+// 		free(buffer);
+// 		free_loop(&data);
+// 	}
+// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -84,6 +84,7 @@ int	main(int ac, char **av, char **envp)
 		handle_history(buffer, previous_buffer);
 		if (parsing(buffer, &data))
 			execute_commands(&data, buffer);
+		// main_tester(&data);
 		free_tab(data.tab_env);
 		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);
