@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 16:41:08 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 23:53:54 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ char	*replace_env_var(char *input, int *index, t_env *env)
 	if (input[0] == '$')
 	{
 		i++;
+		if (!input[i])
+		{
+			*index += i;
+			return (ft_strdup(input));
+		}
 		while (!is_metachar(input[i]) && input[i])
 			i++;
 		name = ft_strndup(input, i);
@@ -64,7 +69,8 @@ char	*handle_env_var(char *input, t_env *env)
 	if (!input)
 		return (NULL);
 	res = NULL;
-	if (is_quote(input, 0) == 1)
+	if (is_quote(input, 0) == 1
+		|| ft_strcmp(input, "\"$\"") == 0)
 		return (ft_strdup(input));
 	while (input[0])
 	{
