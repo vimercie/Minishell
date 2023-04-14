@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:36:41 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 16:49:17 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 18:34:17 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	check_syntax(char *input)
 		return (0);
 	if (!check_consecutive_metachar(tokens))
 		return_val = 0;
+	if (tokens[0][0] == '|')
+		return_val = print_bash_error(tokens[0], 2);
 	free_tab(tokens);
 	return (return_val);
 }
