@@ -6,24 +6,24 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 20:20:15 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 21:52:57 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	handle_history(char *a, char *b)
+void	handle_history(char *buffer, char *previous_buffer)
 {
-	int	size_a;
-	int	size_b;
+	int	size_buffer;
+	int	size_previous_buffer;
 
-	size_a = ft_strlen(a);
-	size_b = ft_strlen(b);
-	if (size_a < size_b)
-		size_a = size_b;
-	if (ft_strncmp(a, b, size_a) != 0)
-		add_history(a);
-	ft_strlcpy(b, a, ft_strlen(a) + 1);
+	size_buffer = ft_strlen(buffer);
+	size_previous_buffer = ft_strlen(previous_buffer);
+	if (size_buffer < size_previous_buffer)
+		size_buffer = size_previous_buffer;
+	if (ft_strncmp(buffer, previous_buffer, size_buffer) != 0)
+		add_history(buffer);
+	ft_strlcpy(previous_buffer, buffer, ft_strlen(buffer) + 1);
 }
 
 // int	exec_gigabash(int ac, char **av, char **envp)

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:41:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 16:05:05 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 19:12:18 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,16 @@ int	set_redirection(t_command *cmd)
 
 int	set_fd(t_data *data)
 {
+	int	return_val;
 	int	i;
 
 	i = 0;
+	return_val = 1;
 	while (i < data->n_cmd)
 	{
-		set_redirection(&data->cmd[i]);
+		if (!set_redirection(&data->cmd[i]))
+			return_val = 0;
 		i++;
 	}
-	return (1);
+	return (return_val);
 }

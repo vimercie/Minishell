@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 17:35:54 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 21:52:39 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+// variable globale
+int								g_err_no;
 
 typedef struct s_env			t_env;
 typedef struct s_data			t_data;
