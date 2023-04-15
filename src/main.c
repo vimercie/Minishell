@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 21:52:57 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 22:13:41 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	handle_history(char *buffer, char *previous_buffer)
 // 	}
 // }
 
+int	g_err_no;
+
 int	main(int ac, char **av, char **envp)
 {
 	t_data				data;
@@ -76,18 +78,15 @@ int	main(int ac, char **av, char **envp)
 		signal_handling(sa);
 		buffer = readline("GigaBash$ ");
 		if (!buffer)
-		{
-			free_tab(data.tab_env);
-			lst_free(data.env);
-			return (0);
-		}
+			break ;
 		handle_history(buffer, previous_buffer);
 		if (parsing(buffer, &data))
 			execute_commands(&data, buffer);
 		// main_tester(&data);
-		free_tab(data.tab_env);
 		free(buffer);
 		free_loop(&data);
 	}
+	free_tab(data.tab_env);
+	lst_free(data.env);
 	return (0);
 }
