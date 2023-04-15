@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 15:09:34 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 18:51:36 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*find_env_var_value(char *to_find, t_env *env)
 
 	if (!env || !to_find)
 		return (NULL);
+	if (ft_strcmp(to_find, "?") == 0)
+		return (ft_itoa(g_err_no));
 	current = env;
 	while (current->next)
 	{

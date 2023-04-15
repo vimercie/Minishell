@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 18:01:10 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 19:12:03 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,8 @@ int				count_args(char **tokens);
 int				pipe_init(t_data *data);
 
 // error
-int				print_error(char *token, int errnum);
+int				print_bash_error(char *token, int errnum);
+int				print_linux_error(char *token);
 
 // cleaning
 void			free_loop(t_data *data);

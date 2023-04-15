@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 18:00:54 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 19:11:27 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_cmd_path(char *cmd)
 		return (NULL);
 	if (is_directory(cmd))
 	{
-		print_error(cmd, 126);
+		print_bash_error(cmd, 126);
 		return (NULL);
 	}
 	if (access(cmd, X_OK) == 0)
@@ -84,6 +84,6 @@ int	cmd_init(char **tokens, t_command *cmd, t_data *data)
 	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
 	cmd->d.is_builtin = is_builtin(cmd->argv[0]);
 	if (!is_builtin(cmd->argv[0]) && !cmd->pathname)
-		return (print_error(cmd->argv[0], 127));
+		return (print_bash_error(cmd->argv[0], 127));
 	return (1);
 }
