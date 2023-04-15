@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 16:05:15 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 18:01:10 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+// variable globale
+int								g_err_no;
 
 typedef struct s_env			t_env;
 typedef struct s_data			t_data;
@@ -129,8 +132,7 @@ int				count_args(char **tokens);
 int				pipe_init(t_data *data);
 
 // error
-int				print_bash_error(char *token, int errnum);
-int				print_linux_error(char *token);
+int				print_error(char *token, int errnum);
 
 // cleaning
 void			free_loop(t_data *data);

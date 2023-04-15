@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:41:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 16:05:05 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 18:00:54 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	set_redirection(t_command *cmd)
 	while (i < cmd->d.n_redir)
 	{
 		if (cmd->d.files[i].fd == -1)
-			return (print_linux_error(cmd->d.files[i].file_name));
+			return (print_error(cmd->d.files[i].file_name, errno));
 		if (cmd->d.files[i].is_outfile)
 		{
 			if (cmd->fd_out > 2)
@@ -61,13 +61,16 @@ int	set_redirection(t_command *cmd)
 
 int	set_fd(t_data *data)
 {
+	int	return_val;
 	int	i;
 
 	i = 0;
+	return_val = 1;
 	while (i < data->n_cmd)
 	{
-		set_redirection(&data->cmd[i]);
+		if (!set_redirection(&data->cmd[i]))
+			return_val = 0;
 		i++;
 	}
-	return (1);
+	return (return_val);
 }
