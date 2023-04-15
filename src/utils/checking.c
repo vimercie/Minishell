@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 15:53:05 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 19:20:09 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	is_builtin(char *str)
 		|| ft_strcmp(str, "env") == 0
 		|| ft_strcmp(str, "pwd") == 0
 		|| ft_strcmp(str, "unset") == 0
-		|| ft_strcmp(str, "exit") == 0
-		|| ft_strcmp(str, "minishell") == 0
-		|| ft_strcmp(str, "./minishell") == 0)
+		|| ft_strcmp(str, "exit") == 0)
 		return (1);
 	return (0);
 }

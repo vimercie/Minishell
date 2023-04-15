@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/14 18:54:03 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 20:21:13 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	perror_exit(char *str)
 	exit(EXIT_FAILURE);
 }
 
-t_env	*child_p(t_data *data, int i, char *buffer)
+int	child_p(t_data *data, int i, char *buffer)
 {
 	if (data->cmd[i].fd_in != STDIN_FILENO)
 	{
@@ -60,20 +60,21 @@ t_env	*child_p(t_data *data, int i, char *buffer)
 	}
 	if (built_in_detection(data, &data->cmd[i], buffer) == -1)
 	{
+		data->tab_env = lst_env_to_tab_env(data->env);
 		execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 		perror_exit("execve");
 	}
-	else
-		return (data->env);
-	return (data->env);
+	return (0);
 }
 
-void	execute_commands(t_data *data, char *buffer)
+int	execute_commands(t_data *data, char *buffer)
 {
 	int		i;
 	pid_t	pid;
 
 	i = 0;
+	if (data->n_cmd == 1 && data->cmd[0].d.is_builtin)
+		return(built_in_detection(data, &data->cmd[0], buffer));
 	while (i < data->n_cmd)
 	{
 		pid = fork();
@@ -81,7 +82,7 @@ void	execute_commands(t_data *data, char *buffer)
 			perror_exit("fork");
 		else if (pid == 0)
 		{
-			data->env = child_p(data, i, buffer);
+			child_p(data, i, buffer);
 			exit(0);
 		}
 		else
@@ -94,5 +95,5 @@ void	execute_commands(t_data *data, char *buffer)
 		}
 		i++;
 	}
-	return ;
+	return (0);
 }

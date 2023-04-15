@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 17:22:22 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 20:20:15 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	main(int ac, char **av, char **envp)
 			execute_commands(&data, buffer);
 		// main_tester(&data);
 		free_tab(data.tab_env);
-		data.tab_env = lst_env_to_tab_env(data.env);
 		free(buffer);
 		free_loop(&data);
 	}

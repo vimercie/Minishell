@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 16:05:15 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 17:35:54 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int				free_tab(char **tab);
 int				close_pipes(t_data *data);
 
 // exec
-void			execute_commands(t_data *data, char *buffer);
+int				execute_commands(t_data *data, char *buffer);
 void			redirect_fds(t_data *data, int i);
 
 // env

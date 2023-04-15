@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/13 19:19:53 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 18:49:16 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ int	print_sorted_list(t_env *env)
 		{
 			if (i == current->index)
 			{
+				if (ft_strncmp(current->name, "_", 2) == 0)
+				{
+					i++;
+					current = current->next;
+					continue ;
+				}
 				printf("declare -x %s", current->name);
 				if (current->val == 1)
 					printf("=\"%s\"", current->value);
@@ -64,21 +70,17 @@ int	print_list(t_env *env)
 	t_env	*current;
 	int		size;
 
-	index_env(env);
 	i = 1;
+	current = env;
 	size = count_env(env);
-	while (i <= size + 1)
+	while (i < size - 1)
 	{
-		current = env;
 		while (current->next)
 		{
-			if (i == current->index)
-			{
-				printf("%s", current->name);
-				if (current->val == 1)
-					printf("=%s", current->value);
-				printf("\n");
-			}
+			printf("%s", current->name);
+			if (current->val == 1)
+				printf("=%s", current->value);
+			printf("\n");
 			current = current->next;
 		}
 		i++;
