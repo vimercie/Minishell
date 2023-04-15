@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/15 20:21:13 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 22:25:19 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	execute_commands(t_data *data, char *buffer)
 	pid_t	pid;
 
 	i = 0;
-	if (data->n_cmd == 1 && data->cmd[0].d.is_builtin)
-		return(built_in_detection(data, &data->cmd[0], buffer));
 	while (i < data->n_cmd)
 	{
 		pid = fork();
