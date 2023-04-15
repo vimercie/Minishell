@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 18:42:14 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 16:05:15 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 # define MINISHELL_H
 # define _XOPEN_SOURCE 700
-# define NO_CMD 0
-# define BI_CMD 1
-# define EX_CMD 2
 
 # include "../Libft/inc/libft.h"
 # include <unistd.h>
@@ -63,6 +60,7 @@ typedef struct s_cmd_data
 	int				pipefd[2];
 	int				n_redir;
 	int				n_arg;
+	bool			is_builtin;
 }				t_cmd_data;
 
 typedef struct s_command
@@ -112,6 +110,7 @@ int				heredoc(char *delimiter, t_data *data);
 
 // checking
 int				is_builtin(char *str);
+int				is_directory(char *path);
 int				is_metachar(char c);
 int				is_string_blank(char *s);
 int				is_quote(char *s, int index);
@@ -131,7 +130,7 @@ int				pipe_init(t_data *data);
 
 // error
 int				print_bash_error(char *token, int errnum);
-int				print_linux_error(char *token, int errnum);
+int				print_linux_error(char *token);
 
 // cleaning
 void			free_loop(t_data *data);

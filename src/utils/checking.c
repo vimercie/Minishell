@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 18:42:48 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 15:53:05 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int	is_builtin(char *str)
 		|| ft_strcmp(str, "exit") == 0
 		|| ft_strcmp(str, "minishell") == 0
 		|| ft_strcmp(str, "./minishell") == 0)
+		return (1);
+	return (0);
+}
+
+int	is_directory(char *path)
+{
+	struct stat	sb;
+
+	if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
 		return (1);
 	return (0);
 }

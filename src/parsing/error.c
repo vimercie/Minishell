@@ -6,19 +6,16 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:39:16 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/04 17:36:06 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 16:04:30 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	print_linux_error(char *token, int errnum)
+int	print_linux_error(char *token)
 {
-	if (errnum == 2)
-	{
-		ft_putstr_fd("Gigabash: ", 2);
-		perror(token);
-	}
+	ft_putstr_fd("Gigabash: ", 2);
+	perror(token);
 	return (0);
 }
 
@@ -29,6 +26,10 @@ int	print_bash_error(char *token, int errnum)
 		ft_putstr_fd("Gigabash: syntax error near unexpected token `", 2);
 		ft_putstr_fd(token, 2);
 		ft_putstr_fd("'\n", 2);
+	}
+	if (errnum == 126)
+	{
+		
 	}
 	if (errnum == 127)
 	{
