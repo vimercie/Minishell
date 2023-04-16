@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 22:08:55 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 04:13:48 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_cmd_data
 {
 	t_file_table	*files;
 	int				pipefd[2];
+	int				pid;
 	int				n_redir;
 	int				n_arg;
 	bool			is_builtin;
