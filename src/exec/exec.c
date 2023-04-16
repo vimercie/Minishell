@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 04:41:00 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 13:26:04 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	built_in_detection(t_data *data, t_command *cmd, char *buffer)
 		return_val = unset_var(cmd, data->env);
 	else if (ft_strncmp(buffer, "exit", 4) == 0)
 		exit(EXIT_SUCCESS);
-	exit(return_val);
+	return (return_val);
 }
 
 void	perror_exit(char *str)
@@ -84,9 +84,10 @@ int	child_p(t_data *data, int i, char *buffer)
 			perror_exit("dup2 stdout");
 		close(data->cmd[i].fd_out);
 	}
-	if (data->cmd->d.is_builtin)
-		built_in_detection(data, &data->cmd[i], buffer);
+	if (data->cmd[i].d.is_builtin)
+		return (built_in_detection(data, &data->cmd[i], buffer));
 	data->tab_env = lst_env_to_tab_env(data->env);
+	printf("execve...\n");
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 	perror_exit("execve");
 	return (0);
@@ -99,7 +100,8 @@ int	execute_commands(t_data *data, char *buffer)
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		data->cmd->d.pid = fork();
+		if (data->cmd[i].d.is_builtin != 1)
+			data->cmd->d.pid = fork();
 		if (data->cmd->d.pid == -1)
 			perror_exit("fork");
 		else if (data->cmd->d.pid == 0)
