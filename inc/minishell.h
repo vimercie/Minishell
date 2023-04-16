@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 22:08:55 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 11:19:21 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,15 @@ typedef struct s_command
 	t_cmd_data		d;
 }				t_command;
 
-typedef struct s_data
+typedef struct			s_data
 {
-	t_command	*cmd;
-	t_env		*env;
-	char		**tab_env;
-	int			env_size;
-	int			n_cmd;
-}				t_data;
+	t_command			*cmd;
+	t_env				*env;
+	char				**tab_env;
+	int					env_size;
+	int					n_cmd;
+	struct sigaction	sa;
+}						t_data;
 
 int				main_tester(t_data *data);
 

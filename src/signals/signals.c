@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:33:20 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/15 20:21:47 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 11:44:07 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,14 @@ int	signal_handling(struct sigaction sa)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
+	return (0);
+}
+
+int	signal_ignore(t_data *data)
+{
+	data->sa.sa_handler = SIG_IGN;
+	sigemptyset(&data->sa.sa_mask);
+	data->sa.sa_flags = 0;
+	sigaction(SIGINT, &data->sa, NULL);
 	return (0);
 }
