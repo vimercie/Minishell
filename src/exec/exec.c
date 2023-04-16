@@ -6,37 +6,34 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 14:41:51 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 15:44:13 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-#define STDIN 0
-#define STDOUT 1
+void	perror_exit(char *str)
+{
+	perror(str);
+	exit(EXIT_FAILURE);
+}
 
-// int	built_in_detection(t_data *data, t_command *cmd, char *buffer)
-// {
-// 	if (buffer[0] == '\0')
-// 		return (0);
-// 	else if (ft_strncmp(cmd->argv[0], "echo", 4) == 0)
-// 		return (echo_controller(cmd));
-// 	else if (ft_strncmp(cmd->argv[0], "cd", 2) == 0)
-// 		return (cd(data));
-// 	else if ((ft_strncmp(cmd->argv[0], "export", 6) == 0) && cmd->d.n_arg == 1)
-// 		return (print_sorted_list(data->env));
-// 	else if (ft_strncmp(cmd->argv[0], "export", 6) == 0 && cmd->d.n_arg >= 2)
-// 		return (export_controller(cmd, data->env));
-// 	else if (ft_strncmp(cmd->argv[0], "env", 3) == 0)
-// 		return (print_list(data->env));
-// 	else if (ft_strncmp(cmd->argv[0], "pwd", 3) == 0)
-// 		return (get_current_dir());
-// 	else if (ft_strncmp(cmd->argv[0], "unset", 5) == 0)
-// 		return (unset_var(cmd, data->env));
-// 	else if (ft_strncmp(buffer, "exit", 4) == 0)
-// 		exit((exit_bash(data, buffer)));
-// 	return (-1);
-// }
+int	dup_fd(t_command *cmd)
+{
+	if (cmd->fd_in != STDIN_FILENO)
+	{
+		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
+			perror_exit("dup2 stdin");
+		close(cmd->fd_in);
+	}
+	if (cmd->fd_out != STDOUT_FILENO)
+	{
+		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+			perror_exit("dup2 stdout");
+		close(cmd->fd_out);
+	}
+	return (1);
+}
 
 int	built_in_detection(t_data *data, t_command *cmd, char *buffer)
 {
@@ -64,26 +61,27 @@ int	built_in_detection(t_data *data, t_command *cmd, char *buffer)
 	return (return_val);
 }
 
-void	perror_exit(char *str)
+int	exec_single_b_in(t_command *cmd, char *buffer, t_data *data)
 {
-	perror(str);
-	exit(EXIT_FAILURE);
+	int	tmp_stdin;
+	int	tmp_stdout;
+
+	if (cmd->fd_in != STDIN_FILENO)
+		tmp_stdin = dup(STDIN_FILENO);
+	if (cmd->fd_out != STDOUT_FILENO)
+		tmp_stdout = dup(STDOUT_FILENO);
+	dup_fd(cmd);
+	built_in_detection(data, cmd, buffer);
+	if (cmd->fd_in != STDIN_FILENO)
+		dup2(tmp_stdin, STDIN_FILENO);
+	if (cmd->fd_out != STDOUT_FILENO)
+		dup2(tmp_stdout, STDOUT_FILENO);
+	return (1);
 }
 
 int	child_p(t_data *data, int i, char *buffer)
 {
-	if (data->cmd[i].fd_in != STDIN_FILENO)
-	{
-		if (dup2(data->cmd[i].fd_in, STDIN_FILENO) == -1)
-			perror_exit("dup2 stdin");
-		close(data->cmd[i].fd_in);
-	}
-	if (data->cmd[i].fd_out != STDOUT_FILENO)
-	{
-		if (dup2(data->cmd[i].fd_out, STDOUT_FILENO) == -1)
-			perror_exit("dup2 stdout");
-		close(data->cmd[i].fd_out);
-	}
+	dup_fd(&data->cmd[i]);
 	if (data->cmd[i].d.is_builtin == 1)
 		exit(built_in_detection(data, &data->cmd[i], buffer));
 	data->tab_env = lst_env_to_tab_env(data->env);
@@ -97,7 +95,7 @@ int	execute_commands(t_data *data, char *buffer)
 	int	i;
 
 	if (data->cmd[0].d.is_builtin && data->n_cmd == 1)
-		return (built_in_detection(data, &data->cmd[0], buffer));
+		return (exec_single_b_in(&data->cmd[0], buffer, data));
 	i = 0;
 	while (i < data->n_cmd)
 	{
