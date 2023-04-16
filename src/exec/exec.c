@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 13:26:04 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 13:37:31 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	child_p(t_data *data, int i, char *buffer)
 	if (data->cmd[i].d.is_builtin)
 		return (built_in_detection(data, &data->cmd[i], buffer));
 	data->tab_env = lst_env_to_tab_env(data->env);
-	printf("execve...\n");
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 	perror_exit("execve");
 	return (0);
@@ -101,10 +100,10 @@ int	execute_commands(t_data *data, char *buffer)
 	while (i < data->n_cmd)
 	{
 		if (data->cmd[i].d.is_builtin != 1)
-			data->cmd->d.pid = fork();
-		if (data->cmd->d.pid == -1)
+			data->cmd[i].d.pid = fork();
+		if (data->cmd[i].d.pid == -1)
 			perror_exit("fork");
-		else if (data->cmd->d.pid == 0)
+		else if (data->cmd[i].d.pid == 0)
 			child_p(data, i, buffer);
 		if (data->cmd[i].fd_in != STDIN_FILENO)
 			close(data->cmd[i].fd_in);
