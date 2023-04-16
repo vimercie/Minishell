@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 13:37:31 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 14:32:47 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	child_p(t_data *data, int i, char *buffer)
 			perror_exit("dup2 stdout");
 		close(data->cmd[i].fd_out);
 	}
-	if (data->cmd[i].d.is_builtin)
-		return (built_in_detection(data, &data->cmd[i], buffer));
+	if (data->cmd[i].d.is_builtin == 1)
+		exit(built_in_detection(data, &data->cmd[i], buffer));
 	data->tab_env = lst_env_to_tab_env(data->env);
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 	perror_exit("execve");
@@ -96,11 +96,12 @@ int	execute_commands(t_data *data, char *buffer)
 {
 	int	i;
 
+	if (data->cmd[0].d.is_builtin && data->n_cmd == 1)
+		return (built_in_detection(data, &data->cmd[0], buffer));
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		if (data->cmd[i].d.is_builtin != 1)
-			data->cmd[i].d.pid = fork();
+		data->cmd[i].d.pid = fork();
 		if (data->cmd[i].d.pid == -1)
 			perror_exit("fork");
 		else if (data->cmd[i].d.pid == 0)
@@ -114,7 +115,8 @@ int	execute_commands(t_data *data, char *buffer)
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		waitpid(0, NULL, 0);
+		if (!data->cmd[i].d.is_builtin)
+			waitpid(data->cmd[i].d.pid, NULL, 0);
 		i++;
 	}
 	return (1);
