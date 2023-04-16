@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/16 11:19:21 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 12:09:07 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_cmd_data
 {
 	t_file_table	*files;
 	int				pipefd[2];
+	int				pid;
 	int				n_redir;
 	int				n_arg;
 	bool			is_builtin;
