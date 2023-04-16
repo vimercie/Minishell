@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 14:39:36 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 14:41:51 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ int	execute_commands(t_data *data, char *buffer)
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		if (!data->cmd[i].d.is_builtin || data->n_cmd > 1)
-			waitpid(data->cmd[i].d.pid, NULL, 0);
+		waitpid(data->cmd[i].d.pid, NULL, 0);
 		i++;
 	}
 	return (1);
