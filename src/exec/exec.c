@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 15:44:13 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 15:59:32 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	perror_exit(char *str)
-{
-	perror(str);
-	exit(EXIT_FAILURE);
-}
 
 int	dup_fd(t_command *cmd)
 {
@@ -65,7 +59,7 @@ int	exec_single_b_in(t_command *cmd, char *buffer, t_data *data)
 {
 	int	tmp_stdin;
 	int	tmp_stdout;
-
+	
 	if (cmd->fd_in != STDIN_FILENO)
 		tmp_stdin = dup(STDIN_FILENO);
 	if (cmd->fd_out != STDOUT_FILENO)

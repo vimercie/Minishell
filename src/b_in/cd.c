@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:07:06 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/15 20:20:29 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 17:26:05 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,29 @@ void	gotohomedir(void)
 // 	return (0);
 // }
 
-int	gotorelativepath(char *path)
+void	tilde_path_construct(t_data *data)
 {
-	if (chdir(path) == -1)
+	char	*cdpath;
+	char	*homepath;
+
+	if (data->cmd[0].argv[1][0] != '~')
+		return ;
+	cdpath = ft_strdup(data->cmd[0].argv[1]);
+	homepath = getenv("HOME");
+	if (ft_strlen(cdpath) == 1)
+	{
+		free(data->cmd[0].argv[1]);
+		data->cmd[0].argv[1] = ft_strdup(homepath);
+		printf("newpath=%s\n", data->cmd[0].argv[1]);
+	}
+	else if (cdpath[1] == '/')
+		data->cmd[0].argv[1] = ft_strjoin(homepath, ++cdpath);
+}
+
+int	gotorelativepath(t_data *data)
+{
+	tilde_path_construct(data);
+	if (chdir(data->cmd[0].argv[1]) == -1)
 	{
 		perror("");
 		return (1);
@@ -84,7 +104,7 @@ int	cd(t_data *data)
 	ft_strlcpy(oldpwd, "OLDPWD=", 8);
 	ft_strlcat(oldpwd, tmp, 4096);
 	if (data->cmd->d.n_arg == 2)
-		if (gotorelativepath(data->cmd->argv[1]) == 0)
+		if (gotorelativepath(data) == 0)
 			refresh_pwds_to_env(data, oldpwd);
 	if (data->cmd->d.n_arg == 1)
 	{

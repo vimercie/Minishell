@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/15 18:49:16 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 15:55:48 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../inc/minishell.h"
+
+void	perror_exit(char *str)
+{
+	perror(str);
+	exit(EXIT_FAILURE);
+}
 
 int	count_env(t_env *start)
 {

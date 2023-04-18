@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/16 12:09:07 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/16 15:55:46 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int				pipe_init(t_data *data);
 // error
 int				print_bash_error(char *token, int errnum);
 int				print_linux_error(char *token);
+void			perror_exit(char *str);
 
 // cleaning
 void			free_loop(t_data *data);
