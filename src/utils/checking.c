@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   checking.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 13:21:17 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 16:19:07 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	is_pipe(int fd, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->n_cmd)
+	{
+		if (fd == data->cmd[i].d.pipefd[0]
+			|| fd == data->cmd[i].d.pipefd[1])
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	is_quote(char *s, int index)
 {

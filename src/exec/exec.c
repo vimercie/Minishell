@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/18 14:16:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 16:24:13 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	child_p(t_data *data, int i, char *buffer)
 	dup_fd(&data->cmd[i]);
 	if (data->cmd[i].d.is_builtin == 1)
 		exit(built_in_detection(data, &data->cmd[i], buffer));
-	printf("\n------------------\n");
 	data->tab_env = lst_env_to_tab_env(data->env);
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
 	perror_exit("execve");
@@ -54,12 +53,21 @@ void	cmd_loop(t_data *data, char *buffer)
 			perror_exit("fork");
 		else if (data->cmd[i].d.pid == 0)
 			child_p(data, i, buffer);
-		if (data->cmd[i].fd_in != STDIN_FILENO)
+		if (is_pipe(data->cmd[i].fd_in, data)
+			&& data->cmd[i].fd_in != STDIN_FILENO)
+		{
+			printf("closing fd_in = %d\n", data->cmd[i].fd_in);
 			close(data->cmd[i].fd_in);
-		if (data->cmd[i].fd_out != STDOUT_FILENO)
+		}
+		if (is_pipe(data->cmd[i].fd_out, data)
+			&& data->cmd[i].fd_out != STDOUT_FILENO)
+		{
+			printf("closing fd_out = %d\n", data->cmd[i].fd_out);
 			close(data->cmd[i].fd_out);
+		}
 		i++;
 	}
+	return ;
 }
 
 int	execute_commands(t_data *data, char *buffer)
@@ -75,7 +83,6 @@ int	execute_commands(t_data *data, char *buffer)
 	{
 		if (waitpid(data->cmd[i].d.pid, &status, 0) == -1)
 			return (print_bash_error("waitpid", 1));
-		printf("CHILD FINISHED\n");
 		if (WIFEXITED(status))
 			g_err_no = WEXITSTATUS(status);
 		// if (WIFSIGNALED(status))

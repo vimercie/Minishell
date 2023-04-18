@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:14:30 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/13 17:27:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 16:06:57 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ int	close_files(t_command *cmd)
 	while (i < cmd->d.n_redir)
 	{
 		free(cmd->d.files[i].file_name);
-		if (cmd->d.files[i].fd == -1)
-			return (0);
-		if (!close(cmd->d.files[i].fd))
-			return (0);
+		if (cmd->d.files[i].fd > 2)
+		{
+			if (close(cmd->d.files[i].fd) == -1)
+				return (print_bash_error("close", 1));
+		}
 		i++;
 	}
 	return (1);

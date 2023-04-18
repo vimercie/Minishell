@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:33:20 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/18 10:15:33 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 15:53:02 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	sigint_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("TEST\n");
 		rl_replace_line("", 0);
 		ft_putchar_fd('\n', STDERR_FILENO);
 		rl_on_new_line();

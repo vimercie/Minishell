@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:18:52 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/18 13:22:32 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 15:57:57 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ int	dup_fd(t_command *cmd)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
 			perror_exit("dup2 stdin");
-		close(cmd->fd_in);
 	}
 	if (cmd->fd_out != STDOUT_FILENO)
 	{
 		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
 			perror_exit("dup2 stdout");
-		close(cmd->fd_out);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 14:55:57 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 16:05:50 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int				is_builtin(char *str);
 int				is_directory(char *path);
 int				is_metachar(char c);
 int				is_string_blank(char *s);
+int				is_pipe(int fd, t_data *data);
 int				is_quote(char *s, int index);
 int				is_quoted(char *s, int index);
 
@@ -147,7 +148,7 @@ void			perror_exit(char *str);
 // cleaning
 void			free_loop(t_data *data);
 int				free_tab(char **tab);
-int				close_pipes(t_data *data);
+int				close_files(t_command *cmd);
 
 // exec
 int				execute_commands(t_data *data, char *buffer);
