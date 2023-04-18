@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/16 15:55:46 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 10:13:38 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_command
 	t_cmd_data		d;
 }				t_command;
 
-typedef struct			s_data
+typedef struct s_data
 {
 	t_command			*cmd;
 	t_env				*env;
@@ -95,9 +95,9 @@ char			*handle_env_var(char *input, t_env *env);
 int				pipe_init(t_data *data);
 
 // init
-int				cmd_init(char **tokens, t_command *cmd, t_data *data);
+int				cmd_init(char *pipe_split, t_command *cmd, t_data *data);
 char			**argv_init(char **tokens, t_env *env);
-char			*get_cmd_path(char *cmd);
+char			*get_cmd_path(char *cmd, t_env *env);
 t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
 int				set_fd(t_data *data);
 
@@ -106,6 +106,9 @@ char			**tokenize_input(char *input);
 int				token_len(char *input);
 int				handle_metachar(char *input);
 int				count_tokens(char *input);
+
+// env_var
+char			*find_env_var_value(char *to_find, t_env *env);
 
 // redirection
 int				get_fd(char *operator, char *file_name, t_data *data);
@@ -136,7 +139,7 @@ int				pipe_init(t_data *data);
 // error
 int				print_bash_error(char *token, int errnum);
 int				print_linux_error(char *token);
-void			perror_exit(char *str);
+int				print_heredoc_warning(char *token);
 
 // cleaning
 void			free_loop(t_data *data);
@@ -173,6 +176,7 @@ void			exit_gigabash(t_data *data);
 void			signal_exit(int signum);
 
 // Signals
-int				signal_handling(struct sigaction sa);
+int				signal_handling(struct sigaction *sa);
+void			execve_sig_handler(int signum);
 
 #endif

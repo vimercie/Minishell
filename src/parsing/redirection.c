@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:04:19 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 19:13:16 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 20:16:52 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ t_file_table	*files_init(char **tokens, int n_redir, t_data *data)
 		{
 			files[j].file_name = ft_strdup(tokens[i + 1]);
 			files[j].fd = get_fd(tokens[i], tokens[i + 1], data);
-			files[j].is_outfile = 0;
-			files[j].is_heredoc = 0;
 			if (tokens[i][0] == '>')
 				files[j].is_outfile = 1;
 			if (ft_strcmp(tokens[i], "<<") == 0)

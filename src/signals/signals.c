@@ -6,16 +6,26 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:33:20 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 15:54:23 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 10:15:33 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+void	execve_sig_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_err_no = 130;
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
+}
+
 void	sigint_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		printf("TEST\n");
 		rl_replace_line("", 0);
 		ft_putchar_fd('\n', STDERR_FILENO);
 		rl_on_new_line();
@@ -24,12 +34,12 @@ void	sigint_handler(int signum)
 	return ;
 }
 
-int	signal_handling(struct sigaction sa)
+int	signal_handling(struct sigaction *sa)
 {
-	sa.sa_handler = sigint_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
+	sa->sa_handler = sigint_handler;
+	sigemptyset(&sa->sa_mask);
+	sa->sa_flags = 0;
+	sigaction(SIGINT, sa, NULL);
 	return (0);
 }
 
