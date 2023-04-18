@@ -6,13 +6,13 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 14:55:32 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 17:08:18 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	count_quotes(char	*s)
+int	count_quotes(char *s)
 {
 	int	res;
 	int	i;

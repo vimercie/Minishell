@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 15:03:20 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 17:09:25 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*remove_quotes(char *s)
 		return (s);
 	i = 0;
 	j = 0;
-	res = ft_calloc(i - count_quotes(s) + 1, sizeof(char));
+	res = ft_calloc(ft_strlen(s) - count_quotes(s) + 1, sizeof(char));
 	while (s[i])
 	{
 		if (!is_quote(s, i))
