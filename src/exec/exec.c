@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 15:44:13 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 01:29:22 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	child_p(t_data *data, int i, char *buffer)
 
 int	execute_commands(t_data *data, char *buffer)
 {
+	int	status;
 	int	i;
 
 	if (data->cmd[0].d.is_builtin && data->n_cmd == 1)
@@ -113,7 +114,11 @@ int	execute_commands(t_data *data, char *buffer)
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		waitpid(data->cmd[i].d.pid, NULL, 0);
+		if (waitpid(data->cmd[i].d.pid, &status, 0) == -1)
+			return (print_bash_error("waitpid", 1));
+		if (WIFEXITED(status))
+			g_err_no = WEXITSTATUS(status);
+		// if (WIFSIGNALED(status))
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 18:51:36 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 02:08:12 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,23 @@ char	*find_env_var_value(char *to_find, t_env *env)
 	return (NULL);
 }
 
+char	*name_to_env(char *input, int *index, t_env *env)
+{
+	char	*name;
+	char	*res;
+
+	while (!is_metachar(input[*index]) && !ft_isspace(input[*index])
+		&& *index == 0 && input[*index])
+		*index += 1;
+	name = ft_strndup(input, *index);
+	res = find_env_var_value(name + 1, env);
+	free(name);
+	return (res);
+}
+
 char	*replace_env_var(char *input, int *index, t_env *env)
 {
 	char	*res;
-	char	*name;
 	int		i;
 
 	i = 0;
@@ -44,12 +57,7 @@ char	*replace_env_var(char *input, int *index, t_env *env)
 			*index += 1;
 			return (ft_strdup(input));
 		}
-		i++;
-		while (!is_metachar(input[i]) && !ft_isspace(input[i]) && input[i])
-			i++;
-		name = ft_strndup(input, i);
-		res = find_env_var_value(name + 1, env);
-		free(name);
+		res = name_to_env(input, &i, env);
 	}
 	else
 	{

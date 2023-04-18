@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:28:45 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 18:48:00 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 02:44:35 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*heredoc_loop(char *delimiter, t_data *data)
 	while (1)
 	{
 		buffer = readline("> ");
-		if (buffer[0] && ft_strcmp(buffer, delimiter) == 0)
+		if (!buffer || ft_strcmp(buffer, delimiter) == 0)
 			break ;
 		tmp = handle_env_var(buffer, data->env);
 		free(buffer);
@@ -38,6 +38,8 @@ char	*heredoc_loop(char *delimiter, t_data *data)
 		free(tmp);
 		free(buffer);
 	}
+	if (!buffer)
+		print_heredoc_warning(delimiter);
 	free(buffer);
 	return (res);
 }

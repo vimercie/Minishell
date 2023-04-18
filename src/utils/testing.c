@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:58:57 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/14 17:06:22 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 20:19:09 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main_tester(t_data *data)
 			printf("cmd[%d].files[%d].file_name = |%s|\n", i, j, data->cmd[i].d.files[j].file_name);
 			printf("cmd[%d].files[%d].fd = |%d|\n", i, j, data->cmd[i].d.files[j].fd);
 			printf("cmd[%d].files[%d].is_outfile = |%d|\n", i, j, data->cmd[i].d.files[j].is_outfile);
+			printf("cmd[%d].files[%d].is_heredoc = |%d|\n", i, j, data->cmd[i].d.files[j].is_heredoc);
 			j++;
 		}
 		printf("\n");
