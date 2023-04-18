@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 16:05:50 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 19:02:23 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				main_tester(t_data *data);
 // parsing
 int				parsing(char *input, t_data *data);
 int				check_syntax(char *input);
-char			*handle_env_var(char *input, t_env *env);
+char			*handle_env_var(char *input, bool is_heredoc, t_env *env);
 int				pipe_init(t_data *data);
 
 // init

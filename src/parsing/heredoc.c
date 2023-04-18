@@ -3,50 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:28:45 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 11:04:43 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 19:05:14 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	heredoc_subft(t_data *data, char *buffer, char *tmp, char *res)
+int	heredoc_putfd(char *buffer, int heredoc_fd, t_env *env)
 {
-	tmp = handle_env_var(buffer, data->env);
-	free(buffer);
-	buffer = ft_strdup(tmp);
-	free(tmp);
-	tmp = NULL;
-	if (res)
-		tmp = ft_strjoin(res, "\n");
+	char	*res;
+
+	res = handle_env_var(buffer, true, env);
+	ft_putstr_fd(res, heredoc_fd);
+	ft_putstr_fd("\n", heredoc_fd);
 	free(res);
-	res = ft_strjoin(tmp, buffer);
-	free(tmp);
-	free(buffer);
+	return (1);
 }
 
-char	*heredoc_loop(char *delimiter, t_data *data)
+int	heredoc_loop(char *delimiter, int heredoc_fd, t_env *env)
 {
 	char	*buffer;
-	char	*res;
-	char	*tmp;
 
-	tmp = NULL;
-	res = NULL;
-	buffer = NULL;
 	while (1)
 	{
 		buffer = readline("> ");
 		if (!buffer || ft_strcmp(buffer, delimiter) == 0)
 			break ;
-		heredoc_subft(data, buffer, tmp, res);
+		heredoc_putfd(buffer, heredoc_fd, env);
+		free(buffer);
 	}
 	if (!buffer)
 		print_heredoc_warning(delimiter);
 	free(buffer);
-	return (res);
+	return (1);
 }
 
 int	heredoc(char *delimiter, t_data *data)
@@ -61,8 +53,7 @@ int	heredoc(char *delimiter, t_data *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		res = heredoc_loop(delimiter, data);
-		ft_putstr_fd(res, pipefd[1]);
+		heredoc_loop(delimiter, pipefd[1], data->env);
 		exit(1);
 	}
 	else if (waitpid(-1, &status, 0) == -1)
