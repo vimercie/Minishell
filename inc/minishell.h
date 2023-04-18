@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 13:24:06 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 14:55:57 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char			*remove_quotes(char *s);
 int				count_cmd(char *s);
 int				count_redir(char **tokens);
 int				count_args(char **tokens);
+int				count_quotes(char	*s);
 
 // file descriptor
 int				pipe_init(t_data *data);

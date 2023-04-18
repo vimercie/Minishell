@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:54:47 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/11 14:12:05 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 14:55:32 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	count_quotes(char	*s)
+{
+	int	res;
+	int	i;
+
+	i = 0;
+	res = 0;
+	while (s[i])
+	{
+		if (is_quote(s, i) > 0)
+			res++;
+		i++;
+	}
+	return (res);
+}
 
 int	count_args(char **tokens)
 {

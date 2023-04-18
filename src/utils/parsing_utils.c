@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 12:05:54 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 11:17:51 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 15:03:20 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*gather_full_path(char *path, char *cmd)
 char	*remove_quotes(char *s)
 {
 	char	*res;
-	int		n_quote;
 	int		i;
 	int		j;
 
@@ -35,17 +34,11 @@ char	*remove_quotes(char *s)
 		free(s);
 		return (NULL);
 	}
-	i = 0;
-	n_quote = 0;
-	while (s[i])
-	{
-		if (is_quote(s, i) > 0)
-			n_quote++;
-		i++;
-	}
-	res = ft_calloc(i - n_quote + 1, sizeof(char));
+	if (count_quotes(s) == 0)
+		return (s);
 	i = 0;
 	j = 0;
+	res = ft_calloc(i - count_quotes(s) + 1, sizeof(char));
 	while (s[i])
 	{
 		if (!is_quote(s, i))

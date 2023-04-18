@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 13:26:50 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 14:13:10 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int ac, char **av, char **envp)
 	data.tab_env = lst_env_to_tab_env(data.env);
 	while (1)
 	{
-		dprintf(1, "IM HERE\n");
 		signal_handling(&data.sa);
 		buffer = readline("GigaBash$ ");
 		if (!buffer)
