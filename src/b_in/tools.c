@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 15:55:48 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 13:22:59 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../inc/minishell.h"
-
-void	perror_exit(char *str)
-{
-	perror(str);
-	exit(EXIT_FAILURE);
-}
 
 int	count_env(t_env *start)
 {
@@ -36,16 +30,22 @@ int	count_env(t_env *start)
 	return (count);
 }
 
-int	print_sorted_list(t_env *env)
+void	print_subft(t_env *current)
+{
+	printf("declare -x %s", current->name);
+	if (current->val == 1)
+		printf("=\"%s\"", current->value);
+	printf("\n");
+}
+
+void	print_sorted_list(t_env *env)
 {
 	int		i;
 	t_env	*current;
-	int		size;
 
 	index_env(env);
 	i = 1;
-	size = count_env(env);
-	while (i <= size)
+	while (i <= count_env(env))
 	{
 		current = env;
 		while (current->next)
@@ -58,16 +58,12 @@ int	print_sorted_list(t_env *env)
 					current = current->next;
 					continue ;
 				}
-				printf("declare -x %s", current->name);
-				if (current->val == 1)
-					printf("=\"%s\"", current->value);
-				printf("\n");
+				print_subft(current);
 			}
 			current = current->next;
 		}
 		i++;
 	}
-	return (0);
 }
 
 int	print_list(t_env *env)

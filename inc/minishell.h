@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 10:13:38 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 13:24:06 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ int				pipe_init(t_data *data);
 int				print_bash_error(char *token, int errnum);
 int				print_linux_error(char *token);
 int				print_heredoc_warning(char *token);
+int				built_in_detection(t_data *data, t_command *cmd, char *buffer);
+void			perror_exit(char *str);
 
 // cleaning
 void			free_loop(t_data *data);
@@ -149,7 +151,8 @@ int				close_pipes(t_data *data);
 // exec
 int				execute_commands(t_data *data, char *buffer);
 void			redirect_fds(t_data *data, int i);
-
+int				dup_fd(t_command *cmd);
+int				built_in_detection(t_data *data, t_command *cmd, char *buffer);
 // env
 t_env			*lst_getenv(char **env);
 t_env			*lst_name(t_env *lst, char *to_find);
@@ -161,7 +164,7 @@ int				assign_name_value(t_env *lst_new, char *string);
 int				print_list(t_env *env);
 int				equal_index(char *string);
 int				export(char *str, t_env *env);
-int				print_sorted_list(t_env *env);
+void			print_sorted_list(t_env *env);
 void			index_env(t_env *env);
 void			lst_free(t_env *lst);
 

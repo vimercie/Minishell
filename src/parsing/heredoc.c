@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:28:45 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 02:44:35 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 11:04:43 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	heredoc_subft(t_data *data, char *buffer, char *tmp, char *res)
+{
+	tmp = handle_env_var(buffer, data->env);
+	free(buffer);
+	buffer = ft_strdup(tmp);
+	free(tmp);
+	tmp = NULL;
+	if (res)
+		tmp = ft_strjoin(res, "\n");
+	free(res);
+	res = ft_strjoin(tmp, buffer);
+	free(tmp);
+	free(buffer);
+}
 
 char	*heredoc_loop(char *delimiter, t_data *data)
 {
@@ -26,17 +41,7 @@ char	*heredoc_loop(char *delimiter, t_data *data)
 		buffer = readline("> ");
 		if (!buffer || ft_strcmp(buffer, delimiter) == 0)
 			break ;
-		tmp = handle_env_var(buffer, data->env);
-		free(buffer);
-		buffer = ft_strdup(tmp);
-		free(tmp);
-		tmp = NULL;
-		if (res)
-			tmp = ft_strjoin(res, "\n");
-		free(res);
-		res = ft_strjoin(tmp, buffer);
-		free(tmp);
-		free(buffer);
+		heredoc_subft(data, buffer, tmp, res);
 	}
 	if (!buffer)
 		print_heredoc_warning(delimiter);

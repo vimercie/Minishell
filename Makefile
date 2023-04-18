@@ -22,11 +22,13 @@ SRC=		main.c						\
 			file_descriptor.c			\
 			heredoc.c					\
 			checking.c					\
+			checking2.c					\
 			parsing_utils.c				\
 			init_utils.c				\
 			error.c						\
 			cleaning.c					\
 			exec.c						\
+			exec2.c						\
 			env.c						\
 			env_tools.c					\
 			cd.c						\
