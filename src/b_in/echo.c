@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:31:59 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/14 18:52:30 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 12:31:19 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,26 @@ int	echo(char *str)
 	return (0);
 }
 
+int	str_has_only_dash_n(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[0] != '-')
+		return (0);
+	while (str[i] == 'n')
+		i++;
+	if (i == ft_strlen(str))
+		return (1);
+	return (0);
+}
+
 int	has_n_option(t_command *cmd)
 {
 	int	i;
 
 	i = 1;
-	if (cmd->argv[i] && ft_strcmp(cmd->argv[1], "-n") != 0)
-		return (0);
-	while (cmd->argv[i] && (ft_strcmp(cmd->argv[i], "-n") == 0))
+	while (str_has_only_dash_n(cmd->argv[i]) == 1)
 		i++;
 	return (i);
 }

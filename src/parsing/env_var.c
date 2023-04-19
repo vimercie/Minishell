@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:59:23 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 15:12:43 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 19:09:23 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*name_to_env(char *input, int *index, t_env *env)
 	return (res);
 }
 
-char	*replace_env_var(char *input, int *index, t_env *env)
+char	*replace_env_var(char *input, int *index, bool is_heredoc, t_env *env)
 {
 	char	*res;
 	int		i;
@@ -61,7 +61,8 @@ char	*replace_env_var(char *input, int *index, t_env *env)
 	}
 	else
 	{
-		while ((input[i] != '$' || is_quoted(input, i) == 1) && input[i])
+		while (((is_quoted(input, i) == 1 && is_heredoc == false)
+				|| input[i] != '$') && input[i])
 			i++;
 		res = ft_strndup(input, i);
 	}
@@ -69,7 +70,7 @@ char	*replace_env_var(char *input, int *index, t_env *env)
 	return (res);
 }
 
-char	*handle_env_var(char *input, t_env *env)
+char	*handle_env_var(char *input, bool is_heredoc, t_env *env)
 {
 	char	*res;
 	char	*tmp;
@@ -79,13 +80,13 @@ char	*handle_env_var(char *input, t_env *env)
 	if (!input)
 		return (NULL);
 	res = NULL;
-	if (is_quote(input, 0) == 1
+	if ((is_quote(input, 0) == 1 && is_heredoc == false)
 		|| ft_strcmp(input, "\"$\"") == 0)
 		return (ft_strdup(input));
 	while (input[0])
 	{
 		i = 0;
-		value = replace_env_var(input, &i, env);
+		value = replace_env_var(input, &i, is_heredoc, env);
 		input += i;
 		tmp = ft_strdup(res);
 		free(res);
