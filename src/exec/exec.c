@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/18 16:24:13 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 16:17:31 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exec_single_b_in(t_command *cmd, char *buffer, t_data *data)
 	if (cmd->fd_out != STDOUT_FILENO)
 		tmp_stdout = dup(STDOUT_FILENO);
 	dup_fd(cmd);
-	built_in_detection(data, cmd, buffer);
+	g_err_no = built_in_detection(data, cmd, buffer);
 	if (cmd->fd_in != STDIN_FILENO)
 		dup2(tmp_stdin, STDIN_FILENO);
 	if (cmd->fd_out != STDOUT_FILENO)
@@ -35,9 +35,10 @@ int	child_p(t_data *data, int i, char *buffer)
 	dup_fd(&data->cmd[i]);
 	if (data->cmd[i].d.is_builtin == 1)
 		exit(built_in_detection(data, &data->cmd[i], buffer));
+	child_signal_handling(&data->sa);
 	data->tab_env = lst_env_to_tab_env(data->env);
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
-	perror_exit("execve");
+	// perror_exit("execve");
 	return (0);
 }
 

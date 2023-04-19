@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 19:02:23 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 16:03:24 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,5 +183,6 @@ void			signal_exit(int signum);
 // Signals
 int				signal_handling(struct sigaction *sa);
 void			execve_sig_handler(int signum);
+int				child_signal_handling(struct sigaction *sa);
 
 #endif

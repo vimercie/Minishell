@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:36:41 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/15 19:11:27 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 16:30:33 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	check_consecutive_metachar(char **tokens)
 	i = 0;
 	while (tokens[i])
 	{
-		if (tokens[i][0] == '>' || tokens[i][0] == '<')
+		if (tokens[i][0] == '>' || tokens[i][0] == '<' || tokens[i][0] == '|')
 		{
-			if (tokens[i + 1] == NULL)
+			if (is_string_blank(tokens[i + 1]))
 				return (print_bash_error("newline", 2));
 			if (tokens[i + 1][0] == '>' || tokens[i + 1][0] == '<'
 				|| tokens[i + 1][0] == '|')
