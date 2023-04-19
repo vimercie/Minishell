@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 17:12:41 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 15:35:18 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,29 @@ int	is_quote(char *s, int index)
 	return (0);
 }
 
+int	get_is_quoted_res(char *s, int first_quote, int last_quote, int index)
+{
+	if (s[last_quote] == s[first_quote])
+	{
+		if ((index > first_quote && index < last_quote))
+		{
+			if (s[first_quote] == '\'')
+				return (1);
+			return (2);
+		}
+	}
+	return (0);
+}
+
 int	is_quoted(char *s, int index)
 {
+	int	res;
 	int	opening_quote_index;
 	int	i;
 
 	i = 0;
-	while (s[i])
+	res = 0;
+	while (s[i] && res == 0)
 	{
 		opening_quote_index = i;
 		if (s[i] == '\"' || s[i] == '\'')
@@ -58,15 +74,11 @@ int	is_quoted(char *s, int index)
 			i++;
 			while (s[i] != s[opening_quote_index] && s[i])
 				i++;
-			if ((index > opening_quote_index && index < i)
-				&& (s[i] == s[opening_quote_index] && s[i]))
-			{
-				if (s[opening_quote_index] == '\'')
-					return (1);
-				return (2);
-			}
+			if (!s[i])
+				return (0);
+			res = get_is_quoted_res(s, opening_quote_index, i, index);
 		}
 		i++;
 	}
-	return (0);
+	return (res);
 }

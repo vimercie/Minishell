@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:39:16 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 02:31:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 15:39:54 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	print_heredoc_warning(char *token)
 {
 	ft_putstr_fd("Gigabash: warning: here-document delimi", STDERR_FILENO);
-	ft_putstr_fd("ted by enf-of-file (wanted `", STDERR_FILENO);
+	ft_putstr_fd("ted by end-of-file (wanted `", STDERR_FILENO);
 	ft_putstr_fd(token, STDERR_FILENO);
 	ft_putstr_fd("')\n", STDERR_FILENO);
 	return (0);
