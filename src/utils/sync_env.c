@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:41:17 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/16 12:26:05 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 17:45:46 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*t_env_to_str(t_env *env)
 	j = 0;
 	str = malloc(sizeof(char)
 			* ft_strlen(env->name) + ft_strlen(env->value) + 2);
-	while (i < ft_strlen(env->name) - 1)
+	while (i <= ft_strlen(env->name) - 1)
 	{
 		str[i] = env->name[i];
 		i++;
