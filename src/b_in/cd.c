@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:07:06 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/17 17:26:05 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 17:40:45 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	tilde_path_construct(t_data *data)
 	{
 		free(data->cmd[0].argv[1]);
 		data->cmd[0].argv[1] = ft_strdup(homepath);
-		printf("newpath=%s\n", data->cmd[0].argv[1]);
 	}
 	else if (cdpath[1] == '/')
 		data->cmd[0].argv[1] = ft_strjoin(homepath, ++cdpath);
@@ -99,10 +98,8 @@ int	cd(t_data *data)
 		printf("cd: too many arguments\n");
 		return (1);
 	}
-	oldpwd = calloc(sizeof(char), 32760);
-	tmp = getcwd(NULL, 4096);
-	ft_strlcpy(oldpwd, "OLDPWD=", 8);
-	ft_strlcat(oldpwd, tmp, 4096);
+	tmp = getcwd(NULL, 0);
+	oldpwd = ft_strjoin("OLDPWD=", tmp);
 	if (data->cmd->d.n_arg == 2)
 		if (gotorelativepath(data) == 0)
 			refresh_pwds_to_env(data, oldpwd);
