@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:31:59 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/19 12:31:19 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 14:18:52 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	echo(char *str)
 
 int	str_has_only_dash_n(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 1;
 	if (str[0] != '-')
@@ -32,14 +32,20 @@ int	str_has_only_dash_n(char *str)
 	return (0);
 }
 
-int	has_n_option(t_command *cmd)
+int	has_n_option(char *str)
 {
 	int	i;
 
 	i = 1;
-	while (str_has_only_dash_n(cmd->argv[i]) == 1)
+	if (str[0] != '-')
+		return (0);
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
 		i++;
-	return (i);
+	}
+	return (1);
 }
 
 int	echo_controller(t_command *cmd)
@@ -50,9 +56,9 @@ int	echo_controller(t_command *cmd)
 	i = 1;
 	if (!cmd->argv[1])
 		return (printf("\n"));
-	n_option = has_n_option(cmd);
-	if (n_option > 0)
-		i = n_option;
+	n_option = has_n_option(cmd->argv[1]);
+	while (cmd->argv[i] && str_has_only_dash_n(cmd->argv[i]) == 1)
+		i++;
 	while (cmd->argv[i] && i < cmd->d.n_arg)
 	{
 		echo(cmd->argv[i]);
