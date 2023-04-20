@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 15:59:23 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 16:49:33 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ int				main_tester(t_data *data);
 
 // parsing
 int				parsing(char *input, t_data *data);
-int				check_syntax(char *input);
+int				check_syntax(char *input, char **tokens);
 char			*handle_env_var(char *input, bool is_heredoc, t_env *env);
 int				pipe_init(t_data *data);
 
 // init
-int				cmd_init(char *pipe_split, t_command *cmd, t_data *data);
+int				cmd_init(char **tokens, t_command *cmd, t_data *data);
 char			**argv_init(char **tokens, t_env *env);
 char			*get_cmd_path(char *cmd, t_env *env);
 t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
@@ -130,7 +130,7 @@ char			*gather_full_path(char *path, char *cmd);
 char			*remove_quotes(char *s);
 
 // init utils
-int				count_cmd(char *s);
+int				count_cmd(char **tokens);
 int				count_redir(char **tokens);
 int				count_args(char **tokens);
 int				count_quotes(char	*s);

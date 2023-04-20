@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 16:03:37 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 17:42:43 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int ac, char **av, char **envp)
 		handle_history(buffer, previous_buffer);
 		if (parsing(buffer, &data))
 			execute_commands(&data);
+		main_tester(&data);
 		free(buffer);
 		free_loop(&data);
 	}

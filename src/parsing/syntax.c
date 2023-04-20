@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:36:41 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 15:17:57 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 16:58:05 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	skip_quoted_string(char *input, int *i)
 		*i += 1;
 		while (is_quoted(input, *i))
 			*i += 1;
-		*i += 1;
 	}
 	else
 		return (0);
@@ -71,20 +70,15 @@ int	check_consecutive_metachar(char **tokens)
 	return (1);
 }
 
-int	check_syntax(char *input)
+int	check_syntax(char *input, char **tokens)
 {
-	char	**tokens;
 	int		return_val;
 
 	return_val = 1;
-	tokens = tokenize_input(input);
-	if (!tokens)
-		return (0);
 	if (!check_consecutive_metachar(tokens)
 		|| !check_quotes_closing(input))
 		return_val = 0;
 	if (tokens[0][0] == '|')
 		return_val = print_bash_error(tokens[0], 2);
-	free_tab(tokens);
 	return (return_val);
 }

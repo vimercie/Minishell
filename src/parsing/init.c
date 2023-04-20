@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/18 19:05:02 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 17:45:06 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,13 @@ char	**argv_init(char **tokens, t_env *env)
 	return (res);
 }
 
-int	cmd_init(char *pipe_split, t_command *cmd, t_data *data)
+int	cmd_init(char **tokens, t_command *cmd, t_data *data)
 {
-	char	**tokens;
-
-	tokens = tokenize_input(pipe_split);
-	if (!tokens)
-		return (0);
 	cmd->argv = argv_init(tokens, data->env);
 	cmd->pathname = get_cmd_path(cmd->argv[0], data->env);
-	cmd->d.n_arg = count_args(tokens);
 	cmd->d.n_redir = count_redir(tokens);
 	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
 	cmd->d.is_builtin = is_builtin(cmd->argv[0]);
-	free_tab(tokens);
 	if (!is_builtin(cmd->argv[0]) && !cmd->pathname)
 		return (print_bash_error(cmd->argv[0], 127));
 	return (1);
