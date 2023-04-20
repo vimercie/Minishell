@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/19 16:03:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 14:38:54 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,19 +142,19 @@ int				pipe_init(t_data *data);
 int				print_bash_error(char *token, int errnum);
 int				print_linux_error(char *token);
 int				print_heredoc_warning(char *token);
-int				built_in_detection(t_data *data, t_command *cmd, char *buffer);
 void			perror_exit(char *str);
 
 // cleaning
 void			free_loop(t_data *data);
 int				free_tab(char **tab);
 int				close_files(t_command *cmd);
+int				close_pipes(t_command *cmd, t_data *data);
 
 // exec
-int				execute_commands(t_data *data, char *buffer);
+int				execute_commands(t_data *data);
 void			redirect_fds(t_data *data, int i);
 int				dup_fd(t_command *cmd);
-int				built_in_detection(t_data *data, t_command *cmd, char *buffer);
+int				built_in_detection(t_command *cmd, t_data *data);
 // env
 t_env			*lst_getenv(char **env);
 t_env			*lst_name(t_env *lst, char *to_find);

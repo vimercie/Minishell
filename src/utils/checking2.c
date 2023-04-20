@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:07:13 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/18 11:08:15 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 15:38:13 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -19,12 +19,16 @@ int	count_tokens(char *input)
 
 	len = 0;
 	n_token = 0;
+	if (!input)
+		return (0);
 	while (!is_string_blank(input + len))
 	{
 		while (ft_isspace(input[len]) && input[len])
 			len++;
 		len += token_len(input + len);
 		n_token++;
+		if (!input[len])
+			return (n_token);
 	}
 	return (n_token);
 }
@@ -48,7 +52,9 @@ int	handle_metachar(char *input)
 	}
 	else if (input[0] == '\'' || input[0] == '\"')
 	{
-		while (is_quoted(input, res) != 0)
+		if (is_quote(input, 0) == 0)
+			return (1);
+		while (is_quoted(input, res) > 0)
 			res++;
 		res++;
 	}
