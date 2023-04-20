@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/20 15:58:06 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 16:01:26 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	wait_child_processes(t_data *data)
 			return (print_bash_error("waitpid", 1));
 		if (WIFEXITED(status))
 			g_err_no = WEXITSTATUS(status);
-		// if (WIFSIGNALED(status))
+		if (WIFSIGNALED(status))
+			printf("\n");
 		i++;
 	}
 	return (1);
@@ -50,6 +51,7 @@ int	wait_child_processes(t_data *data)
 
 int	child_p(t_command *cmd, t_data *data)
 {
+	signal_handling(&data->sa);
 	dup_fd(cmd);
 	if (cmd->d.is_builtin == 1)
 		exit(built_in_detection(cmd, data));
