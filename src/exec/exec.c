@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/20 14:37:35 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 15:58:06 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ void	cmd_loop(t_data *data)
 	i = 0;
 	while (i < data->n_cmd)
 	{
+		data->sa.sa_handler = SIG_IGN;
+		sigemptyset(&data->sa.sa_mask);
+		data->sa.sa_flags = 0;
+		if (sigaction(SIGINT, &data->sa, NULL) == -1)
+			perror("sigaction");
 		data->cmd[i].d.pid = fork();
 		if (data->cmd[i].d.pid == -1)
 			perror_exit("fork");

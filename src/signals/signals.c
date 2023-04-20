@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:33:20 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/19 16:03:02 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 14:49:48 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	signal_handling(struct sigaction *sa)
 {
 	sa->sa_handler = sigint_handler;
 	sigemptyset(&sa->sa_mask);
-	sa->sa_flags = 0;
+	sa->sa_flags = SA_RESTART;
 	sigaction(SIGINT, sa, NULL);
 	return (0);
 }
