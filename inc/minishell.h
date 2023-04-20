@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/19 16:03:24 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 14:50:28 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,6 @@ void			signal_exit(int signum);
 int				signal_handling(struct sigaction *sa);
 void			execve_sig_handler(int signum);
 int				child_signal_handling(struct sigaction *sa);
+void			sigint_handler(int signum);
 
 #endif

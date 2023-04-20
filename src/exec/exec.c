@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/19 17:49:42 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 15:07:32 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,15 @@ int	exec_single_b_in(t_command *cmd, char *buffer, t_data *data)
 	return (1);
 }
 
-int	child_p(t_data *data, int i, char *buffer)
+void	child_p(t_data *data, int i, char *buffer)
 {
+	signal_handling(&data->sa);
 	dup_fd(&data->cmd[i]);
 	if (data->cmd[i].d.is_builtin == 1)
 		exit(built_in_detection(data, &data->cmd[i], buffer));
-	child_signal_handling(&data->sa);
 	data->tab_env = lst_env_to_tab_env(data->env);
 	execve(data->cmd[i].pathname, data->cmd[i].argv, data->tab_env);
-	// perror_exit("execve");
-	return (0);
+	perror_exit("execve");
 }
 
 void	cmd_loop(t_data *data, char *buffer)
@@ -49,6 +48,11 @@ void	cmd_loop(t_data *data, char *buffer)
 	i = 0;
 	while (i < data->n_cmd)
 	{
+		data->sa.sa_handler = SIG_IGN;
+		sigemptyset(&data->sa.sa_mask);
+		data->sa.sa_flags = 0;
+		if (sigaction(SIGINT, &data->sa, NULL) == -1)
+			perror("sigaction");
 		data->cmd[i].d.pid = fork();
 		if (data->cmd[i].d.pid == -1)
 			perror_exit("fork");
@@ -86,7 +90,8 @@ int	execute_commands(t_data *data, char *buffer)
 			return (print_bash_error("waitpid", 1));
 		if (WIFEXITED(status))
 			g_err_no = WEXITSTATUS(status);
-		// if (WIFSIGNALED(status))
+		if (WIFSIGNALED(status))
+			printf("\n");
 		i++;
 	}
 	return (1);
