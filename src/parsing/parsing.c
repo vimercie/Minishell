@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 17:46:09 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 18:01:29 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,51 +22,32 @@ int	data_init(char **tokens, t_data *data)
 	return (1);
 }
 
-int	count_args(char **tokens)
+int	cmd_init_loop(char **tokens, t_data *data)
 {
-	int	n_arg;
-
-	n_arg = 0;
-	if (!tokens)
-		return (0);
-	while (tokens[n_arg])
-	{
-		if (ft_strcmp(tokens[n_arg], "|") == 0)
-			return (n_arg);
-		n_arg++;
-	}
-	return (n_arg);
-}
-
-char	**token_pipe_split(char **tokens, int *token_i, t_command *cmd)
-{
-	char	**res;
+	char	**cmd_split;
+	int		return_val;
+	int		token_i;
 	int		i;
 
 	i = 0;
-	cmd->d.n_arg = count_args(tokens);
-	res = ft_calloc(cmd->d.n_arg + 1, sizeof(char *));
-	if (!res)
-		return (NULL);
-	while (i < cmd->d.n_arg)
+	token_i = 0;
+	return_val = 0;
+	while (i < data->n_cmd)
 	{
-		res[i] = ft_strdup(tokens[i]);
+		cmd_split = cmd_pipe_split(tokens + token_i, &token_i, &data->cmd[i]);
+		return_val = cmd_init(cmd_split, &data->cmd[i], data);
+		free_tab(cmd_split);
 		i++;
+		token_i++;
 	}
-	*token_i += i;
-	return (res);
+	return (return_val);
 }
 
 int	parsing(char *input, t_data *data)
 {
 	char	**tokens;
-	char	**pipe_split;
-	int		err_return;
-	int		i;
-	int		j;
+	int		return_val;
 
-	i = 0;
-	j = 0;
 	data->cmd = NULL;
 	tokens = tokenize_input(input);
 	if (!tokens)
@@ -77,16 +58,9 @@ int	parsing(char *input, t_data *data)
 		return (0);
 	if (!pipe_init(data))
 		return (0);
-	while (i < data->n_cmd)
-	{
-		pipe_split = token_pipe_split(tokens + j, &j, &data->cmd[i]);
-		err_return = cmd_init(pipe_split, &data->cmd[i], data);
-		free_tab(pipe_split);
-		j++;
-		i++;
-	}
+	return_val = cmd_init_loop(tokens, data);
 	free_tab(tokens);
-	if (!err_return || !set_fd(data))
+	if (!return_val || !set_fd(data))
 		return (0);
 	return (1);
 }

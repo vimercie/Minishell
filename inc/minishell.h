@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 16:49:33 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 17:59:35 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int				is_quote(char *s, int index);
 int				is_quoted(char *s, int index);
 
 // parsing utils
+char			**cmd_pipe_split(char **tokens, int *token_i, t_command *cmd);
 char			*gather_full_path(char *path, char *cmd);
 char			*remove_quotes(char *s);
 
