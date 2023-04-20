@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:32:34 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 18:01:29 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 21:24:06 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	cmd_init_loop(char **tokens, t_data *data)
 	return_val = 0;
 	while (i < data->n_cmd)
 	{
-		cmd_split = cmd_pipe_split(tokens + token_i, &token_i, &data->cmd[i]);
+		cmd_split = cmd_pipe_split(tokens + token_i, &token_i);
 		return_val = cmd_init(cmd_split, &data->cmd[i], data);
 		free_tab(cmd_split);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:08:46 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/20 16:01:26 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 23:31:45 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,30 @@ int	child_p(t_command *cmd, t_data *data)
 {
 	signal_handling(&data->sa);
 	dup_fd(cmd);
+	close_pipes(data);
 	if (cmd->d.is_builtin == 1)
 		exit(built_in_detection(cmd, data));
 	data->tab_env = lst_env_to_tab_env(data->env);
 	execve(cmd->pathname, cmd->argv, data->tab_env);
-	perror_exit("execve");
 	return (0);
 }
 
-void	cmd_loop(t_data *data)
+int	cmd_loop(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->n_cmd)
 	{
-		data->sa.sa_handler = SIG_IGN;
-		sigemptyset(&data->sa.sa_mask);
-		data->sa.sa_flags = 0;
-		if (sigaction(SIGINT, &data->sa, NULL) == -1)
-			perror("sigaction");
+		signal_ignore(data);
 		data->cmd[i].d.pid = fork();
 		if (data->cmd[i].d.pid == -1)
-			perror_exit("fork");
+			return (print_linux_error("fork"));
 		else if (data->cmd[i].d.pid == 0)
 			child_p(&data->cmd[i], data);
-		close_pipes(&data->cmd[i], data);
 		i++;
 	}
-	return ;
+	return (1);
 }
 
 int	execute_commands(t_data *data)
@@ -89,6 +84,7 @@ int	execute_commands(t_data *data)
 	if (data->cmd[0].d.is_builtin && data->n_cmd == 1)
 		return (exec_single_b_in(&data->cmd[0], data));
 	cmd_loop(data);
+	close_pipes(data);
 	wait_child_processes(data);
 	return (1);
 }

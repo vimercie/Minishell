@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:33:20 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/20 18:02:04 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 23:31:00 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	signal_ignore(t_data *data)
 	data->sa.sa_handler = SIG_IGN;
 	sigemptyset(&data->sa.sa_mask);
 	data->sa.sa_flags = 0;
-	sigaction(SIGINT, &data->sa, NULL);
+	if (sigaction(SIGINT, &data->sa, NULL) == -1)
+		return (print_linux_error("sigaction"));
 	return (0);
 }

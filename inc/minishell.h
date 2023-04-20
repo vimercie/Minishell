@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 17:59:35 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 23:31:34 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_file_table
 {
 	char			*file_name;
 	int				fd;
-	bool			is_outfile;
+	int				is_outfile;
 	bool			is_heredoc;
 }				t_file_table;
 
@@ -111,6 +111,7 @@ int				count_tokens(char *input);
 char			*find_env_var_value(char *to_find, t_env *env);
 
 // redirection
+int				find_duplicate(int file_index, t_file_table *files);
 int				get_fd(char *operator, char *file_name, t_data *data);
 
 // heredoc
@@ -126,13 +127,14 @@ int				is_quote(char *s, int index);
 int				is_quoted(char *s, int index);
 
 // parsing utils
-char			**cmd_pipe_split(char **tokens, int *token_i, t_command *cmd);
+char			**cmd_pipe_split(char **tokens, int *token_i);
 char			*gather_full_path(char *path, char *cmd);
 char			*remove_quotes(char *s);
 
 // init utils
 int				count_cmd(char **tokens);
 int				count_redir(char **tokens);
+int				count_token_args(char **tokens);
 int				count_args(char **tokens);
 int				count_quotes(char	*s);
 
@@ -149,7 +151,7 @@ void			perror_exit(char *str);
 void			free_loop(t_data *data);
 int				free_tab(char **tab);
 int				close_files(t_command *cmd);
-int				close_pipes(t_command *cmd, t_data *data);
+int				close_pipes(t_data *data);
 
 // exec
 int				execute_commands(t_data *data);
@@ -186,5 +188,6 @@ int				signal_handling(struct sigaction *sa);
 void			execve_sig_handler(int signum);
 int				child_signal_handling(struct sigaction *sa);
 void			sigint_handler(int signum);
+int				signal_ignore(t_data *data);
 
 #endif
