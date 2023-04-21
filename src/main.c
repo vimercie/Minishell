@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/21 08:18:49 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:34:51 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ void	handle_history(char *buffer, char *previous_buffer)
 	ft_strlcpy(previous_buffer, buffer, ft_strlen(buffer) + 1);
 }
 
+int	env_init(t_data *data, char **envp)
+{
+	data->env = lst_getenv(envp);
+	data->tab_env = lst_env_to_tab_env(data->env);
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)
+		|| !isatty(STDERR_FILENO))
+	{
+		print_bash_error("Gigabash", 1);
+		exit(g_err_no);
+	}
+	return (0);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_data				data;
@@ -37,11 +50,7 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	previous_buffer[0] = 0;
-	data.env = lst_getenv(envp);
-	data.tab_env = lst_env_to_tab_env(data.env);
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)
-		|| !isatty(STDERR_FILENO))
-		return (print_bash_error("Gigabash", 1));
+	env_init(&data, envp);
 	while (1)
 	{
 		signal_handling(&data.sa);
