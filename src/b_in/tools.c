@@ -6,7 +6,7 @@
 /*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:30:05 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/18 13:22:59 by mmajani          ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:06:05 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,11 @@ int	print_list(t_env *env)
 	{
 		while (current->next)
 		{
-			printf("%s", current->name);
 			if (current->val == 1)
+			{
+				printf("%s", current->name);
 				printf("=%s", current->value);
+			}
 			printf("\n");
 			current = current->next;
 		}
