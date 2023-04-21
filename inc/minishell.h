@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/21 01:48:09 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:29:56 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,12 @@ int				main_tester(t_data *data);
 int				parsing(char *input, t_data *data);
 int				check_syntax(char *input, char **tokens);
 char			*handle_env_var(char *input, bool is_heredoc, t_env *env);
-int				pipe_init(t_data *data);
 
 // init
 int				cmd_init(char **tokens, t_command *cmd, t_data *data);
 char			**argv_init(char **tokens, t_env *env);
 char			*get_cmd_path(char *cmd, t_env *env);
 t_file_table	*files_init(char **tokens, int n_redir, t_data *data);
-int				set_fd(t_data *data);
 
 // token handling
 char			**tokenize_input(char *input);
@@ -122,7 +120,6 @@ int				is_builtin(char *str);
 int				is_directory(char *path);
 int				is_metachar(char c);
 int				is_string_blank(char *s);
-int				is_pipe(int fd, t_data *data);
 int				is_quote(char *s, int index);
 int				is_quoted(char *s, int index);
 
@@ -140,6 +137,7 @@ int				count_quotes(char	*s);
 
 // file descriptor
 int				pipe_init(t_data *data);
+int				set_fd(t_data *data);
 
 // error
 int				print_bash_error(char *token, int errnum);
@@ -189,6 +187,6 @@ int				exec_signal_handling(struct sigaction *sa);
 int				child_signal_handling(struct sigaction *sa);
 int				heredoc_signal_handling(struct sigaction *sa);
 void			prompt_on_new_line(int signum);
-int				signal_ignore(t_data *data);
+void			heredoc_prompt_on_new_line(int signum);
 
 #endif

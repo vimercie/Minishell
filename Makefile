@@ -39,6 +39,7 @@ SRC=		main.c						\
 			export.c					\
 			tools.c						\
 			signals.c					\
+			signals_utils.c				\
 			sync_env.c					\
 			sort.c
 

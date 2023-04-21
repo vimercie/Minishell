@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:39:16 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/19 15:39:54 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:31:55 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	print_heredoc_warning(char *token)
 int	print_linux_error(char *token)
 {
 	g_err_no = 1;
-	ft_putstr_fd("Gigabash: ", 2);
+	ft_putstr_fd("Gigabash: ", STDERR_FILENO);
 	perror(token);
 	return (0);
 }

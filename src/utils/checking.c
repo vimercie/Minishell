@@ -6,26 +6,11 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:02:24 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/19 15:35:18 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:29:53 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	is_pipe(int fd, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->n_cmd)
-	{
-		if (fd == data->cmd[i].d.pipefd[0]
-			|| fd == data->cmd[i].d.pipefd[1])
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int	is_quote(char *s, int index)
 {
