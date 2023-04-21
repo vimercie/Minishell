@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:28:45 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/19 15:00:30 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 03:02:00 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ int	heredoc_loop(char *delimiter, int heredoc_fd, t_env *env)
 
 int	heredoc(char *delimiter, t_data *data)
 {
-	char	*res;
 	int		pipefd[2];
 	int		pid;
-	int		status;
 
-	res = NULL;
 	pipe(pipefd);
+	exec_signal_handling(&data->sa);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -58,12 +56,13 @@ int	heredoc(char *delimiter, t_data *data)
 	}
 	if (pid == 0)
 	{
+		heredoc_signal_handling(&data->sa);
 		heredoc_loop(delimiter, pipefd[1], data->env);
 		exit(1);
 	}
-	else if (waitpid(-1, &status, 0) == -1)
-		return (-1);
 	close(pipefd[1]);
-	free(res);
+	wait_child_process(pid);
+	if (g_err_no == 130)
+		return (-1);
 	return (pipefd[0]);
 }

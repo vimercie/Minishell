@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 02:06:07 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 21:51:12 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 02:38:06 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ char	*find_in_path(char *cmd, t_env *env)
 	if (!res)
 		return (NULL);
 	path = ft_split(res, ':');
-	free(res);
-	res = NULL;
 	if (!path)
 		return (NULL);
+	free(res);
+	res = NULL;
 	while (path[i])
 	{
 		res = gather_full_path(path[i], cmd);
@@ -92,7 +92,7 @@ int	cmd_init(char **tokens, t_command *cmd, t_data *data)
 	cmd->d.n_redir = count_redir(tokens);
 	cmd->d.files = files_init(tokens, cmd->d.n_redir, data);
 	cmd->d.is_builtin = is_builtin(cmd->argv[0]);
-	if (!is_builtin(cmd->argv[0]) && !cmd->pathname)
+	if (!cmd->d.is_builtin && !cmd->pathname)
 		return (print_bash_error(cmd->argv[0], 127));
 	return (1);
 }

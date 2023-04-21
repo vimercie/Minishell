@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 23:31:34 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 01:48:09 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,9 +155,9 @@ int				close_pipes(t_data *data);
 
 // exec
 int				execute_commands(t_data *data);
-void			redirect_fds(t_data *data, int i);
-int				dup_fd(t_command *cmd);
 int				built_in_detection(t_command *cmd, t_data *data);
+int				wait_child_process(int pid);
+int				dup_fd(t_command *cmd);
 // env
 t_env			*lst_getenv(char **env);
 t_env			*lst_name(t_env *lst, char *to_find);
@@ -185,9 +185,10 @@ void			signal_exit(int signum);
 
 // Signals
 int				signal_handling(struct sigaction *sa);
-void			execve_sig_handler(int signum);
+int				exec_signal_handling(struct sigaction *sa);
 int				child_signal_handling(struct sigaction *sa);
-void			sigint_handler(int signum);
+int				heredoc_signal_handling(struct sigaction *sa);
+void			prompt_on_new_line(int signum);
 int				signal_ignore(t_data *data);
 
 #endif

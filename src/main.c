@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 23:25:09 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 02:54:49 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int	main(int ac, char **av, char **envp)
 	previous_buffer[0] = 0;
 	data.env = lst_getenv(envp);
 	data.tab_env = lst_env_to_tab_env(data.env);
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)
+		|| !isatty(STDERR_FILENO))
+		return (print_bash_error("Gigabash", 1));
 	while (1)
 	{
 		signal_handling(&data.sa);

@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:41:26 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/20 21:52:21 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 02:43:08 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ int	set_redirection(t_command *cmd)
 	while (i < cmd->d.n_redir)
 	{
 		if (cmd->d.files[i].fd == -1)
-			return (print_linux_error(cmd->d.files[i].file_name));
+		{
+			if (cmd->d.files[i].is_heredoc == 0)
+				print_linux_error(cmd->d.files[i].file_name);
+			return (0);
+		}
 		if (cmd->d.files[i].is_outfile > 0)
 			cmd->fd_out = cmd->d.files[i].fd;
 		else

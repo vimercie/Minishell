@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:18:52 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/20 23:20:45 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 01:15:12 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,24 @@ void	perror_exit(char *str)
 
 int	close_pipes(t_data *data)
 {
-	int	return_val;
 	int	i;
 
 	i = 0;
-	return_val = 1;
 	while (i < data->n_cmd)
 	{
 		if (data->cmd[i].d.pipefd[0] > 2)
 		{
 			if (close(data->cmd[i].d.pipefd[0]) == -1)
-				return_val = print_linux_error("close");
+				exit(print_linux_error("close"));
 		}
 		if (data->cmd[i].d.pipefd[1] > 2)
 		{
 			if (close(data->cmd[i].d.pipefd[1]) == -1)
-				return_val = print_linux_error("close");
+				exit(print_linux_error("close"));
 		}
 		i++;
 	}
-	return (return_val);
+	return (1);
 }
 
 int	dup_fd(t_command *cmd)
@@ -47,12 +45,12 @@ int	dup_fd(t_command *cmd)
 	if (cmd->fd_in != STDIN_FILENO)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-			perror_exit("dup2 stdin");
+			perror_exit("dup2");
 	}
 	if (cmd->fd_out != STDOUT_FILENO)
 	{
 		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-			perror_exit("dup2 stdout");
+			perror_exit("dup2");
 	}
 	return (1);
 }
