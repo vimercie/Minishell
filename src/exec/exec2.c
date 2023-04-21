@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:18:52 by mmajani           #+#    #+#             */
-/*   Updated: 2023/04/21 01:15:12 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:24:32 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int	built_in_detection(t_command *cmd, t_data *data)
 		return_val = get_current_dir();
 	else if (ft_strcmp(cmd->argv[0], "unset") == 0)
 		return_val = unset_var(cmd, data->env);
-	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
-		exit(EXIT_SUCCESS);
+	else if (ft_strcmp(cmd->argv[0], "exit") == 0 && cmd->d.n_arg == 2)
+		exit_bash(data, NULL, ft_atoi(cmd->argv[1]));
+	else if (ft_strcmp(cmd->argv[0], "exit") == 0 && cmd->d.n_arg == 1)
+		exit_bash(data, NULL, EXIT_SUCCESS);
 	return (return_val);
 }

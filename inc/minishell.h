@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mmajani <mmajani@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:28:50 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/21 01:48:09 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:18:16 by mmajani          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int				echo_controller(t_command *cmd);
 int				export_controller(t_command *cmd, t_env *env);
 int				cd(t_data *data);
 int				unset_var(t_command *cmd, t_env *env);
-int				exit_bash(t_data *data, char *buffer);
+int				exit_bash(t_data *data, char *buffer, int val);
 void			exit_gigabash(t_data *data);
 void			signal_exit(int signum);
 
