@@ -6,7 +6,7 @@
 /*   By: vimercie <vimercie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:41:05 by vimercie          #+#    #+#             */
-/*   Updated: 2023/04/21 02:54:49 by vimercie         ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 08:18:49 by vimercie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	main(int ac, char **av, char **envp)
 		free(buffer);
 		free_loop(&data);
 	}
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 2);
 	free_tab(data.tab_env);
 	lst_free(data.env);
-	return (0);
+	return (g_err_no);
 }
